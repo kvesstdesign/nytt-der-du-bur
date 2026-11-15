@@ -1,0 +1,10 @@
+﻿exports/
+*.psd
+*.blend
+bin/
+obj/
+node_modules/
+.env
+review/ut/
+.claude/worktrees/
+.claude/settings.local.json
