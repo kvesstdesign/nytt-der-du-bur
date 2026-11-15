@@ -288,7 +288,7 @@ textarea { min-height: 6rem; }
         <p class="hint" id="q3-hint">Ikkje skriv namn, telefonnummer eller adresse.</p>
         <textarea id="q3" maxlength="500" aria-describedby="q3-hint"></textarea>
       </fieldset>
-      <p class="hint" id="m-lagring">Svara går til eit Google-skjema som Oleiv eig. Du ser over svara før du sender, og kan endra dei. Namn og e-post blir ikkje spurt etter. Google lagrar tidspunktet du sender.</p>
+      <p class="hint" id="m-lagring">Svara går rett til eit Google-skjema som Oleiv eig når du trykkjer «Send svara». Namn og e-post blir ikkje spurt etter. Google lagrar tidspunktet du sender.</p>
       <p class="hint" id="m-svar">Svar på spørsmål 1 for å senda.</p>
       <button class="btn" type="submit" id="n-svar" disabled>Send svara</button>
     </form>
@@ -322,15 +322,6 @@ textarea { min-height: 6rem; }
     </div>
   </section>
 
-  <!-- RESULTAT (for Oleiv) -->
-  <section class="view" id="v-resultat" hidden aria-labelledby="h-resultat">
-    <div class="stack">
-      <h2 id="h-resultat">Resultat frå testen</h2>
-      <p class="hint" id="r-status">Hentar svar …</p>
-      <div id="r-body" class="stack"></div>
-      <a href="#" class="hint">Til starten</a>
-    </div>
-  </section>
 
   <!-- LAPP -->
   <section class="view" id="v-lapp" hidden aria-labelledby="h-lapp">
@@ -368,7 +359,6 @@ textarea { min-height: 6rem; }
     ["Større tekst", "Større tekst", "Larger text", "Більший текст", "Większy tekst"],
     ["Visning", "Visning", "Display", "Вигляд", "Wygląd"],
     ["Siste steg: send skjemaet", "Siste steg: send skjemaet", "Last step: send the form", "Останній крок: надішліть форму", "Ostatni krok: wyślij formularz"],
-    ["Skjemaet er opna i ei ny fane med svara dine. Trykk «Send» nedst i skjemaet, elles kjem ikkje svara fram.", "Skjemaet er åpnet i en ny fane med svarene dine. Trykk «Send» nederst i skjemaet, ellers kommer ikke svarene fram.", "The form has opened in a new tab with your answers filled in. Press Send at the bottom of the form, or your answers won't arrive.", "Форма відкрилася в новій вкладці з вашими відповідями. Натисніть кнопку надсилання внизу форми, інакше відповіді не дійдуть.", "Formularz otworzył się w nowej karcie z Twoimi odpowiedziami. Naciśnij przycisk wysyłania na dole formularza, inaczej odpowiedzi nie dotrą."],
     ["Skjedde i 2026", "Skjedde i 2026", "Happened in 2026", "Сталося у 2026 році", "Wydarzyło się w 2026"],
     ["Ekte saker frå Hå i år, skrivne om med eigne ord. Kjelda står under kvar sak.", "Ekte saker fra Hå i år, skrevet om med egne ord. Kilden står under hver sak.", "Real items from Hå this year, rewritten in our own words. The source is under each item.", "Справжні новини з Hå цього року, переказані своїми словами. Джерело вказано під кожною новиною.", "Prawdziwe wiadomości z Hå z tego roku, opisane własnymi słowami. Źródło jest pod każdą wiadomością."],
     ["Frå", "Fra", "From", "Від", "Od"],
@@ -464,15 +454,14 @@ textarea { min-height: 6rem; }
     ["Kvar burde du sett det", "Hvor burde du sett det", "Where should you have seen it", "Де ви мали б це побачити", "Gdzie warto to pokazać"],
     ["4. Kva saknar du?", "4. Hva savner du?", "4. What is missing?", "4. Чого вам бракує?", "4. Czego Ci brakuje?"],
     ["Ikkje skriv namn, telefonnummer eller adresse.", "Ikke skriv navn, telefonnummer eller adresse.", "Don't write names, phone numbers or addresses.", "Не пишіть імен, номерів телефонів чи адрес.", "Nie wpisuj imion, numerów telefonów ani adresów."],
-    ["Svara går til eit Google-skjema som Oleiv eig. Du ser over svara før du sender, og kan endra dei. Namn og e-post blir ikkje spurt etter. Google lagrar tidspunktet du sender.", "Svarene går til et Google-skjema som Oleiv eier. Du ser over svarene før du sender, og kan endre dem. Navn og e-post blir ikke spurt etter. Google lagrer tidspunktet du sender.", "Your answers go to a Google form owned by Oleiv. You can review and change them before sending. No name or email is asked for. Google stores the time you send.", "Ваші відповіді потрапляють у Google-форму, яка належить Олейву. Перед надсиланням ви можете їх переглянути й змінити. Ім'я та електронну пошту не запитують. Google зберігає час надсилання.", "Twoje odpowiedzi trafiają do formularza Google należącego do Oleiva. Przed wysłaniem możesz je przejrzeć i zmienić. Formularz nie pyta o imię ani e-mail. Google zapisuje czas wysłania."],
-    ["Svara blir lagra i skissa utan namn, berre med dato. Berre eigaren eller ein redaktør av skissa kan lesa dei.", "Svarene lagres i skissen uten navn, bare med dato. Bare eieren eller en redaktør av skissen kan lese dem.", "Answers are stored in the sketch without names, with the date only. Only the owner or an editor of the sketch can read them.", "Відповіді зберігаються в ескізі без імен, лише з датою. Читати їх може тільки власник або редактор ескізу.", "Odpowiedzi są zapisywane w szkicu bez imion, tylko z datą. Może je czytać tylko właściciel lub redaktor szkicu."],
+    ["Svara går rett til eit Google-skjema som Oleiv eig når du trykkjer «Send svara». Namn og e-post blir ikkje spurt etter. Google lagrar tidspunktet du sender.", "Svarene går rett til et Google-skjema som Oleiv eier når du trykker «Send svarene». Navn og e-post blir ikke spurt etter. Google lagrer tidspunktet du sender.", "Your answers go straight to a Google form owned by Oleiv when you press “Send answers”. No name or email is asked for. Google stores the time you send.", "Коли ви натиснете «Надіслати відповіді», вони одразу потраплять у Google-форму, яка належить Олейву. Ім'я та електронну пошту не запитують. Google зберігає час надсилання.", "Po naciśnięciu „Wyślij odpowiedzi” trafiają one prosto do formularza Google należącego do Oleiva. Formularz nie pyta o imię ani e-mail. Google zapisuje czas wysłania."],
     ["Svar på spørsmål 1 for å senda.", "Svar på spørsmål 1 for å sende.", "Answer question 1 to send.", "Дайте відповідь на запитання 1, щоб надіслати.", "Odpowiedz na pytanie 1, aby wysłać."],
     ["Send svara", "Send svarene", "Send answers", "Надіслати відповіді", "Wyślij odpowiedzi"],
     ["Takk!", "Takk!", "Thank you!", "Дякуємо!", "Dziękujemy!"],
     ["Eitt steg att", "Ett steg igjen", "One more step", "Ще один крок", "Jeszcze jeden krok"],
     ["Opne skjemaet og trykk «Send»", "Åpne skjemaet og send det", "Open the form and send it", "Відкрийте форму й надішліть її", "Otwórz formularz i wyślij go"],
     ["Start på nytt for neste person", "Start på nytt for neste person", "Start again for the next person", "Почати знову для наступної людини", "Zacznij od nowa dla następnej osoby"],
-    ["Svara er lagra utan namn. Gi telefonen vidare, eller trykk under for å starta på nytt.", "Svarene er lagret uten navn. Gi telefonen videre, eller trykk under for å starte på nytt.", "Your answers are saved without your name. Pass the phone on, or press below to start again.", "Відповіді збережено без імені. Передайте телефон далі або натисніть нижче, щоб почати знову.", "Odpowiedzi zapisano bez imienia. Przekaż telefon dalej lub naciśnij poniżej, aby zacząć od nowa."],
+    ["Svara er sende. Gi telefonen vidare, eller trykk under for å starta på nytt.", "Svarene er sendt. Gi telefonen videre, eller trykk under for å starte på nytt.", "Your answers have been sent. Pass the phone on, or press below to start again.", "Відповіді надіслано. Передайте телефон далі або натисніть нижче, щоб почати знову.", "Odpowiedzi zostały wysłane. Przekaż telefon dalej lub naciśnij poniżej, aby zacząć od nowa."],
     ["Eitt steg att: opne skjemaet, sjå over svara og trykk «Send» nedst. Skjemaet er Oleiv sitt i Google Skjema, ikkje kommunen sitt.", "Ett steg igjen: åpne skjemaet, se over svarene og send det nederst. Skjemaet er Oleivs eget i Google Skjemaer, ikke kommunens.", "One more step: open the form, check your answers and send it at the bottom. The form is Oleiv's own in Google Forms, not the municipality's.", "Ще один крок: відкрийте форму, перевірте відповіді й надішліть її внизу. Форма належить Олейву в Google Forms, а не комуні.", "Jeszcze jeden krok: otwórz formularz, sprawdź odpowiedzi i wyślij go na dole. Formularz należy do Oleiva w Google Forms, nie do gminy."],
     ["Opnar ikkje skjemaet? Vis denne skjermen til Oleiv.", "Åpner ikke skjemaet? Vis denne skjermen til Oleiv.", "Form won't open? Show this screen to Oleiv.", "Форма не відкривається? Покажіть цей екран Олейву.", "Formularz się nie otwiera? Pokaż ten ekran Oleivowi."],
     ["Eit år med døme", "Et år med eksempler", "A year of examples", "Рік прикладів", "Rok przykładów"],
@@ -684,7 +673,7 @@ textarea { min-height: 6rem; }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="vendor/qrcode.min.js"></script>
 <script>
 (function () {
   "use strict";
@@ -730,20 +719,29 @@ textarea { min-height: 6rem; }
     { h: "godt", mnd: 12, tema: "Helse", bygd: "Heile Hå", t: "Røykvarslaren sin dag: test han i dag", x: "Trykk på knappen. Byt batteri om han ikkje pip." }
   ];
 
-  var state, startTime = Date.now(), pameldtSek = null, db = null;
+  var state, startTime = Date.now(), pameldtSek = null;
 
-  // Naboens eigen telefon: svara går til Oleivs Google-skjema, ferdig utfylt. Ingen namn eller e-post.
+  // Svara går rett til Oleivs Google-skjema med eitt trykk. Ingen namn eller e-post.
   var SKJEMA = "https://docs.google.com/forms/d/e/1FAIpQLSeq-rG8zZSAN3xljNi9Ge_K3R1IcT6SpzYwgKLWIrgk9hFEJQ/viewform";
+  // ?test=1 sender til ein lokal adresse i staden, så testar ikkje lagar svar i skjemaet.
+  var TEST = /(?:^|[?&])test=1(?:&|$)/.test(location.search || "");
+  var SKJEMA_POST = TEST ? "test-formResponse" : SKJEMA.replace(/\/viewform$/, "/formResponse");
   var FELT = { bygd: "144338228", tema: "1494700229", kStraks: "535172419", kSnart: "1629005840", kGodt: "1065507517", q1: "1532557234", q4: "588487473", q2: "1723581213", q3: "129376377", sekund: "1021682156" };
-  function skjemaUrl(s) {
-    var p = ["usp=pp_url"];
+  // Same felt for sending og reservelenkje, så dei aldri sprikar.
+  function skjemaPar(s) {
+    var p = [];
     Object.keys(FELT).forEach(function (k) {
       var v = s[k];
       (Array.isArray(v) ? v : [v]).forEach(function (x) {
         if (x === "" || x == null) return;
-        p.push("entry." + FELT[k] + "=" + encodeURIComponent(String(x)));
+        p.push(["entry." + FELT[k], String(x)]);
       });
     });
+    return p;
+  }
+  function skjemaUrl(s) {
+    var p = ["usp=pp_url"];
+    skjemaPar(s).forEach(function (kv) { p.push(kv[0] + "=" + encodeURIComponent(kv[1])); });
     return SKJEMA + "?" + p.join("&");
   }
   // Ekte saker frå 2026 (årsoversikta). Skrivne om med eigne ord. m = månad for sortering, 0 = ukjend (sist).
@@ -876,7 +874,7 @@ textarea { min-height: 6rem; }
     document.getElementById("m-svar").style.visibility = state.q1.length > 0 ? "hidden" : "visible";
   }
 
-  var VIEWS = ["start", "bygd", "tema", "kanal", "ferdig", "svar", "takk", "aaret", "resultat", "lapp"];
+  var VIEWS = ["start", "bygd", "tema", "kanal", "ferdig", "svar", "takk", "aaret", "lapp"];
   function show(name) {
     document.body.classList.toggle("compact", name !== "start" && name !== "aaret");
     VIEWS.forEach(function (v) { document.getElementById("v-" + v).hidden = (v !== name); });
@@ -1012,7 +1010,7 @@ textarea { min-height: 6rem; }
     visEkte();
   }
 
-  async function lagre() {
+  async function sende() {
     var sek = pameldtSek;
     var svar = {
       bygd: state.bygd.slice(), tema: state.tema.slice(),
@@ -1022,91 +1020,27 @@ textarea { min-height: 6rem; }
       sekund: sek, dato: new Date().toISOString().slice(0, 10), versjon: 5
     };
     var t = document.getElementById("t-takk");
-    if (db) {
-      try {
-        await Promise.race([db.collection("svar").add(svar), new Promise(function (_, rej) { setTimeout(function () { rej(new Error("tidsgrense")); }, 8000); })]);
-        t.textContent = "Svara er lagra utan namn. Gi telefonen vidare, eller trykk under for å starta på nytt.";
-        return;
-      } catch (e) { /* fell through */ }
-    }
+    // Sender rett til Google-skjemaet. no-cors gir eit svar vi ikkje kan lesa, så berre nettverksfeil eller tidsgrense blir rekna som feil.
+    try {
+      var body = new URLSearchParams();
+      skjemaPar(svar).forEach(function (kv) { body.append(kv[0], kv[1]); });
+      await Promise.race([
+        fetch(SKJEMA_POST, { method: "POST", mode: "no-cors", body: body }),
+        new Promise(function (_, rej) { setTimeout(function () { rej(new Error("tidsgrense")); }, 8000); })
+      ]);
+      t.textContent = "Svara er sende. Gi telefonen vidare, eller trykk under for å starta på nytt.";
+      return;
+    } catch (e) { /* reserve under */ }
+    // Reserve: lenkje til det ferdig utfylte skjemaet. Opnar berre når naboen trykkjer.
     document.getElementById("h-takk").textContent = "Siste steg: send skjemaet";
     var lenkje = document.getElementById("b-skjema");
-    var url = skjemaUrl(svar);
-    lenkje.href = url;
+    lenkje.href = skjemaUrl(svar);
     lenkje.hidden = false;
-    // Opnar skjemaet med ein gong (same trykk som «Send svara»). Blir det stoppa, står knappen klar.
-    var opna = null;
-    try { opna = window.open(url, "_blank"); if (opna) opna.opener = null; } catch (e) { opna = null; }
-    t.textContent = opna
-      ? "Skjemaet er opna i ei ny fane med svara dine. Trykk «Send» nedst i skjemaet, elles kjem ikkje svara fram."
-      : "Eitt steg att: opne skjemaet, sjå over svara og trykk «Send» nedst. Skjemaet er Oleiv sitt i Google Skjema, ikkje kommunen sitt.";
+    t.textContent = "Eitt steg att: opne skjemaet, sjå over svara og trykk «Send» nedst. Skjemaet er Oleiv sitt i Google Skjema, ikkje kommunen sitt.";
     var res = document.getElementById("t-reserve");
     res.hidden = false;
     lastSvar = svar;
     res.textContent = reserveTekst(svar);
-  }
-
-  function count(rows, key) {
-    var m = {};
-    rows.forEach(function (r) {
-      var v = r[key];
-      (Array.isArray(v) ? v : [v]).forEach(function (x) { if (x) m[x] = (m[x] || 0) + 1; });
-    });
-    return Object.keys(m).sort(function (a, b) { return m[b] - m[a]; }).map(function (k) { return [k, m[k]]; });
-  }
-
-  function statBlock(title, pairs, total) {
-    var c = el("div", { "class": "card" });
-    c.appendChild(el("b", null, title));
-    if (pairs.length === 0) c.appendChild(el("span", { "class": "hint" }, "Ingen svar enno."));
-    pairs.forEach(function (p) {
-      var s = el("div", { "class": "stat" });
-      s.appendChild(el("span", null, p[0]));
-      s.appendChild(el("span", null, String(p[1])));
-      s.appendChild(el("div", { "class": "bar", style: "width:" + Math.round(100 * p[1] / Math.max(total, 1)) + "%;grid-column:1/-1" }));
-      c.appendChild(s);
-    });
-    return c;
-  }
-
-  var unsubResultat = null;
-  function visResultat() {
-    show("resultat");
-    var st = document.getElementById("r-status");
-    var body = document.getElementById("r-body");
-    if (!db) { st.textContent = "Resultata kan berre visast for eigaren eller ein redaktør av skissa, innlogga."; return; }
-    if (unsubResultat) return;
-    var timer = setTimeout(function () { st.textContent = "Får ikkje kontakt med lagringa enno. Prøv igjen om litt."; }, 10000);
-    unsubResultat = db.collection("svar").onSnapshot(function (snap) {
-      if (!snap.metadata.fromCache) clearTimeout(timer);
-      var rows = snap.docs.map(function (d) { return d.data() || {}; });
-      st.textContent = rows.length + " svar.";
-      body.textContent = "";
-      var tider = rows.map(function (r) { return r.sekund; }).filter(function (x) { return typeof x === "number"; }).sort(function (a, b) { return a - b; });
-      var median = tider.length ? tider[Math.floor(tider.length / 2)] : null;
-      var under = tider.filter(function (x) { return x <= 60; }).length;
-      var k = el("div", { "class": "card" });
-      k.appendChild(el("b", null, "Tid frå skissa vart opna til påmelding"));
-      k.appendChild(el("span", null, median == null ? "Ingen målingar enno." : "Median " + median + " sekund. " + under + " av " + tider.length + " klarte det på under eitt minutt."));
-      body.appendChild(k);
-      body.appendChild(statBlock("Ville meldt seg på", count(rows, "q1"), rows.length));
-      body.appendChild(statBlock("Skiljet Straks, Snart, Godt å vite var lett å skjøna", count(rows, "q4"), rows.length));
-      body.appendChild(statBlock("Kvar dei burde sett det", count(rows, "q2"), rows.length));
-      body.appendChild(statBlock("Straks som", count(rows, "kStraks"), rows.length));
-      body.appendChild(statBlock("Snart som", count(rows, "kSnart"), rows.length));
-      body.appendChild(statBlock("Godt å vite som", count(rows, "kGodt"), rows.length));
-      body.appendChild(statBlock("Bygder valde", count(rows, "bygd"), rows.length));
-      body.appendChild(statBlock("Tema valde", count(rows, "tema"), rows.length));
-      var fri = el("div", { "class": "card" });
-      fri.appendChild(el("b", null, "Kva dei saknar"));
-      var any = false;
-      rows.forEach(function (r) { if (r.q3) { any = true; fri.appendChild(el("p", null, "«" + r.q3 + "»")); } });
-      if (!any) fri.appendChild(el("span", { "class": "hint" }, "Ingen fritekst enno."));
-      body.appendChild(fri);
-    }, function () {
-      clearTimeout(timer);
-      st.textContent = "Resultata kan ikkje visast her. Opne skissa innlogga som eigar eller redaktør.";
-    });
   }
 
   function visLapp() {
@@ -1127,7 +1061,6 @@ textarea { min-height: 6rem; }
 
   function route() {
     var h = (location.hash || "").replace("#", "");
-    if (h === "resultat") return visResultat();
     if (h === "lapp") return visLapp();
     if (h === "aaret") return visAaret();
     if (h === "bygd") return show("bygd");
@@ -1167,7 +1100,7 @@ textarea { min-height: 6rem; }
   document.getElementById("f-svar").addEventListener("submit", async function (e) {
     e.preventDefault();
     var b = document.getElementById("n-svar"); b.disabled = true;
-    await lagre();
+    await sende();
     go("takk");
   });
   document.getElementById("b-igjen").addEventListener("click", function () { if (window.__resetLang) window.__resetLang(); lastSvar = null; reset(); startTime = Date.now(); go("start"); });
@@ -1199,15 +1132,6 @@ textarea { min-height: 6rem; }
   window.addEventListener("hashchange", route);
   window.__rerender = route;
   route();
-
-  // Lagring: berre når sida kan bruka db (eigaren, innlogga). Elles fungerer skissa utan.
-  if (window.claude && typeof window.claude.use === "function") {
-    window.claude.use("db").then(function (ns) {
-      db = ns || null;
-      if (db) document.getElementById("m-lagring").textContent = "Svara blir lagra i skissa utan namn, berre med dato. Berre eigaren eller ein redaktør av skissa kan lesa dei.";
-      if ((location.hash || "") === "#resultat") { unsubResultat = null; visResultat(); }
-    }).catch(function () { db = null; });
-  }
 })();
 </script>
 </body>
