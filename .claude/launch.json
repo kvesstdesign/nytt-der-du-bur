@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "nytt-der-du-bur",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-I", "test/server.py"],
+      "port": 8080
+    }
+  ]
+}

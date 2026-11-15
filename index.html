@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nytt der du bur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: éi smal mobilkolonne, eitt steg om gongen. Hovudgrepet er hastegrad: Straks, Snart, Godt å vite. Palett «jærstein og mose». */
+:root {
+  --bg: #f4f2ee;
+  --surface: #ffffff;
+  --ink: #1f2421;
+  --muted: #555c57;
+  --line: #d6d2c9;
+  --edge: #858076;
+  --accent: #2f5d44;
+  --accent-ink: #ffffff;
+  --accent-soft: #e3ece6;
+  --flag: #7a4a00;
+  --flag-bg: #fff4dc;
+  --straks: #8f1d14;
+  --straks-bg: #fde7e4;
+  --snart: #7a4a00;
+  --snart-bg: #fff4dc;
+  --godt: #2f5d44;
+  --godt-bg: #e3ece6;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #171a18; --surface: #212623; --ink: #ecefe9; --muted: #b3bab4; --line: #3a413c; --edge: #7f8781;
+    --accent: #8fc7a5; --accent-ink: #10231a; --accent-soft: #24352b; --flag: #ffd58a; --flag-bg: #3a2d12;
+    --straks: #ffb3a8; --straks-bg: #3d1a16; --snart: #ffd58a; --snart-bg: #3a2d12; --godt: #a9d9bb; --godt-bg: #24352b;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #171a18; --surface: #212623; --ink: #ecefe9; --muted: #b3bab4; --line: #3a413c; --edge: #7f8781;
+  --accent: #8fc7a5; --accent-ink: #10231a; --accent-soft: #24352b; --flag: #ffd58a; --flag-bg: #3a2d12;
+  --straks: #ffb3a8; --straks-bg: #3d1a16; --snart: #ffd58a; --snart-bg: #3a2d12; --godt: #a9d9bb; --godt-bg: #24352b;
+  color-scheme: dark;
+}
+/* Lys variant med sterkare kontrast (for dei som ser dårlegare). Gjeld berre lyst tema; mørkt tema er uendra.
+   Kontrast mot bakgrunn: tekst ca. 16:1, grå tekst ca. 8:1, kantar ca. 5,5:1, kvit tekst på merkelappar 7–9:1. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #eceae4; --surface: #ffffff; --ink: #141816; --muted: #3f4541; --line: #857f73; --edge: #5f5a52;
+    --accent: #24503a; --accent-ink: #ffffff; --accent-soft: #dfe9e2; --flag: #5c3700; --flag-bg: #ffe9b0;
+    --b-straks-bg: #9b1c12; --b-straks-fg: #ffffff; --b-snart-bg: #7a4a00; --b-snart-fg: #ffffff; --b-godt-bg: #24503a; --b-godt-fg: #ffffff;
+    --card-shadow: 0 1px 2px rgba(0,0,0,.10), 0 3px 10px rgba(0,0,0,.07);
+  }
+}
+:root[data-theme="light"] {
+  --bg: #eceae4; --surface: #ffffff; --ink: #141816; --muted: #3f4541; --line: #857f73; --edge: #5f5a52;
+  --accent: #24503a; --accent-ink: #ffffff; --accent-soft: #dfe9e2; --flag: #5c3700; --flag-bg: #ffe9b0;
+  --b-straks-bg: #9b1c12; --b-straks-fg: #ffffff; --b-snart-bg: #7a4a00; --b-snart-fg: #ffffff; --b-godt-bg: #24503a; --b-godt-fg: #ffffff;
+  --card-shadow: 0 1px 2px rgba(0,0,0,.10), 0 3px 10px rgba(0,0,0,.07);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.5; }
+.wrap { max-width: 34rem; margin: 0 auto; padding: 16px 16px 48px; display: grid; gap: 20px; }
+/* Same venstrekant som innhaldet (.wrap er 34rem med 16px luft): */
+.flag { background: var(--flag-bg); color: var(--flag); border-bottom: 1px solid var(--line); padding: 10px max(16px, calc((100% - 34rem) / 2 + 16px)); font-size: .95rem; }
+.flag p { margin: 0; }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; max-width: 34rem; margin: 0 auto; padding: 10px 16px; }
+.topbar .lang { display: flex; align-items: center; gap: 8px; color: var(--muted); }
+.topbar .lang svg { flex: none; }
+.topbar select { font: inherit; font-size: .95rem; color: var(--ink); background: var(--surface); border: 1.5px solid var(--edge); border-radius: 10px; padding: 8px 10px; min-height: 44px; cursor: pointer; }
+.topbar .vis { display: flex; gap: 8px; }
+.topbar .vis button { font: inherit; font-size: 1rem; font-weight: 600; line-height: 1; min-width: 44px; min-height: 44px; padding: 0 10px; border: 1.5px solid var(--edge); border-radius: 10px; background: var(--surface); color: var(--ink); cursor: pointer; }
+.topbar .vis button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.topbar select:focus-visible, .topbar button:focus-visible { outline: 3px solid var(--flag); outline-offset: 2px; }
+.flag strong { font-weight: 600; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: 2rem; margin-top: 8px; }
+h2 { font-size: 1.4rem; }
+h3 { font-size: 1.1rem; }
+p { margin: 0; }
+.stack { display: grid; gap: 16px; }
+.lead { color: var(--muted); }
+.hint { color: var(--muted); font-size: .9rem; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 12px; }
+/* Hastegradane: merkelappane i eiga kolonne, så overskriftene startar på same linje same kor brei lappen er (gjeld alle språk). */
+.levels { display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; align-items: baseline; }
+.level { display: contents; }
+.level .badge { grid-column: 1; justify-self: stretch; text-align: center; }
+.level b { grid-column: 2; }
+.level p { grid-column: 2; color: var(--muted); font-size: .95rem; margin-bottom: 10px; }
+.level:last-child p { margin-bottom: 0; }
+.badge { display: inline-block; border-radius: 6px; padding: 1px 8px; font-size: .8rem; font-weight: 600; white-space: nowrap; }
+.b-straks { background: var(--b-straks-bg, var(--straks-bg)); color: var(--b-straks-fg, var(--straks)); }
+.b-snart { background: var(--b-snart-bg, var(--snart-bg)); color: var(--b-snart-fg, var(--snart)); }
+.b-godt { background: var(--b-godt-bg, var(--godt-bg)); color: var(--b-godt-fg, var(--godt)); }
+.card, .kanalgruppe, .mail { box-shadow: var(--card-shadow, none); }
+.b-demo { background: var(--flag-bg); color: var(--flag); }
+.b-plain { background: var(--accent-soft); color: var(--ink); font-weight: 400; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font: inherit; border: 1.5px solid var(--edge); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 10px 16px; min-height: 44px; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.chip[aria-pressed="true"]::before { content: "✓ "; }
+.btn { font: inherit; font-weight: 600; border: none; border-radius: 12px; padding: 14px 20px; min-height: 48px; cursor: pointer; background: var(--accent); color: var(--accent-ink); width: 100%; }
+.btn[disabled] { opacity: .45; cursor: not-allowed; }
+.btn.ghost { background: transparent; color: var(--accent); border: 1.5px solid var(--accent); }
+a.btn { display: block; text-align: center; text-decoration: none; box-sizing: border-box; }
+a.btn[hidden], .toggle[hidden] { display: none; }
+.langbar { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; max-width: 34rem; margin: 0 auto; padding: 10px 16px 6px; }
+.langbar button { font: inherit; font-size: .9rem; border: 1.5px solid var(--edge); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 8px 12px; min-height: 44px; cursor: pointer; }
+.langbar button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+/* Visning: lys/mørk bakgrunn og større tekst, synleg på alle sider. */
+.viewbar { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; max-width: 34rem; margin: 0 auto; padding: 8px 16px 0; }
+.viewbar button { font: inherit; font-size: .9rem; border: 1.5px solid var(--edge); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 6px 14px; min-height: 44px; cursor: pointer; }
+.viewbar button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+/* Kompakt topp: full merking og språkval på start og årsoversikt, ei kort linje elles. */
+body.compact .flag-full, body:not(.compact) .flag-short, body.compact .langbar, body.compact #mt-note { display: none; }
+.flag-short { font-weight: 600; }
+[tabindex="-1"]:focus { outline: none; }
+.row > .btn.ghost { flex: 0 0 auto; width: auto; padding-inline: 20px; }
+.mt { background: var(--flag-bg); color: var(--flag); padding: 8px max(16px, calc((100% - 34rem) / 2 + 16px)); font-size: .9rem; margin: 0; }
+.row { display: flex; gap: 10px; }
+.row > * { flex: 1; }
+button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visible { outline: 3px solid var(--flag); outline-offset: 2px; }
+a { color: var(--accent); }
+.progress { color: var(--muted); font-size: .9rem; }
+.lane { display: grid; gap: 8px; }
+.lane > .lane-h { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.notif { background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--straks); border-radius: 14px; padding: 12px 14px; display: grid; gap: 2px; box-shadow: 0 2px 10px rgba(0,0,0,.08); }
+.notif.soon { border-left-color: var(--snart); }
+.notif small { color: var(--muted); }
+.mail { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.mail header { background: var(--accent-soft); padding: 10px 14px; font-size: .9rem; color: var(--muted); display: grid; gap: 2px; }
+.mail header b { color: var(--ink); }
+.mail .body { padding: 12px 14px; display: grid; gap: 14px; }
+.mail .sec { display: grid; gap: 0; }
+.item { display: grid; gap: 4px; padding: 10px 0; border-top: 1px solid var(--line); }
+.item:first-child { border-top: none; padding-top: 4px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.kanalgruppe { display: grid; gap: 8px; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.kanalgruppe .lane-h { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+fieldset { border: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+legend { font-weight: 600; margin-bottom: 8px; padding: 0; }
+textarea, input[type="url"] { font: inherit; width: 100%; border: 1.5px solid var(--edge); border-radius: 10px; padding: 10px; background: var(--surface); color: var(--ink); }
+textarea { min-height: 6rem; }
+.month { display: grid; gap: 6px; padding: 12px 0; border-top: 1px solid var(--line); }
+.month:first-child { border-top: none; }
+.mline { display: grid; grid-template-columns: 6.5rem 1fr; gap: 8px; align-items: baseline; }
+.stat { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; font-variant-numeric: tabular-nums; }
+.bar { height: 8px; border-radius: 4px; background: var(--accent); }
+.lapp { background: #fff; color: #1f2421; border: 2px dashed #8a8a8a; border-radius: 10px; padding: 18px; display: grid; gap: 10px; justify-items: center; text-align: center; max-width: 105mm; margin: 0 auto; }
+.lapp h2 { color: #1f2421; }
+.lapp .small { font-size: .8rem; color: #555; }
+#qr { background: #fff; padding: 8px; }
+.toggle { display: flex; gap: 8px; align-items: center; }
+.view[hidden] { display: none; }
+@media (prefers-reduced-motion: no-preference) { .view { animation: inn .18s ease-out; } @keyframes inn { from { opacity: .6; transform: translateY(4px); } to { opacity: 1; transform: none; } } }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <label class="lang" data-noi18n>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg>
+    <select id="langsel" aria-label="Språk / Language / Мова / Język">
+      <option value="nn" lang="nn">Nynorsk</option>
+      <option value="nb" lang="nb">Bokmål</option>
+      <option value="en" lang="en">English</option>
+      <option value="uk" lang="uk">Українська</option>
+      <option value="pl" lang="pl">Polski</option>
+    </select>
+  </label>
+  <div class="vis" role="group" aria-label="Visning">
+    <button type="button" id="b-lys" aria-label="Lys bakgrunn" title="Lys bakgrunn">☀</button>
+    <button type="button" id="b-stor" aria-pressed="false" aria-label="Større tekst" title="Større tekst">A+</button>
+  </div>
+</div>
+<p class="mt" id="mt-note" role="note" hidden data-noi18n></p>
+<div class="flag" role="note">
+  <p class="flag-short">Forslag frå Oleiv, innbyggjar på Nærbø · ikkje ei teneste frå Hå kommune</p>
+  <p class="flag-full"><strong>Forslag frå Oleiv, innbyggjar på Nærbø.</strong> Dette er ikkje ei teneste frå Hå kommune. Døma er oppdikta, bortsett frå dei ekte sakene frå 2026 i årsoversikta. Ingen varsel blir sende.</p>
+</div>
+
+<main class="wrap">
+
+  <!-- START -->
+  <section class="view" id="v-start" aria-labelledby="h-start">
+    <div class="stack">
+      <h1 id="h-start">Få med deg det som skjer der du bur</h1>
+      <p class="lead">Ei skisse av korleis du kunne fått beskjed frå kommunen utan Facebook. Det som hastar, kjem med ein gong. Resten kjem samla, når det passar deg.</p>
+      <button class="btn" id="b-start">Prøv det (om lag eitt minutt)</button>
+      <div class="card levels" aria-label="Tre hastegradar">
+        <div class="level"><span class="badge b-straks">Straks</span><b>Kjem med ein gong</b><p>Vatnet er stengt, kokevarsel, flaum, bålforbod.</p></div>
+        <div class="level"><span class="badge b-snart">Snart</span><b>Kjem før det skjer</b><p>Planlagd stenging av vatn, vegarbeid, endra henting av avfall.</p></div>
+        <div class="level"><span class="badge b-godt">Godt å vite</span><b>Kjem samla kvar veke</b><p>Fristar, arrangement, høyringar og tips gjennom året.</p></div>
+      </div>
+      <div class="notif" aria-label="Døme på straksvarsel">
+        <small>DØME · Straks · Vatn og avløp · Vigrestad</small>
+        <b>Vatnet er stengt i Dømegata no</b>
+        <span class="hint">Brot på leidning. Vatnet er truleg tilbake om lag kl. 15.</span>
+      </div>
+      <p class="hint"><a href="#aaret">Sjå eit heilt år med døme</a></p>
+    </div>
+  </section>
+
+  <!-- BYGD -->
+  <section class="view" id="v-bygd" hidden aria-labelledby="h-bygd">
+    <div class="stack">
+      <p class="progress">Steg 1 av 3</p>
+      <h2 id="h-bygd">Kvar bur du?</h2>
+      <p class="hint">Du kan velja fleire, til dømes der du bur og der borna går på skule.</p>
+      <div class="chips" id="c-bygd" role="group" aria-label="Bygder"></div>
+      <p class="hint" id="m-bygd">Vel minst éi bygd for å gå vidare.</p>
+      <div class="row"><button class="btn ghost" data-back="start">Tilbake</button><button class="btn" id="n-bygd" disabled>Vidare</button></div>
+    </div>
+  </section>
+
+  <!-- TEMA -->
+  <section class="view" id="v-tema" hidden aria-labelledby="h-tema">
+    <div class="stack">
+      <p class="progress">Steg 2 av 3</p>
+      <h2 id="h-tema">Kva vil du høyra om?</h2>
+      <p class="hint"><span class="badge b-straks">Straks</span> får du alltid for bygda di, same kva du vel her. Tema gjeld det som kan venta.</p>
+      <div class="chips" id="c-tema" role="group" aria-label="Tema"></div>
+      <p class="hint" id="m-tema">Vel minst eitt tema for å gå vidare.</p>
+      <div class="row"><button class="btn ghost" data-back="bygd">Tilbake</button><button class="btn" id="n-tema" disabled>Vidare</button></div>
+    </div>
+  </section>
+
+  <!-- KANAL -->
+  <section class="view" id="v-kanal" hidden aria-labelledby="h-kanal">
+    <div class="stack">
+      <p class="progress">Steg 3 av 3</p>
+      <h2 id="h-kanal">Korleis vil du få det?</h2>
+      <p class="hint">Skissa har valt noko på førehand. Du kan endra det.</p>
+      <div class="kanalgruppe">
+        <div class="lane-h"><span class="badge b-straks">Straks</span><b>Når noko hastar</b></div>
+        <div class="chips" id="c-k-straks" role="group" aria-label="Kanal for Straks"></div>
+        <p class="hint"><b>SMS</b> kjem på alle telefonar, også gamle, utan at du gjer noko meir. Det ville kosta kommunen litt per melding. <b>Varsel i app</b> krev at du har ein app frå kommunen på telefonen.</p>
+      </div>
+      <div class="kanalgruppe">
+        <div class="lane-h"><span class="badge b-snart">Snart</span><b>Når noko er planlagt</b></div>
+        <div class="chips" id="c-k-snart" role="group" aria-label="Kanal for Snart"></div>
+      </div>
+      <div class="kanalgruppe">
+        <div class="lane-h"><span class="badge b-godt">Godt å vite</span><b>Resten</b></div>
+        <div class="chips" id="c-k-godt" role="group" aria-label="Kanal for Godt å vite"></div>
+      </div>
+      <p class="hint">I denne skissa treng du ikkje skriva inn e-post eller telefonnummer. Ingen varsel blir sende.</p>
+      <div class="row"><button class="btn ghost" data-back="tema">Tilbake</button><button class="btn" id="n-kanal">Meld meg på (døme)</button></div>
+    </div>
+  </section>
+
+  <!-- FERDIG -->
+  <section class="view" id="v-ferdig" hidden aria-labelledby="h-ferdig">
+    <div class="stack">
+      <h2 id="h-ferdig">Slik kunne det sett ut for deg</h2>
+      <p class="lead" id="t-val"></p>
+      <div class="lane" id="p-straks"></div>
+      <div class="lane" id="p-snart"></div>
+      <div class="lane" id="p-mail"></div>
+      <p class="hint"><a href="#aaret">Sjå kva du ville fått gjennom eit heilt år</a></p>
+      <button class="btn" id="n-ferdig">Fire korte spørsmål</button>
+    </div>
+  </section>
+
+  <!-- SPØRSMÅL -->
+  <section class="view" id="v-svar" hidden aria-labelledby="h-svar">
+    <form id="f-svar" class="stack" style="gap:20px">
+      <h2 id="h-svar">Fire korte spørsmål</h2>
+      <fieldset>
+        <legend>1. Ville du meldt deg på noko slikt?</legend>
+        <div class="chips" id="c-q1" role="group" aria-label="Ville du meldt deg på"></div>
+      </fieldset>
+      <fieldset>
+        <legend>2. Var det lett å skjøna skiljet mellom Straks, Snart og Godt å vite?</legend>
+        <div class="chips" id="c-q4" role="group" aria-label="Var skiljet lett å skjøna"></div>
+      </fieldset>
+      <fieldset>
+        <legend>3. Kvar ville du helst fått vita at dette finst?</legend>
+        <p class="hint">Vel så mange du vil.</p>
+        <div class="chips" id="c-q2" role="group" aria-label="Kvar burde du sett det"></div>
+      </fieldset>
+      <fieldset>
+        <legend><label for="q3">4. Kva saknar du?</label></legend>
+        <p class="hint" id="q3-hint">Ikkje skriv namn, telefonnummer eller adresse.</p>
+        <textarea id="q3" maxlength="500" aria-describedby="q3-hint"></textarea>
+      </fieldset>
+      <p class="hint" id="m-lagring">Svara går rett til eit Google-skjema som Oleiv eig når du trykkjer «Send svara». Namn og e-post blir ikkje spurt etter. Google lagrar tidspunktet du sender.</p>
+      <p class="hint" id="m-svar">Svar på spørsmål 1 for å senda.</p>
+      <button class="btn" type="submit" id="n-svar" disabled>Send svara</button>
+    </form>
+  </section>
+
+  <!-- TAKK -->
+  <section class="view" id="v-takk" hidden aria-labelledby="h-takk">
+    <div class="stack">
+      <h2 id="h-takk">Takk!</h2>
+      <p id="t-takk"></p>
+      <a class="btn" id="b-skjema" hidden target="_blank" rel="noopener">Opne skjemaet og trykk «Send»</a>
+      <p class="hint" id="t-reserve" hidden></p>
+      <button class="btn ghost" id="b-igjen">Start på nytt for neste person</button>
+    </div>
+  </section>
+
+  <!-- ÅRET -->
+  <section class="view" id="v-aaret" hidden aria-labelledby="h-aaret">
+    <div class="stack">
+      <h2 id="h-aaret">Eit år med døme</h2>
+      <p class="lead">Øvst er oppdikta døme som viser kva som kunne kome, og kor fort. Nedst er ekte saker frå 2026.</p>
+      <div class="toggle" id="t-mine-box" hidden>
+        <button type="button" class="chip" id="t-mine" aria-pressed="false">Berre det som passar vala mine</button>
+      </div>
+      <div class="card" id="aar-body"></div>
+      <h3>Skjedde i 2026</h3>
+      <p class="hint">Ekte saker frå Hå i år, skrivne om med eigne ord. Kjelda står under kvar sak.</p>
+      <div class="card" id="aar-ekte"></div>
+      <button class="btn ghost" id="b-aar-tilbake" hidden>Tilbake til veka di</button>
+      <a href="#" class="hint">Til starten</a>
+    </div>
+  </section>
+
+
+  <!-- LAPP -->
+  <section class="view" id="v-lapp" hidden aria-labelledby="h-lapp">
+    <div class="stack">
+      <h2 id="h-lapp">QR-lapp til testen</h2>
+      <label for="lapp-url">Lim inn lenka til skissa</label>
+      <input type="url" id="lapp-url" placeholder="https://kvesstdesign.github.io/nytt-der-du-bur/" autocomplete="off">
+      <div class="lapp" aria-live="polite">
+        <h2>Få med deg det som skjer der du bur</h2>
+        <div id="qr" aria-label="QR-kode"></div>
+        <p>Skann og prøv på eitt minutt.</p>
+        <p class="small">Forslag frå Oleiv, innbyggjar på Nærbø. Ikkje ei teneste frå Hå kommune. Du treng ikkje oppgje namn, e-post eller telefonnummer.</p>
+      </div>
+      <p class="hint">Ta eit skjermbilete av lappen og skriv det ut i A6.</p>
+      <a href="#" class="hint">Til starten</a>
+    </div>
+  </section>
+
+</main>
+
+<script>
+// Språk: nynorsk er kjelda. Andre språk blir sette inn i visinga; verdiane som blir sende, er alltid nynorsk.
+(function () {
+  "use strict";
+  var LANGS = ["nn", "nb", "en", "uk", "pl"];
+  var R = [
+    ["Nytt der du bur", "Nytt der du bor", "News where you live", "Новини там, де ви живете", "Wiadomości z Twojej okolicy"],
+    ["Forslag frå Oleiv, innbyggjar på Nærbø.", "Forslag fra Oleiv, innbygger på Nærbø.", "A proposal from Oleiv, a resident of Nærbø.", "Пропозиція від Олейва, мешканця Nærbø.", "Propozycja od Oleiva, mieszkańca Nærbø."],
+    ["Dette er ikkje ei teneste frå Hå kommune. Døma er oppdikta, bortsett frå dei ekte sakene frå 2026 i årsoversikta. Ingen varsel blir sende.", "Dette er ikke en tjeneste fra Hå kommune. Eksemplene er oppdiktet, bortsett fra de ekte sakene fra 2026 i årsoversikten. Ingen varsler blir sendt.", "This is not a service from Hå municipality. The examples are made up, except the real 2026 items in the year overview. No alerts are sent.", "Це не сервіс комуни Hå. Приклади вигадані, крім справжніх новин 2026 року в річному огляді. Жодні сповіщення не надсилаються.", "To nie jest usługa gminy Hå. Przykłady są zmyślone, z wyjątkiem prawdziwych wiadomości z 2026 roku w przeglądzie rocznym. Żadne powiadomienia nie są wysyłane."],
+    ["Øvst er oppdikta døme som viser kva som kunne kome, og kor fort. Nedst er ekte saker frå 2026.", "Øverst er oppdiktede eksempler som viser hva som kunne kommet, og hvor raskt. Nederst er ekte saker fra 2026.", "At the top are made-up examples showing what could arrive, and how quickly. Below are real items from 2026.", "Угорі вигадані приклади, які показують, що могло б надходити і як швидко. Нижче справжні новини 2026 року.", "U góry są zmyślone przykłady pokazujące, co mogłoby przychodzić i jak szybko. Poniżej prawdziwe wiadomości z 2026 roku."],
+    ["Forslag frå Oleiv, innbyggjar på Nærbø · ikkje ei teneste frå Hå kommune", "Forslag fra Oleiv, innbygger på Nærbø · ikke en tjeneste fra Hå kommune", "A proposal from Oleiv, a Nærbø resident · not a Hå municipality service", "Пропозиція від Олейва, мешканця Nærbø · не сервіс комуни Hå", "Propozycja od Oleiva, mieszkańca Nærbø · to nie usługa gminy Hå"],
+    ["Ingen saker i e-posten denne veka for vala dine.", "Ingen saker i e-posten denne uka for valgene dine.", "No items in this week's email for your choices.", "Цього тижня у листі немає новин для вашого вибору.", "W tym tygodniu w e-mailu nie ma wiadomości dla Twoich wyborów."],
+    ["Lys bakgrunn", "Lys bakgrunn", "Light background", "Світлий фон", "Jasne tło"],
+    ["Mørk bakgrunn", "Mørk bakgrunn", "Dark background", "Темний фон", "Ciemne tło"],
+    ["Større tekst", "Større tekst", "Larger text", "Більший текст", "Większy tekst"],
+    ["Visning", "Visning", "Display", "Вигляд", "Wygląd"],
+    ["Siste steg: send skjemaet", "Siste steg: send skjemaet", "Last step: send the form", "Останній крок: надішліть форму", "Ostatni krok: wyślij formularz"],
+    ["Skjedde i 2026", "Skjedde i 2026", "Happened in 2026", "Сталося у 2026 році", "Wydarzyło się w 2026"],
+    ["Ekte saker frå Hå i år, skrivne om med eigne ord. Kjelda står under kvar sak.", "Ekte saker fra Hå i år, skrevet om med egne ord. Kilden står under hver sak.", "Real items from Hå this year, rewritten in our own words. The source is under each item.", "Справжні новини з Hå цього року, переказані своїми словами. Джерело вказано під кожною новиною.", "Prawdziwe wiadomości z Hå z tego roku, opisane własnymi słowami. Źródło jest pod każdą wiadomością."],
+    ["Frå", "Fra", "From", "Від", "Od"],
+    ["Kjelde", "Kilde", "Source", "Джерело", "Źródło"],
+    ["Hå kommune", "Hå kommune", "Hå municipality", "Комуна Hå", "Gmina Hå"],
+    ["Meteorologisk institutt", "Meteorologisk institutt", "Norwegian Meteorological Institute", "Метеорологічний інститут Норвегії", "Norweski Instytut Meteorologiczny"],
+    ["Go-Ahead (tog)", "Go-Ahead (tog)", "Go-Ahead (trains)", "Go-Ahead (поїзди)", "Go-Ahead (pociągi)"],
+    ["Vegeigaren", "Veieieren", "The road owner", "Власник дороги", "Zarządca drogi"],
+    ["Raudt farevarsel: ekstremvêr første påskedag", "Rødt farevarsel: ekstremvær første påskedag", "Red weather warning: extreme weather on Easter Sunday", "Червоне попередження: екстремальна погода на Великдень", "Czerwone ostrzeżenie: ekstremalna pogoda w Niedzielę Wielkanocną"],
+    ["Vindkast rundt 40 m/s. Det var farleg å vera ute, og laust utstyr burde sikrast.", "Vindkast rundt 40 m/s. Det var farlig å være ute, og løse ting burde sikres.", "Gusts around 40 m/s. It was dangerous to be outdoors, and loose items had to be secured.", "Пориви вітру близько 40 м/с. Перебувати надворі було небезпечно, незакріплені речі слід було закріпити.", "Porywy wiatru około 40 m/s. Przebywanie na zewnątrz było niebezpieczne, a luźne przedmioty należało zabezpieczyć."],
+    ["4.–5. april", "4.–5. april", "4–5 April", "4–5 квітня", "4–5 kwietnia"],
+    ["Store Ring på Nærbø stengd i over eit halvt år", "Store Ring på Nærbø stengt i over et halvt år", "Store Ring in Nærbø closed for over six months", "Дорогу Store Ring у Nærbø закрито понад пів року", "Store Ring w Nærbø zamknięta na ponad pół roku"],
+    ["Flaumsikring og nye overvassrøyr. Omkøyring i heile perioden.", "Flomsikring og nye overvannsrør. Omkjøring i hele perioden.", "Flood protection and new stormwater pipes. Detour for the whole period.", "Захист від повеней і нові зливові труби. Об'їзд протягом усього періоду.", "Zabezpieczenie przeciwpowodziowe i nowe rury burzowe. Objazd przez cały okres."],
+    ["april–november", "april–november", "April–November", "квітень–листопад", "kwiecień–listopad"],
+    ["Kviavegen og Rongavegen delvis stengde i to dagar", "Kviavegen og Rongavegen delvis stengt i to dager", "Kviavegen and Rongavegen partly closed for two days", "Kviavegen і Rongavegen частково закрито на два дні", "Kviavegen i Rongavegen częściowo zamknięte na dwa dni"],
+    ["Asfaltering kl. 08:30–20:30. Utrykkingskøyretøy kom ikkje forbi.", "Asfaltering kl. 08:30–20:30. Utrykningskjøretøy kom ikke forbi.", "Resurfacing 8:30 am–8:30 pm. Emergency vehicles could not pass.", "Асфальтування з 8:30 до 20:30. Аварійні машини не могли проїхати.", "Asfaltowanie w godz. 8:30–20:30. Pojazdy uprzywilejowane nie mogły przejechać."],
+    ["26.–27. mai", "26.–27. mai", "26–27 May", "26–27 травня", "26–27 maja"],
+    ["Symjehallen på Vigrestad storskule er open igjen", "Svømmehallen på Vigrestad storskule er åpen igjen", "The swimming pool at Vigrestad storskule has reopened", "Басейн у школі Vigrestad storskule знову відкрито", "Basen w szkole Vigrestad storskule jest znów otwarty"],
+    ["Hallen var stengd fordi det var fukt i takkonstruksjonen.", "Hallen var stengt fordi det var fukt i takkonstruksjonen.", "It had been closed because of moisture in the roof structure.", "Його закривали через вологу в конструкції даху.", "Był zamknięty z powodu wilgoci w konstrukcji dachu."],
+    ["19. oktober", "19. oktober", "19 October", "19 жовтня", "19 października"],
+    ["Oransje farevarsel: svært høg vasstand langs Jærkysten", "Oransje farevarsel: svært høy vannstand langs Jærkysten", "Orange warning: very high sea level along the Jæren coast", "Помаранчеве попередження: дуже високий рівень моря на узбережжі Jæren", "Pomarańczowe ostrzeżenie: bardzo wysoki poziom morza na wybrzeżu Jæren"],
+    ["Toppen var venta måndag føremiddag.", "Toppen var ventet mandag formiddag.", "The peak was expected on Monday morning.", "Пік очікували в понеділок до обіду.", "Szczytu spodziewano się w poniedziałek przed południem."],
+    ["25.–26. oktober", "25.–26. oktober", "25–26 October", "25–26 жовтня", "25–26 października"],
+    ["Graving i Varhaug sentrum kan ta eit halvt år", "Graving i Varhaug sentrum kan ta et halvt år", "Digging in Varhaug centre may take six months", "Земляні роботи в центрі Varhaug можуть тривати пів року", "Wykopy w centrum Varhaug mogą potrwać pół roku"],
+    ["Nye overvassrøyr, mellom anna i Skulegata og Dublandsvegen.", "Nye overvannsrør, blant annet i Skulegata og Dublandsvegen.", "New stormwater pipes, including in Skulegata and Dublandsvegen.", "Нові зливові труби, зокрема на Skulegata і Dublandsvegen.", "Nowe rury burzowe, m.in. na Skulegata i Dublandsvegen."],
+    ["varsla 2. november", "varslet 2. november", "announced 2 November", "оголошено 2 листопада", "ogłoszono 2 listopada"],
+    ["Full stans på Jærbanen mellom Vigrestad og Ogna", "Full stans på Jærbanen mellom Vigrestad og Ogna", "Jæren line halted between Vigrestad and Ogna", "Повна зупинка руху на лінії Jærbanen між Vigrestad і Ogna", "Całkowite wstrzymanie ruchu na linii Jærbanen między Vigrestad a Ogna"],
+    ["Buss for tog frå om lag kl. 17 til 19:30.", "Buss for tog fra omtrent kl. 17 til 19:30.", "Buses replaced trains from about 5 pm to 7:30 pm.", "Замість поїздів курсували автобуси приблизно з 17:00 до 19:30.", "Autobusy zastępcze kursowały mniej więcej od 17:00 do 19:30."],
+    ["10. november", "10. november", "10 November", "10 листопада", "10 listopada"],
+    ["Straumbrot i Nærbø sør/aust", "Strømbrudd i Nærbø sør/øst", "Power cut in south-east Nærbø", "Відключення електроенергії на південному сході Nærbø", "Przerwa w dostawie prądu w południowo-wschodnim Nærbø"],
+    ["1081 kundar utan straum frå om lag kl. 20:40 til 22:30.", "1081 kunder uten strøm fra omtrent kl. 20:40 til 22:30.", "1,081 customers without power from about 8:40 pm to 10:30 pm.", "1081 абонент без світла приблизно з 20:40 до 22:30.", "1081 odbiorców bez prądu od około 20:40 do 22:30."],
+    ["12. november", "12. november", "12 November", "12 листопада", "12 listopada"],
+    ["Nye røykjeforbod frå 1. januar", "Nye røykeforbud fra 1. januar", "New smoking bans from 1 January", "Нові заборони на куріння з 1 січня", "Nowe zakazy palenia od 1 stycznia"],
+    ["Gjeld leikeplassar og idrettsanlegg ute, også e-sigarettar.", "Gjelder lekeplasser og idrettsanlegg ute, også e-sigaretter.", "Applies to playgrounds and outdoor sports facilities, including e-cigarettes.", "Стосується дитячих майданчиків і відкритих спортивних об'єктів, зокрема електронних сигарет.", "Dotyczy placów zabaw i zewnętrznych obiektów sportowych, także e-papierosów."],
+    ["1. januar", "1. januar", "1 January", "1 січня", "1 stycznia"],
+    ["Influensavaksinen blir forseinka", "Influensavaksinen blir forsinket", "The flu vaccine is delayed", "Вакцина від грипу затримується", "Szczepionka przeciw grypie jest opóźniona"],
+    ["hausten", "høsten", "autumn", "осінь", "jesień"],
+    ["Fugleinfluensa i nabokommunen", "Fugleinfluensa i nabokommunen", "Bird flu in a neighbouring municipality", "Пташиний грип у сусідній комуні", "Ptasia grypa w sąsiedniej gminie"],
+    ["6. november", "6. november", "6 November", "6 листопада", "6 listopada"],
+    ["Her får du informasjon om mobil og internett fell bort", "Her får du informasjon hvis mobil og internett faller bort", "Where to get information if mobile and internet go down", "Де отримати інформацію, якщо зникне мобільний зв'язок та інтернет", "Gdzie szukać informacji, gdy zabraknie sieci komórkowej i internetu"],
+    ["Få med deg det som skjer der du bur", "Få med deg det som skjer der du bor", "Keep up with what's happening where you live", "Будьте в курсі того, що відбувається там, де ви живете", "Bądź na bieżąco z tym, co dzieje się tam, gdzie mieszkasz"],
+    ["Ei skisse av korleis du kunne fått beskjed frå kommunen utan Facebook. Det som hastar, kjem med ein gong. Resten kjem samla, når det passar deg.", "En skisse av hvordan du kunne fått beskjed fra kommunen uten Facebook. Det som haster, kommer med en gang. Resten kommer samlet, når det passer deg.", "A sketch of how you could hear from the municipality without Facebook. Urgent news arrives at once. The rest comes bundled, when it suits you.", "Ескіз того, як ви могли б отримувати повідомлення від комуни без Facebook. Термінове приходить одразу. Решта приходить разом, коли вам зручно.", "Szkic tego, jak gmina mogłaby przekazywać Ci informacje bez Facebooka. Pilne sprawy docierają od razu. Reszta przychodzi zbiorczo, kiedy Ci pasuje."],
+    ["Straks", "Straks", "Urgent", "Терміново", "Pilne"],
+    ["Snart", "Snart", "Soon", "Незабаром", "Wkrótce"],
+    ["Godt å vite", "Godt å vite", "Good to know", "Корисно знати", "Warto wiedzieć"],
+    ["Kjem med ein gong", "Kommer med en gang", "Arrives at once", "Приходить одразу", "Przychodzi od razu"],
+    ["Vatnet er stengt, kokevarsel, flaum, bålforbod.", "Vannet er stengt, kokevarsel, flom, bålforbud.", "Water shut off, boil-water notice, flooding, fire ban.", "Воду відключено, попередження кип'ятити воду, повінь, заборона розпалювати вогонь.", "Zakręcona woda, nakaz gotowania wody, powódź, zakaz palenia ognisk."],
+    ["Kjem før det skjer", "Kommer før det skjer", "Arrives before it happens", "Приходить заздалегідь", "Przychodzi, zanim to nastąpi"],
+    ["Planlagd stenging av vatn, vegarbeid, endra henting av avfall.", "Planlagt stenging av vann, veiarbeid, endret henting av avfall.", "Planned water shutoffs, roadworks, changed waste collection.", "Планове відключення води, дорожні роботи, зміни у вивезенні сміття.", "Planowane wyłączenia wody, roboty drogowe, zmiany w odbiorze śmieci."],
+    ["Kjem samla kvar veke", "Kommer samlet hver uke", "Comes bundled every week", "Приходить разом щотижня", "Przychodzi zbiorczo co tydzień"],
+    ["Fristar, arrangement, høyringar og tips gjennom året.", "Frister, arrangementer, høringer og tips gjennom året.", "Deadlines, events, public consultations and tips through the year.", "Терміни, заходи, громадські обговорення та поради протягом року.", "Terminy, wydarzenia, konsultacje społeczne i porady przez cały rok."],
+    ["Tre hastegradar", "Tre hastegrader", "Three levels of urgency", "Три рівні терміновості", "Trzy poziomy pilności"],
+    ["DØME · Straks · Vatn og avløp · Vigrestad", "EKSEMPEL · Straks · Vann og avløp · Vigrestad", "EXAMPLE · Urgent · Water and sewage · Vigrestad", "ПРИКЛАД · Терміново · Вода і каналізація · Vigrestad", "PRZYKŁAD · Pilne · Woda i kanalizacja · Vigrestad"],
+    ["Vatnet er stengt i Dømegata no", "Vannet er stengt i Eksempelgata nå", "Water is shut off in Example Street now", "Зараз відключено воду на вулиці Прикладна", "Woda jest teraz zakręcona na ulicy Przykładowej"],
+    ["Brot på leidning. Vatnet er truleg tilbake om lag kl. 15.", "Brudd på ledning. Vannet er trolig tilbake rundt kl. 15.", "A burst pipe. Water should be back around 3 pm.", "Пошкодження труби. Воду, ймовірно, дадуть близько 15:00.", "Awaria rury. Woda wróci prawdopodobnie około 15:00."],
+    ["Døme på straksvarsel", "Eksempel på hastevarsel", "Example of an urgent alert", "Приклад термінового сповіщення", "Przykład pilnego powiadomienia"],
+    ["Prøv det (om lag eitt minutt)", "Prøv det (omtrent ett minutt)", "Try it (about one minute)", "Спробуйте (приблизно одна хвилина)", "Wypróbuj (około minuty)"],
+    ["Sjå eit heilt år med døme", "Se et helt år med eksempler", "See a whole year of examples", "Перегляньте приклади за цілий рік", "Zobacz przykłady z całego roku"],
+    ["Steg 1 av 3", "Steg 1 av 3", "Step 1 of 3", "Крок 1 з 3", "Krok 1 z 3"],
+    ["Steg 2 av 3", "Steg 2 av 3", "Step 2 of 3", "Крок 2 з 3", "Krok 2 z 3"],
+    ["Steg 3 av 3", "Steg 3 av 3", "Step 3 of 3", "Крок 3 з 3", "Krok 3 z 3"],
+    ["Kvar bur du?", "Hvor bor du?", "Where do you live?", "Де ви живете?", "Gdzie mieszkasz?"],
+    ["Du kan velja fleire, til dømes der du bur og der borna går på skule.", "Du kan velge flere, for eksempel der du bor og der barna går på skole.", "You can choose more than one, for example where you live and where your children go to school.", "Можна вибрати кілька, наприклад, де ви живете і де діти ходять до школи.", "Możesz wybrać kilka, na przykład miejsce zamieszkania i miejsce, gdzie dzieci chodzą do szkoły."],
+    ["Bygder", "Bygder", "Villages", "Селища", "Miejscowości"],
+    ["Vel minst éi bygd for å gå vidare.", "Velg minst én bygd for å gå videre.", "Choose at least one village to continue.", "Виберіть щонайменше одне селище, щоб продовжити.", "Wybierz co najmniej jedną miejscowość, aby przejść dalej."],
+    ["Tilbake", "Tilbake", "Back", "Назад", "Wstecz"],
+    ["Vidare", "Videre", "Next", "Далі", "Dalej"],
+    ["Kva vil du høyra om?", "Hva vil du høre om?", "What do you want to hear about?", "Про що ви хочете дізнаватися?", "O czym chcesz słyszeć?"],
+    ["får du alltid for bygda di, same kva du vel her. Tema gjeld det som kan venta.", "får du alltid for bygda di, uansett hva du velger her. Tema gjelder det som kan vente.", "alerts always come for your village, whatever you choose here. Topics apply to what can wait.", "— ці сповіщення ви отримуєте завжди для свого селища, незалежно від вибору тут. Теми стосуються того, що може зачекати.", "otrzymujesz zawsze dla swojej miejscowości, niezależnie od wyboru tutaj. Tematy dotyczą spraw, które mogą poczekać."],
+    ["Tema", "Tema", "Topics", "Теми", "Tematy"],
+    ["Vel minst eitt tema for å gå vidare.", "Velg minst ett tema for å gå videre.", "Choose at least one topic to continue.", "Виберіть щонайменше одну тему, щоб продовжити.", "Wybierz co najmniej jeden temat, aby przejść dalej."],
+    ["Korleis vil du få det?", "Hvordan vil du få det?", "How do you want to receive it?", "Як ви хочете це отримувати?", "Jak chcesz to otrzymywać?"],
+    ["Skissa har valt noko på førehand. Du kan endra det.", "Skissen har valgt noe på forhånd. Du kan endre det.", "The sketch has pre-selected something. You can change it.", "Ескіз уже вибрав дещо заздалегідь. Ви можете це змінити.", "Szkic wybrał coś z góry. Możesz to zmienić."],
+    ["Når noko hastar", "Når noe haster", "When something is urgent", "Коли щось термінове", "Gdy coś jest pilne"],
+    ["Kanal for Straks", "Kanal for Straks", "Channel for Urgent", "Канал для «Терміново»", "Kanał dla «Pilne»"],
+    ["Kanal for Snart", "Kanal for Snart", "Channel for Soon", "Канал для «Незабаром»", "Kanał dla «Wkrótce»"],
+    ["Kanal for Godt å vite", "Kanal for Godt å vite", "Channel for Good to know", "Канал для «Корисно знати»", "Kanał dla «Warto wiedzieć»"],
+    ["kjem på alle telefonar, også gamle, utan at du gjer noko meir. Det ville kosta kommunen litt per melding.", "kommer på alle telefoner, også gamle, uten at du gjør noe mer. Det ville kostet kommunen litt per melding.", "reaches every phone, even old ones, with nothing more to do. It would cost the municipality a little per message.", "приходить на всі телефони, навіть старі, без жодних додаткових дій. Це коштувало б комуні трохи за кожне повідомлення.", "dociera na każdy telefon, także stary, bez żadnych dodatkowych kroków. Kosztowałoby to gminę trochę za każdą wiadomość."],
+    ["krev at du har ein app frå kommunen på telefonen.", "krever at du har en app fra kommunen på telefonen.", "requires an app from the municipality on your phone.", "потребує застосунку комуни на вашому телефоні.", "wymaga aplikacji gminy na telefonie."],
+    ["Når noko er planlagt", "Når noe er planlagt", "When something is planned", "Коли щось заплановано", "Gdy coś jest zaplanowane"],
+    ["Resten", "Resten", "Everything else", "Усе інше", "Cała reszta"],
+    ["I denne skissa treng du ikkje skriva inn e-post eller telefonnummer. Ingen varsel blir sende.", "I denne skissen trenger du ikke skrive inn e-post eller telefonnummer. Ingen varsler blir sendt.", "In this sketch you don't need to enter an email or phone number. No alerts are sent.", "У цьому ескізі не потрібно вводити електронну пошту чи номер телефону. Жодні сповіщення не надсилаються.", "W tym szkicu nie musisz podawać adresu e-mail ani numeru telefonu. Żadne powiadomienia nie są wysyłane."],
+    ["Meld meg på (døme)", "Meld meg på (eksempel)", "Sign me up (example)", "Підписатися (приклад)", "Zapisz mnie (przykład)"],
+    ["Slik kunne det sett ut for deg", "Slik kunne det sett ut for deg", "This is how it could look for you", "Ось як це могло б виглядати для вас", "Tak mogłoby to wyglądać u Ciebie"],
+    ["Sjå kva du ville fått gjennom eit heilt år", "Se hva du ville fått gjennom et helt år", "See what you would get over a whole year", "Подивіться, що ви отримали б за цілий рік", "Zobacz, co przychodziłoby przez cały rok"],
+    ["Fire korte spørsmål", "Fire korte spørsmål", "Four short questions", "Чотири короткі запитання", "Cztery krótkie pytania"],
+    ["1. Ville du meldt deg på noko slikt?", "1. Ville du meldt deg på noe slikt?", "1. Would you sign up for something like this?", "1. Чи підписалися б ви на щось подібне?", "1. Czy zapisał(a)byś się na coś takiego?"],
+    ["Ville du meldt deg på", "Ville du meldt deg på", "Would you sign up", "Чи підписалися б ви", "Czy zapisał(a)byś się"],
+    ["2. Var det lett å skjøna skiljet mellom Straks, Snart og Godt å vite?", "2. Var det lett å forstå skillet mellom Straks, Snart og Godt å vite?", "2. Was the difference between Urgent, Soon and Good to know easy to understand?", "2. Чи легко було зрозуміти різницю між «Терміново», «Незабаром» і «Корисно знати»?", "2. Czy różnica między «Pilne», «Wkrótce» i «Warto wiedzieć» była łatwa do zrozumienia?"],
+    ["Var skiljet lett å skjøna", "Var skillet lett å forstå", "Was the difference easy to understand", "Чи легко було зрозуміти різницю", "Czy różnica była zrozumiała"],
+    ["3. Kvar ville du helst fått vita at dette finst?", "3. Hvor ville du helst fått vite at dette finnes?", "3. Where would you most like to find out that this exists?", "3. Де ви хотіли б дізнатися, що таке існує?", "3. Gdzie najlepiej byłoby dowiedzieć się, że coś takiego istnieje?"],
+    ["Vel så mange du vil.", "Velg så mange du vil.", "Choose as many as you like.", "Виберіть скільки завгодно.", "Wybierz dowolną liczbę."],
+    ["Kvar burde du sett det", "Hvor burde du sett det", "Where should you have seen it", "Де ви мали б це побачити", "Gdzie warto to pokazać"],
+    ["4. Kva saknar du?", "4. Hva savner du?", "4. What is missing?", "4. Чого вам бракує?", "4. Czego Ci brakuje?"],
+    ["Ikkje skriv namn, telefonnummer eller adresse.", "Ikke skriv navn, telefonnummer eller adresse.", "Don't write names, phone numbers or addresses.", "Не пишіть імен, номерів телефонів чи адрес.", "Nie wpisuj imion, numerów telefonów ani adresów."],
+    ["Svara går rett til eit Google-skjema som Oleiv eig når du trykkjer «Send svara». Namn og e-post blir ikkje spurt etter. Google lagrar tidspunktet du sender.", "Svarene går rett til et Google-skjema som Oleiv eier når du trykker «Send svarene». Navn og e-post blir ikke spurt etter. Google lagrer tidspunktet du sender.", "Your answers go straight to a Google form owned by Oleiv when you press “Send answers”. No name or email is asked for. Google stores the time you send.", "Коли ви натиснете «Надіслати відповіді», вони одразу потраплять у Google-форму, яка належить Олейву. Ім'я та електронну пошту не запитують. Google зберігає час надсилання.", "Po naciśnięciu „Wyślij odpowiedzi” trafiają one prosto do formularza Google należącego do Oleiva. Formularz nie pyta o imię ani e-mail. Google zapisuje czas wysłania."],
+    ["Svar på spørsmål 1 for å senda.", "Svar på spørsmål 1 for å sende.", "Answer question 1 to send.", "Дайте відповідь на запитання 1, щоб надіслати.", "Odpowiedz na pytanie 1, aby wysłać."],
+    ["Send svara", "Send svarene", "Send answers", "Надіслати відповіді", "Wyślij odpowiedzi"],
+    ["Takk!", "Takk!", "Thank you!", "Дякуємо!", "Dziękujemy!"],
+    ["Eitt steg att", "Ett steg igjen", "One more step", "Ще один крок", "Jeszcze jeden krok"],
+    ["Opne skjemaet og trykk «Send»", "Åpne skjemaet og send det", "Open the form and send it", "Відкрийте форму й надішліть її", "Otwórz formularz i wyślij go"],
+    ["Start på nytt for neste person", "Start på nytt for neste person", "Start again for the next person", "Почати знову для наступної людини", "Zacznij od nowa dla następnej osoby"],
+    ["Svara er sende. Gi telefonen vidare, eller trykk under for å starta på nytt.", "Svarene er sendt. Gi telefonen videre, eller trykk under for å starte på nytt.", "Your answers have been sent. Pass the phone on, or press below to start again.", "Відповіді надіслано. Передайте телефон далі або натисніть нижче, щоб почати знову.", "Odpowiedzi zostały wysłane. Przekaż telefon dalej lub naciśnij poniżej, aby zacząć od nowa."],
+    ["Eitt steg att: opne skjemaet, sjå over svara og trykk «Send» nedst. Skjemaet er Oleiv sitt i Google Skjema, ikkje kommunen sitt.", "Ett steg igjen: åpne skjemaet, se over svarene og send det nederst. Skjemaet er Oleivs eget i Google Skjemaer, ikke kommunens.", "One more step: open the form, check your answers and send it at the bottom. The form is Oleiv's own in Google Forms, not the municipality's.", "Ще один крок: відкрийте форму, перевірте відповіді й надішліть її внизу. Форма належить Олейву в Google Forms, а не комуні.", "Jeszcze jeden krok: otwórz formularz, sprawdź odpowiedzi i wyślij go na dole. Formularz należy do Oleiva w Google Forms, nie do gminy."],
+    ["Opnar ikkje skjemaet? Vis denne skjermen til Oleiv.", "Åpner ikke skjemaet? Vis denne skjermen til Oleiv.", "Form won't open? Show this screen to Oleiv.", "Форма не відкривається? Покажіть цей екран Олейву.", "Formularz się nie otwiera? Pokaż ten ekran Oleivowi."],
+    ["Eit år med døme", "Et år med eksempler", "A year of examples", "Рік прикладів", "Rok przykładów"],
+    ["Alt er oppdikta. Det viser kva slags saker som kunne kome, og kor fort. (gamal)", "Alt er oppdiktet. Det viser hva slags saker som kunne kommet, og hvor raskt.", "Everything is made up. It shows what kind of news could arrive, and how quickly.", "Усе вигадано. Це показує, які новини могли б надходити і як швидко.", "Wszystko jest zmyślone. Pokazuje, jakie wiadomości mogłyby przychodzić i jak szybko."],
+    ["Berre det som passar vala mine", "Bare det som passer valgene mine", "Only what fits my choices", "Лише те, що відповідає моєму вибору", "Tylko to, co pasuje do moich wyborów"],
+    ["Tilbake til veka di", "Tilbake til uka di", "Back to your week", "Назад до вашого тижня", "Wróć do swojego tygodnia"],
+    ["Til starten", "Til starten", "To the start", "На початок", "Na początek"],
+    ["QR-lapp til testen", "QR-lapp til testen", "QR note for the test", "QR-листівка для тесту", "Karteczka z kodem QR do testu"],
+    ["Lim inn lenka til skissa", "Lim inn lenken til skissen", "Paste the link to the sketch", "Вставте посилання на ескіз", "Wklej link do szkicu"],
+    ["Skann og prøv på eitt minutt.", "Skann og prøv på ett minutt.", "Scan and try it in one minute.", "Скануйте й спробуйте за одну хвилину.", "Zeskanuj i wypróbuj w minutę."],
+    ["Forslag frå Oleiv, innbyggjar på Nærbø. Ikkje ei teneste frå Hå kommune. Du treng ikkje oppgje namn, e-post eller telefonnummer.", "Forslag fra Oleiv, innbygger på Nærbø. Ikke en tjeneste fra Hå kommune. Du trenger ikke oppgi navn, e-post eller telefonnummer.", "A proposal from Oleiv, a resident of Nærbø. Not a service from Hå municipality. You don't need to give your name, email or phone number.", "Пропозиція від Олейва, мешканця Nærbø. Не сервіс комуни Hå. Не потрібно вказувати ім'я, електронну пошту чи номер телефону.", "Propozycja od Oleiva, mieszkańca Nærbø. To nie usługa gminy Hå. Nie musisz podawać imienia, e-maila ani numeru telefonu."],
+    ["Ta eit skjermbilete av lappen og skriv det ut i A6.", "Ta et skjermbilde av lappen og skriv det ut i A6.", "Take a screenshot of the note and print it in A6.", "Зробіть знімок екрана листівки й надрукуйте у форматі A6.", "Zrób zrzut ekranu karteczki i wydrukuj w formacie A6."],
+    ["Lim inn lenka over, så kjem QR-koden her.", "Lim inn lenken over, så kommer QR-koden her.", "Paste the link above and the QR code appears here.", "Вставте посилання вище, і тут з'явиться QR-код.", "Wklej link powyżej, a kod QR pojawi się tutaj."],
+    ["QR-koden kunne ikkje lagast. Prøv å lasta sida på nytt.", "QR-koden kunne ikke lages. Prøv å laste siden på nytt.", "The QR code could not be made. Try reloading the page.", "Не вдалося створити QR-код. Спробуйте перезавантажити сторінку.", "Nie udało się utworzyć kodu QR. Spróbuj odświeżyć stronę."],
+    ["QR-kode", "QR-kode", "QR code", "QR-код", "Kod QR"],
+    ["QR-kode til skissa", "QR-kode til skissen", "QR code for the sketch", "QR-код до ескізу", "Kod QR do szkicu"],
+    ["Tid", "Tid", "Time", "Час", "Czas"],
+    ["sekund", "sekunder", "seconds", "с", "s"],
+    ["Heile Hå", "Hele Hå", "All of Hå", "Уся комуна Hå", "Cała gmina Hå"],
+    ["Vatn og avløp", "Vann og avløp", "Water and sewage", "Вода і каналізація", "Woda i kanalizacja"],
+    ["Veg og trafikk", "Vei og trafikk", "Roads and traffic", "Дороги і рух", "Drogi i ruch"],
+    ["Miljø og avfall", "Miljø og avfall", "Environment and waste", "Довкілля і сміття", "Środowisko i odpady"],
+    ["Skule og barnehage", "Skole og barnehage", "School and kindergarten", "Школа і дитсадок", "Szkoła i przedszkole"],
+    ["Helse", "Helse", "Health", "Здоров'я", "Zdrowie"],
+    ["Kultur og fritid", "Kultur og fritid", "Culture and leisure", "Культура і дозвілля", "Kultura i czas wolny"],
+    ["Politikk og høyring", "Politikk og høring", "Politics and consultations", "Політика і громадські обговорення", "Polityka i konsultacje"],
+    ["Varsel i app", "Varsel i app", "App notification", "Сповіщення в застосунку", "Powiadomienie w aplikacji"],
+    ["SMS dagen før", "SMS dagen før", "Text the day before", "SMS напередодні", "SMS dzień wcześniej"],
+    ["Varsel i app dagen før", "Varsel i app dagen før", "App notification the day before", "Сповіщення в застосунку напередодні", "Powiadomienie w aplikacji dzień wcześniej"],
+    ["I e-posten kvar veke", "I e-posten hver uke", "In the weekly email", "У щотижневому листі", "W cotygodniowym e-mailu"],
+    ["Nei takk", "Nei takk", "No thanks", "Ні, дякую", "Nie, dziękuję"],
+    ["Ja", "Ja", "Yes", "Так", "Tak"],
+    ["Kanskje", "Kanskje", "Maybe", "Можливо", "Może"],
+    ["Nei", "Nei", "No", "Ні", "Nie"],
+    ["Litt", "Litt", "Somewhat", "Частково", "Trochę"],
+    ["Butikken", "Butikken", "The shop", "Магазин", "Sklep"],
+    ["Lokalavisa", "Lokalavisen", "Local newspaper", "Місцева газета", "Lokalna gazeta"],
+    ["Postkassa", "Postkassen", "Letterbox", "Поштова скринька", "Skrzynka pocztowa"],
+    ["Skule eller barnehage", "Skole eller barnehage", "School or kindergarten", "Школа або дитсадок", "Szkoła lub przedszkole"],
+    ["Kommunen si nettside", "Kommunens nettside", "The municipality's website", "Вебсайт комуни", "Strona internetowa gminy"],
+    ["Anna", "Annet", "Other", "Інше", "Inne"],
+    ["Når som helst", "Når som helst", "Any time", "Будь-коли", "W dowolnym momencie"],
+    ["Januar", "Januar", "January", "Січень", "Styczeń"],
+    ["Februar", "Februar", "February", "Лютий", "Luty"],
+    ["Mars", "Mars", "March", "Березень", "Marzec"],
+    ["April", "April", "April", "Квітень", "Kwiecień"],
+    ["Mai", "Mai", "May", "Травень", "Maj"],
+    ["Juni", "Juni", "June", "Червень", "Czerwiec"],
+    ["Juli", "Juli", "July", "Липень", "Lipiec"],
+    ["August", "August", "August", "Серпень", "Sierpień"],
+    ["September", "September", "September", "Вересень", "Wrzesień"],
+    ["Oktober", "Oktober", "October", "Жовтень", "Październik"],
+    ["November", "November", "November", "Листопад", "Listopad"],
+    ["Desember", "Desember", "December", "Грудень", "Grudzień"],
+    ["Du valde", "Du valgte", "You chose", "Ви вибрали", "Wybrano"],
+    ["Tema:", "Tema:", "Topics:", "Теми:", "Tematy:"],
+    ["og", "og", "and", "і", "i"],
+    ["Med ein gong, som", "Med en gang, som", "At once, as", "Одразу, як", "Od razu, jako"],
+    ["Dagen før, som", "Dagen før, som", "The day before, as", "Напередодні, як", "Dzień wcześniej, jako"],
+    ["Ingen straksdøme for bygda di. I verkelegheita kjem dei sjeldan.", "Ingen hasteeksempler for bygda di. I virkeligheten kommer de sjelden.", "No urgent examples for your village. In reality they are rare.", "Для вашого селища немає термінових прикладів. Насправді вони трапляються рідко.", "Brak pilnych przykładów dla Twojej miejscowości. W rzeczywistości zdarzają się rzadko."],
+    ["Ingen planlagde saker for vala dine denne veka.", "Ingen planlagte saker for valgene dine denne uka.", "No planned items for your choices this week.", "Цього тижня немає запланованих новин для вашого вибору.", "W tym tygodniu brak zaplanowanych wiadomości dla Twoich wyborów."],
+    ["I e-posten onsdag kveld", "I e-posten onsdag kveld", "In the email on Wednesday evening", "У листі в середу ввечері", "W e-mailu w środę wieczorem"],
+    ["DØME · Til: deg · onsdag kl. 18", "EKSEMPEL · Til: deg · onsdag kl. 18", "EXAMPLE · To: you · Wednesday 6 pm", "ПРИКЛАД · Кому: вам · середа, 18:00", "PRZYKŁAD · Do: Ciebie · środa, 18:00"],
+    ["Nytt der du bur denne veka", "Nytt der du bor denne uka", "News where you live this week", "Новини там, де ви живете, цього тижня", "Wiadomości z Twojej okolicy w tym tygodniu"],
+    ["sak", "sak", "item", "новина", "wiadomość"],
+    ["saker", "saker", "items", "новин", "wiadomości"],
+    ["Du får ingen e-post med desse vala.", "Du får ingen e-post med disse valgene.", "You get no email with these choices.", "З таким вибором ви не отримуватимете листів.", "Przy tych wyborach nie dostaniesz e-maili."],
+    ["DØME", "EKSEMPEL", "EXAMPLE", "ПРИКЛАД", "PRZYKŁAD"],
+    ["Ingen døme passar vala dine.", "Ingen eksempler passer valgene dine.", "No examples fit your choices.", "Жоден приклад не відповідає вашому вибору.", "Żaden przykład nie pasuje do Twoich wyborów."],
+    ["Døme på", "Eksempel på", "Example of", "Приклад:", "Przykład:"],
+    ["Brot på leidning. Vatnet er truleg tilbake om lag kl. 15. Vatn kan hentast ved Dømeskulen.", "Brudd på ledning. Vannet er trolig tilbake rundt kl. 15. Vann kan hentes ved Eksempelskolen.", "A burst pipe. Water should be back around 3 pm. Water can be collected at Example School.", "Пошкодження труби. Воду, ймовірно, дадуть близько 15:00. Воду можна набрати біля школи Прикладна.", "Awaria rury. Woda wróci prawdopodobnie około 15:00. Wodę można pobrać przy Szkole Przykładowej."],
+    ["Kokevarsel: kok drikkevatnet", "Kokevarsel: kok drikkevannet", "Boil-water notice: boil your drinking water", "Попередження: кип'ятіть питну воду", "Nakaz gotowania: gotuj wodę pitną"],
+    ["Gjeld til nytt varsel. Vatn til dusj og vask er trygt.", "Gjelder til nytt varsel. Vann til dusj og vask er trygt.", "Applies until further notice. Water for showering and washing is safe.", "Діє до нового повідомлення. Вода для душу й миття безпечна.", "Obowiązuje do odwołania. Woda do prysznica i mycia jest bezpieczna."],
+    ["Flaum: Dømevegen ved elva er stengd", "Flom: Eksempelveien ved elva er stengt", "Flooding: Example Road by the river is closed", "Повінь: дорогу Прикладна біля річки закрито", "Powódź: Droga Przykładowa przy rzece jest zamknięta"],
+    ["Køyr omvegen om sentrum. Hald born unna elvebreidda.", "Kjør omveien om sentrum. Hold barn unna elvebredden.", "Take the detour through the centre. Keep children away from the riverbank.", "Їдьте об'їздом через центр. Тримайте дітей подалі від берега.", "Jedź objazdem przez centrum. Trzymaj dzieci z dala od brzegu rzeki."],
+    ["Bålforbod frå i dag", "Bålforbud fra i dag", "Fire ban from today", "Заборона розпалювати вогонь з сьогодні", "Zakaz palenia ognisk od dziś"],
+    ["Høg brannfare. Gjeld også eingongsgrill på stranda.", "Høy brannfare. Gjelder også engangsgrill på stranda.", "High fire risk. Also applies to disposable barbecues on the beach.", "Висока пожежна небезпека. Стосується й одноразових грилів на пляжі.", "Wysokie zagrożenie pożarowe. Dotyczy też jednorazowych grilli na plaży."],
+    ["Dømeskulen er stengd i dag på grunn av uvêr", "Eksempelskolen er stengt i dag på grunn av uvær", "Example School is closed today due to bad weather", "Школа Прикладна сьогодні закрита через негоду", "Szkoła Przykładowa jest dziś zamknięta z powodu złej pogody"],
+    ["SFO er også stengd. Meir informasjon kjem i løpet av dagen.", "SFO er også stengt. Mer informasjon kommer i løpet av dagen.", "After-school care is also closed. More information later today.", "Група продовженого дня теж закрита. Більше інформації буде протягом дня.", "Świetlica też jest zamknięta. Więcej informacji w ciągu dnia."],
+    ["Besøksstans på Dømeheimen", "Besøksstans på Eksempelhjemmet", "No visitors at Example Care Home", "Заборона відвідувань у будинку догляду Прикладний", "Zakaz odwiedzin w Domu Opieki Przykładowym"],
+    ["Omgangssjuke på to avdelingar. Ring før du kjem.", "Omgangssyke på to avdelinger. Ring før du kommer.", "Stomach bug on two wards. Call before you come.", "Кишкова інфекція у двох відділеннях. Зателефонуйте перед візитом.", "Grypa żołądkowa na dwóch oddziałach. Zadzwoń przed przyjściem."],
+    ["Vatnet blir stengt i Dømegata torsdag kl. 09–13", "Vannet blir stengt i Eksempelgata torsdag kl. 09–13", "Water will be shut off in Example Street on Thursday, 9 am–1 pm", "У четвер з 9:00 до 13:00 на вулиці Прикладна відключать воду", "W czwartek w godz. 9–13 woda zostanie zakręcona na ulicy Przykładowej"],
+    ["Tapp opp vatn kvelden før. Det kan koma brunt vatn etterpå.", "Tapp opp vann kvelden før. Det kan komme brunt vann etterpå.", "Draw some water the evening before. The water may be brown afterwards.", "Наберіть води напередодні ввечері. Після цього вода може бути бурою.", "Nalej wody wieczorem dzień wcześniej. Potem woda może być brązowa."],
+    ["Brøyting: desse vegane blir tekne først", "Brøyting: disse veiene blir tatt først", "Snow clearing: these roads are cleared first", "Прибирання снігу: ці дороги чистять першими", "Odśnieżanie: te drogi są odśnieżane najpierw"],
+    ["Bussvegar og vegar til skular og sjukeheimar har forrang.", "Bussveier og veier til skoler og sykehjem har forrang.", "Bus routes and roads to schools and care homes come first.", "Пріоритет мають автобусні маршрути та дороги до шкіл і будинків догляду.", "Pierwszeństwo mają trasy autobusowe i drogi do szkół i domów opieki."],
+    ["Asfaltering: Dømevegen stengd tysdag og onsdag", "Asfaltering: Eksempelveien stengt tirsdag og onsdag", "Resurfacing: Example Road closed Tuesday and Wednesday", "Асфальтування: дорогу Прикладна закрито у вівторок і середу", "Asfaltowanie: Droga Przykładowa zamknięta we wtorek i środę"],
+    ["Skilta omkøyring. Parker ikkje langs vegen desse dagane.", "Skiltet omkjøring. Ikke parker langs veien disse dagene.", "Signposted detour. Don't park along the road on these days.", "Об'їзд позначено знаками. У ці дні не паркуйтеся вздовж дороги.", "Objazd oznakowany. W te dni nie parkuj wzdłuż drogi."],
+    ["Ny skuleskyssrute frå skulestart", "Ny skoleskyssrute fra skolestart", "New school bus route from the start of term", "Новий шкільний автобусний маршрут з початку навчального року", "Nowa trasa autobusu szkolnego od początku roku szkolnego"],
+    ["Sjå tider og haldeplassar for bygda di.", "Se tider og holdeplasser for bygda di.", "See times and stops for your village.", "Перегляньте розклад і зупинки для вашого селища.", "Zobacz godziny i przystanki dla swojej miejscowości."],
+    ["Nærbødagane i helga", "Nærbødagene i helgen", "Nærbø Days this weekend", "Свято Nærbødagane цими вихідними", "Dni Nærbø w ten weekend"],
+    ["Program, parkering og kva gater som er stengde.", "Program, parkering og hvilke gater som er stengt.", "Programme, parking and which streets are closed.", "Програма, паркування та які вулиці закрито.", "Program, parkingi i zamknięte ulice."],
+    ["17. mai: tog, tider og tale i nye Loen", "17. mai: tog, tider og tale i nye Loen", "17 May: parade, times and speech in the new Loen", "17 травня: хода, розклад і промова в новому Loen", "17 maja: pochód, godziny i przemówienie w nowym Loen"],
+    ["Toget går frå skulen. Tale og kaker etterpå.", "Toget går fra skolen. Tale og kaker etterpå.", "The parade leaves from the school. Speech and cake afterwards.", "Хода вирушає від школи. Потім промова й тістечка.", "Pochód wyrusza spod szkoły. Potem przemówienie i ciasto."],
+    ["Influensavaksine for 65+ og risikogrupper", "Influensavaksine for 65+ og risikogrupper", "Flu vaccine for over-65s and risk groups", "Щеплення від грипу для людей 65+ і груп ризику", "Szczepienie przeciw grypie dla osób 65+ i grup ryzyka"],
+    ["Timebestilling opnar måndag.", "Timebestilling åpner mandag.", "Booking opens on Monday.", "Запис відкривається в понеділок.", "Zapisy ruszają w poniedziałek."],
+    ["Gjødselspreiing: det kan lukta denne veka", "Gjødselspredning: det kan lukte denne uka", "Manure spreading: there may be a smell this week", "Внесення гною: цього тижня може бути запах", "Rozrzucanie obornika: w tym tygodniu może być czuć zapach"],
+    ["Spreiinga går føre seg måndag til torsdag.", "Spredningen foregår mandag til torsdag.", "Spreading takes place Monday to Thursday.", "Внесення триває з понеділка до четверга.", "Rozrzucanie trwa od poniedziałku do czwartku."],
+    ["Valdagen nærmar seg: kvar og når du kan røysta", "Valgdagen nærmer seg: hvor og når du kan stemme", "Election day is coming: where and when you can vote", "Наближається день виборів: де і коли можна проголосувати", "Zbliża się dzień wyborów: gdzie i kiedy możesz głosować"],
+    ["Du kan framleis førehandsrøysta. Ta med legitimasjon.", "Du kan fortsatt forhåndsstemme. Ta med legitimasjon.", "You can still vote early. Bring ID.", "Ще можна проголосувати достроково. Візьміть посвідчення особи.", "Nadal możesz głosować wcześniej. Zabierz dokument tożsamości."],
+    ["Endra henting av avfall i romjula", "Endret henting av avfall i romjulen", "Changed waste collection between Christmas and New Year", "Зміни у вивезенні сміття між Різдвом і Новим роком", "Zmiany w odbiorze śmieci między świętami a Nowym Rokiem"],
+    ["Sjå den nye datoen for gata di.", "Se den nye datoen for gata di.", "See the new date for your street.", "Перегляньте нову дату для вашої вулиці.", "Zobacz nową datę dla swojej ulicy."],
+    ["Hugs å lesa av vassmålaren", "Husk å lese av vannmåleren", "Remember to read your water meter", "Не забудьте зняти показники лічильника води", "Pamiętaj o odczycie wodomierza"],
+    ["Det tek to minutt, og rekninga blir rett.", "Det tar to minutter, og regningen blir riktig.", "It takes two minutes, and your bill will be right.", "Це займе дві хвилини, і рахунок буде правильним.", "To zajmie dwie minuty, a rachunek będzie prawidłowy."],
+    ["Søknadsfristen for barnehageplass nærmar seg", "Søknadsfristen for barnehageplass nærmer seg", "The deadline to apply for a kindergarten place is coming up", "Наближається термін подання заяв на місце в дитсадку", "Zbliża się termin składania wniosków o miejsce w przedszkolu"],
+    ["Søk innan fristen for å vera med i hovudopptaket.", "Søk innen fristen for å være med i hovedopptaket.", "Apply by the deadline to be included in the main admission.", "Подайте заяву вчасно, щоб потрапити до основного набору.", "Złóż wniosek w terminie, aby wziąć udział w głównym naborze."],
+    ["Påmelding til kulturskulen er open", "Påmelding til kulturskolen er åpen", "Registration for the arts school is open", "Відкрито запис до школи мистецтв", "Ruszyły zapisy do szkoły artystycznej"],
+    ["Plassane blir fordelte etter påmeldingsdato.", "Plassene blir fordelt etter påmeldingsdato.", "Places are given in order of registration.", "Місця розподіляються за датою запису.", "Miejsca są przydzielane według daty zapisu."],
+    ["Hageavfall: slik blir du kvitt det i vår", "Hageavfall: slik blir du kvitt det i vår", "Garden waste: how to get rid of it this spring", "Садове сміття: як позбутися його цієї весни", "Odpady ogrodowe: jak się ich pozbyć tej wiosny"],
+    ["Kvar du kan levera, og kva det kostar.", "Hvor du kan levere, og hva det koster.", "Where you can drop it off, and what it costs.", "Куди можна здати і скільки це коштує.", "Gdzie można je oddać i ile to kosztuje."],
+    ["Badevatn: alle prøvane er grøne", "Badevann: alle prøvene er grønne", "Bathing water: all samples are green", "Вода для купання: усі проби в нормі", "Woda w kąpieliskach: wszystkie próbki są w normie"],
+    ["Nye prøvar kvar veke gjennom sommaren.", "Nye prøver hver uke gjennom sommeren.", "New samples every week through the summer.", "Нові проби щотижня протягом літа.", "Nowe próbki co tydzień przez całe lato."],
+    ["Sommarjobb for ungdom: siste frist snart", "Sommerjobb for ungdom: siste frist snart", "Summer jobs for young people: deadline soon", "Літня робота для молоді: термін спливає незабаром", "Praca wakacyjna dla młodzieży: termin wkrótce mija"],
+    ["For deg mellom 15 og 18 år.", "For deg mellom 15 og 18 år.", "For ages 15 to 18.", "Для вас, якщо вам від 15 до 18 років.", "Dla osób w wieku od 15 do 18 lat."],
+    ["Høyring om ny gang- og sykkelveg", "Høring om ny gang- og sykkelvei", "Consultation on a new footpath and cycle path", "Громадське обговорення нової пішохідної та велосипедної доріжки", "Konsultacje w sprawie nowej ścieżki pieszo-rowerowej"],
+    ["Sei di meining innan fristen.", "Si din mening innen fristen.", "Have your say by the deadline.", "Висловіть свою думку до кінцевого терміну.", "Wyraź swoją opinię przed terminem."],
+    ["Budsjettet er lagt fram: dette betyr det for deg", "Budsjettet er lagt fram: dette betyr det for deg", "The budget is out: what it means for you", "Бюджет представлено: що це означає для вас", "Budżet przedstawiony: co to oznacza dla Ciebie"],
+    ["Kort samandrag av det som endrar seg neste år.", "Kort sammendrag av det som endrer seg neste år.", "A short summary of what changes next year.", "Короткий огляд того, що зміниться наступного року.", "Krótkie podsumowanie zmian w przyszłym roku."],
+    ["Julegrantenning i sentrum", "Julegrantenning i sentrum", "Christmas tree lighting in the centre", "Запалювання різдвяної ялинки в центрі", "Zapalenie choinki w centrum"],
+    ["Song, gløgg og nissen kjem.", "Sang, gløgg og nissen kommer.", "Singing, mulled wine, and Santa is coming.", "Пісні, глінтвейн, і прийде Санта.", "Śpiewy, grzane wino i przyjdzie Mikołaj."],
+    ["Røykvarslaren sin dag: test han i dag", "Røykvarslerens dag: test den i dag", "Smoke alarm day: test yours today", "День димового сповіщувача: перевірте його сьогодні", "Dzień czujnika dymu: przetestuj go dziś"],
+    ["Trykk på knappen. Byt batteri om han ikkje pip.", "Trykk på knappen. Bytt batteri hvis den ikke piper.", "Press the button. Change the battery if it doesn't beep.", "Натисніть кнопку. Замініть батарейку, якщо він не пищить.", "Naciśnij przycisk. Wymień baterię, jeśli nie piszczy."]
+  ];
+  var D = { nb: {}, en: {}, uk: {}, pl: {} };
+  R.forEach(function (r) { ["nb", "en", "uk", "pl"].forEach(function (l, i) { if (r[i + 1]) D[l][r[0]] = r[i + 1]; }); });
+  var MT = {
+    uk: "Переклад зроблено машинно і ще не перевірено. Якщо помітите помилку, скажіть Олейву.",
+    pl: "Tłumaczenie maszynowe, jeszcze niesprawdzone. Jeśli zauważysz błąd, powiedz Oleivowi."
+  };
+  var LANG = "nn";
+  window.T = function (s) {
+    if (LANG === "nn" || s == null) return s;
+    var m = D[LANG];
+    return (m && Object.prototype.hasOwnProperty.call(m, s)) ? m[s] : s;
+  };
+  window.lc = function (s) { return (s && s !== s.toUpperCase()) ? s.charAt(0).toLowerCase() + s.slice(1) : s; };
+
+  var ORIG = new WeakMap(), SHOWN = new WeakMap();
+  function trText(n) {
+    var v = n.nodeValue;
+    if (!v || !v.trim()) return;
+    if (!ORIG.has(n) || SHOWN.get(n) !== v) ORIG.set(n, v);
+    var o = ORIG.get(n), k = o.trim(), t = window.T(k);
+    var nv = t === k ? o : o.replace(k, function () { return t; });
+    SHOWN.set(n, nv);
+    if (nv !== v) n.nodeValue = nv;
+  }
+  var ATTRS = ["aria-label", "placeholder", "title", "alt"], AO = new WeakMap();
+  function trAttrs(el) {
+    if (!el.getAttribute || (el.closest && el.closest("[data-noi18n]"))) return;
+    var m = AO.get(el) || {};
+    ATTRS.forEach(function (a) {
+      if (!el.hasAttribute(a)) return;
+      var v = el.getAttribute(a), e = m[a];
+      if (!e || e.s !== v) e = { o: v };
+      e.s = window.T(e.o); m[a] = e;
+      if (e.s !== v) el.setAttribute(a, e.s);
+    });
+    AO.set(el, m);
+  }
+  function skip(n) { var p = n.nodeType === 3 ? n.parentElement : n; return !p || !!p.closest("[data-noi18n],script,style,textarea"); }
+  function walk(root) {
+    if (!root || skip(root)) return;
+    if (root.nodeType === 3) return trText(root);
+    if (root.nodeType !== 1) return;
+    trAttrs(root);
+    var w = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT), n;
+    while ((n = w.nextNode())) { if (skip(n)) continue; if (n.nodeType === 3) trText(n); else trAttrs(n); }
+  }
+  var obs = new MutationObserver(function (ms) {
+    ms.forEach(function (m) {
+      if (m.type === "characterData") { if (!skip(m.target)) trText(m.target); }
+      else if (m.type === "attributes") trAttrs(m.target);
+      else m.addedNodes.forEach(walk);
+    });
+  });
+
+  function setLang(l, save) {
+    if (LANGS.indexOf(l) < 0) l = "nn";
+    LANG = l;
+    document.documentElement.lang = l;
+    document.title = window.T("Nytt der du bur");
+    document.querySelectorAll("[data-lang]").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-lang") === l ? "true" : "false"); });
+    var lsel = document.getElementById("langsel"); if (lsel) lsel.value = l;
+    var note = document.getElementById("mt-note");
+    if (note) { note.textContent = MT[l] || ""; note.hidden = !MT[l]; }
+    walk(document.body);
+    if (save) { try { localStorage.setItem("ndb-lang", l); } catch (e) {} }
+    if (typeof window.__rerender === "function") window.__rerender();
+  }
+
+  var DEF = "nn";
+  // «Start på nytt»: neste person startar på standardspråket, ikkje på språket til den førre.
+  window.__resetLang = function () { try { localStorage.removeItem("ndb-lang"); } catch (e) {} if (LANG !== DEF) setLang(DEF, false); };
+  function init() {
+    var start = "nn";
+    try { var q0 = new URLSearchParams(location.search).get("lang"); if (q0 && LANGS.indexOf(q0) >= 0) DEF = q0; } catch (e) {}
+    try {
+      var q = new URLSearchParams(location.search).get("lang");
+      var s = null; try { s = localStorage.getItem("ndb-lang"); } catch (e) {}
+      var nl = (navigator.language || "").toLowerCase();
+      if (q) start = q; else if (s) start = s; else if (nl.indexOf("uk") === 0) start = "uk"; else if (nl.indexOf("pl") === 0) start = "pl";
+    } catch (e) {}
+    document.querySelectorAll("[data-lang]").forEach(function (b) { b.addEventListener("click", function () { setLang(b.getAttribute("data-lang"), true); }); });
+    var lsel = document.getElementById("langsel");
+    if (lsel) lsel.addEventListener("change", function () { setLang(lsel.value, true); });
+    obs.observe(document.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ATTRS });
+    setLang(start, false);
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
+})();
+</script>
+<script src="vendor/qrcode.min.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var BYGDER = ["Nærbø", "Varhaug", "Vigrestad", "Ogna", "Brusand", "Hæen", "Sirevåg", "Nærland"];
+  var TEMA = ["Vatn og avløp", "Veg og trafikk", "Miljø og avfall", "Skule og barnehage", "Helse", "Kultur og fritid", "Politikk og høyring"];
+  var K_STRAKS = ["SMS", "Varsel i app"];
+  var K_SNART = ["SMS dagen før", "Varsel i app dagen før", "I e-posten kvar veke"];
+  var K_GODT = ["I e-posten kvar veke", "Nei takk"];
+  var Q1 = ["Ja", "Kanskje", "Nei"];
+  var Q4 = ["Ja", "Litt", "Nei"];
+  var Q2 = ["Butikken", "Lokalavisa", "Postkassa", "Skule eller barnehage", "Kommunen si nettside", "Facebook", "Anna"];
+  var HAST = { straks: "Straks", snart: "Snart", godt: "Godt å vite" };
+  var MND = ["Når som helst", "Januar", "Februar", "Mars", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Desember"];
+
+  // Oppdikta døme. Gatenamn og stader med «Døme» er med vilje ikkje ekte. mnd 0 = når som helst.
+  var SAKER = [
+    { h: "straks", mnd: 0, tema: "Vatn og avløp", bygd: "Vigrestad", t: "Vatnet er stengt i Dømegata no", x: "Brot på leidning. Vatnet er truleg tilbake om lag kl. 15. Vatn kan hentast ved Dømeskulen." },
+    { h: "straks", mnd: 0, tema: "Vatn og avløp", bygd: "Heile Hå", t: "Kokevarsel: kok drikkevatnet", x: "Gjeld til nytt varsel. Vatn til dusj og vask er trygt." },
+    { h: "straks", mnd: 0, tema: "Veg og trafikk", bygd: "Ogna", t: "Flaum: Dømevegen ved elva er stengd", x: "Køyr omvegen om sentrum. Hald born unna elvebreidda." },
+    { h: "straks", mnd: 7, tema: "Miljø og avfall", bygd: "Heile Hå", t: "Bålforbod frå i dag", x: "Høg brannfare. Gjeld også eingongsgrill på stranda." },
+    { h: "straks", mnd: 1, tema: "Skule og barnehage", bygd: "Nærbø", t: "Dømeskulen er stengd i dag på grunn av uvêr", x: "SFO er også stengd. Meir informasjon kjem i løpet av dagen." },
+    { h: "straks", mnd: 0, tema: "Helse", bygd: "Varhaug", t: "Besøksstans på Dømeheimen", x: "Omgangssjuke på to avdelingar. Ring før du kjem." },
+    { h: "snart", mnd: 0, tema: "Vatn og avløp", bygd: "Varhaug", t: "Vatnet blir stengt i Dømegata torsdag kl. 09–13", x: "Tapp opp vatn kvelden før. Det kan koma brunt vatn etterpå." },
+    { h: "snart", mnd: 2, tema: "Veg og trafikk", bygd: "Heile Hå", t: "Brøyting: desse vegane blir tekne først", x: "Bussvegar og vegar til skular og sjukeheimar har forrang." },
+    { h: "snart", mnd: 6, tema: "Veg og trafikk", bygd: "Nærbø", t: "Asfaltering: Dømevegen stengd tysdag og onsdag", x: "Skilta omkøyring. Parker ikkje langs vegen desse dagane." },
+    { h: "snart", mnd: 8, tema: "Skule og barnehage", bygd: "Heile Hå", t: "Ny skuleskyssrute frå skulestart", x: "Sjå tider og haldeplassar for bygda di." },
+    { h: "snart", mnd: 8, tema: "Kultur og fritid", bygd: "Nærbø", t: "Nærbødagane i helga", x: "Program, parkering og kva gater som er stengde." },
+    { h: "snart", mnd: 5, tema: "Kultur og fritid", bygd: "Nærbø", t: "17. mai: tog, tider og tale i nye Loen", x: "Toget går frå skulen. Tale og kaker etterpå." },
+    { h: "snart", mnd: 9, tema: "Helse", bygd: "Heile Hå", t: "Influensavaksine for 65+ og risikogrupper", x: "Timebestilling opnar måndag." },
+    { h: "snart", mnd: 9, tema: "Miljø og avfall", bygd: "Nærland", t: "Gjødselspreiing: det kan lukta denne veka", x: "Spreiinga går føre seg måndag til torsdag." },
+    { h: "snart", mnd: 9, tema: "Politikk og høyring", bygd: "Heile Hå", t: "Valdagen nærmar seg: kvar og når du kan røysta", x: "Du kan framleis førehandsrøysta. Ta med legitimasjon." },
+    { h: "snart", mnd: 12, tema: "Miljø og avfall", bygd: "Heile Hå", t: "Endra henting av avfall i romjula", x: "Sjå den nye datoen for gata di." },
+    { h: "godt", mnd: 1, tema: "Vatn og avløp", bygd: "Heile Hå", t: "Hugs å lesa av vassmålaren", x: "Det tek to minutt, og rekninga blir rett." },
+    { h: "godt", mnd: 3, tema: "Skule og barnehage", bygd: "Heile Hå", t: "Søknadsfristen for barnehageplass nærmar seg", x: "Søk innan fristen for å vera med i hovudopptaket." },
+    { h: "godt", mnd: 3, tema: "Kultur og fritid", bygd: "Heile Hå", t: "Påmelding til kulturskulen er open", x: "Plassane blir fordelte etter påmeldingsdato." },
+    { h: "godt", mnd: 4, tema: "Miljø og avfall", bygd: "Heile Hå", t: "Hageavfall: slik blir du kvitt det i vår", x: "Kvar du kan levera, og kva det kostar." },
+    { h: "godt", mnd: 6, tema: "Helse", bygd: "Brusand", t: "Badevatn: alle prøvane er grøne", x: "Nye prøvar kvar veke gjennom sommaren." },
+    { h: "godt", mnd: 6, tema: "Kultur og fritid", bygd: "Heile Hå", t: "Sommarjobb for ungdom: siste frist snart", x: "For deg mellom 15 og 18 år." },
+    { h: "godt", mnd: 10, tema: "Politikk og høyring", bygd: "Nærbø", t: "Høyring om ny gang- og sykkelveg", x: "Sei di meining innan fristen." },
+    { h: "godt", mnd: 11, tema: "Politikk og høyring", bygd: "Heile Hå", t: "Budsjettet er lagt fram: dette betyr det for deg", x: "Kort samandrag av det som endrar seg neste år." },
+    { h: "godt", mnd: 11, tema: "Kultur og fritid", bygd: "Varhaug", t: "Julegrantenning i sentrum", x: "Song, gløgg og nissen kjem." },
+    { h: "godt", mnd: 12, tema: "Helse", bygd: "Heile Hå", t: "Røykvarslaren sin dag: test han i dag", x: "Trykk på knappen. Byt batteri om han ikkje pip." }
+  ];
+
+  var state, startTime = Date.now(), pameldtSek = null;
+
+  // Svara går rett til Oleivs Google-skjema med eitt trykk. Ingen namn eller e-post.
+  var SKJEMA = "https://docs.google.com/forms/d/e/1FAIpQLSeq-rG8zZSAN3xljNi9Ge_K3R1IcT6SpzYwgKLWIrgk9hFEJQ/viewform";
+  // ?test=1 sender til ein lokal adresse i staden, så testar ikkje lagar svar i skjemaet.
+  var TEST = /(?:^|[?&])test=1(?:&|$)/.test(location.search || "");
+  var SKJEMA_POST = TEST ? "test-formResponse" : SKJEMA.replace(/\/viewform$/, "/formResponse");
+  var FELT = { bygd: "144338228", tema: "1494700229", kStraks: "535172419", kSnart: "1629005840", kGodt: "1065507517", q1: "1532557234", q4: "588487473", q2: "1723581213", q3: "129376377", sekund: "1021682156" };
+  // Same felt for sending og reservelenkje, så dei aldri sprikar.
+  function skjemaPar(s) {
+    var p = [];
+    Object.keys(FELT).forEach(function (k) {
+      var v = s[k];
+      (Array.isArray(v) ? v : [v]).forEach(function (x) {
+        if (x === "" || x == null) return;
+        p.push(["entry." + FELT[k], String(x)]);
+      });
+    });
+    return p;
+  }
+  function skjemaUrl(s) {
+    var p = ["usp=pp_url"];
+    skjemaPar(s).forEach(function (kv) { p.push(kv[0] + "=" + encodeURIComponent(kv[1])); });
+    return SKJEMA + "?" + p.join("&");
+  }
+  // Ekte saker frå 2026 (årsoversikta). Skrivne om med eigne ord. m = månad for sortering, 0 = ukjend (sist).
+  var JBL = "Jærbladet", HANO = "ha.no";
+  var EKTE = [
+    { m: 1, h: "godt", dato: "1. januar", bygd: ["Heile Hå"], tema: "Helse", fra: "Hå kommune", t: "Nye røykjeforbod frå 1. januar", x: "Gjeld leikeplassar og idrettsanlegg ute, også e-sigarettar.", k: HANO, u: "https://www.ha.no/aktuelt/nye-roykjeforbod-trer-i-kraft-1-januar-2026.130740.aspx" },
+    { m: 4, h: "straks", dato: "4.–5. april", bygd: ["Heile Hå"], tema: null, fra: "Meteorologisk institutt", t: "Raudt farevarsel: ekstremvêr første påskedag", x: "Vindkast rundt 40 m/s. Det var farleg å vera ute, og laust utstyr burde sikrast.", k: JBL, u: "https://www.jbl.no/rodt-farevarsel-dette-bor-du-gjore-na/s/5-103-1268249" },
+    { m: 4, h: "snart", dato: "april–november", bygd: ["Nærbø"], tema: "Veg og trafikk", fra: "Hå kommune", t: "Store Ring på Nærbø stengd i over eit halvt år", x: "Flaumsikring og nye overvassrøyr. Omkøyring i heile perioden.", k: JBL, u: "https://www.jbl.no/vegen-har-vore-stengt-i-eit-halvt-ar-neste-veke-startar-innspurten/s/80-103-35810" },
+    { m: 5, h: "snart", dato: "26.–27. mai", bygd: ["Nærbø"], tema: "Veg og trafikk", fra: "Vegeigaren", t: "Kviavegen og Rongavegen delvis stengde i to dagar", x: "Asfaltering kl. 08:30–20:30. Utrykkingskøyretøy kom ikkje forbi.", k: JBL, u: "https://www.jbl.no/stenger-vei-pa-narbo-i-to-dager/s/5-103-1291470" },
+    { m: 10, h: "godt", dato: "19. oktober", bygd: ["Vigrestad"], tema: "Kultur og fritid", fra: "Hå kommune", t: "Symjehallen på Vigrestad storskule er open igjen", x: "Hallen var stengd fordi det var fukt i takkonstruksjonen.", k: HANO, u: "https://www.ha.no/aktuelt/symjehallen-pa-vigrestad-storskule-er-no-open.134658.aspx" },
+    { m: 10, h: "straks", dato: "25.–26. oktober", bygd: ["Heile Hå"], tema: null, fra: "Meteorologisk institutt", t: "Oransje farevarsel: svært høg vasstand langs Jærkysten", x: "Toppen var venta måndag føremiddag.", k: JBL, u: "https://www.jbl.no/oransje-farevarsel-om-svart-hoy-vannstand-i-rogaland/s/80-103-36551" },
+    { m: 10, h: "snart", dato: "hausten", bygd: ["Heile Hå"], tema: "Helse", fra: "Hå kommune", t: "Influensavaksinen blir forseinka", x: "", k: HANO, u: "https://www.ha.no/aktuelt/influensavaksinen-blir-forsinka.134302.aspx" },
+    { m: 11, h: "snart", dato: "varsla 2. november", bygd: ["Varhaug"], tema: "Veg og trafikk", fra: "Hå kommune", t: "Graving i Varhaug sentrum kan ta eit halvt år", x: "Nye overvassrøyr, mellom anna i Skulegata og Dublandsvegen.", k: JBL, u: "https://www.jbl.no/her-kan-det-bli-graving-i-eit-halvt-ar/s/80-103-37121" },
+    { m: 11, h: "snart", dato: "6. november", bygd: ["Heile Hå"], tema: "Helse", fra: "Hå kommune", t: "Fugleinfluensa i nabokommunen", x: "", k: HANO, u: "https://www.ha.no/aktuelt/fugleinfluensa-i-nabokommunen-var.134739.aspx" },
+    { m: 11, h: "straks", dato: "10. november", bygd: ["Vigrestad", "Brusand", "Ogna"], tema: null, fra: "Go-Ahead (tog)", t: "Full stans på Jærbanen mellom Vigrestad og Ogna", x: "Buss for tog frå om lag kl. 17 til 19:30.", k: JBL, u: "https://www.jbl.no/stans-i-togtrafikken-ma-paregne-forsinkelser/s/80-103-44583" },
+    { m: 11, h: "straks", dato: "12. november", bygd: ["Nærbø"], tema: null, fra: "Jæren everk", t: "Straumbrot i Nærbø sør/aust", x: "1081 kundar utan straum frå om lag kl. 20:40 til 22:30.", k: JBL, u: "https://www.jbl.no/strombrudd-pa-narbo/s/80-103-45601" },
+    { m: 0, h: "godt", dato: "2026", bygd: ["Heile Hå"], tema: null, fra: "Hå kommune", t: "Her får du informasjon om mobil og internett fell bort", x: "", k: HANO, u: "https://www.ha.no/aktuelt/her-far-du-informasjon-dersom-mobil-og-internett-fell-bort.134637.aspx" }
+  ];
+  function ekteOk(s) {
+    var b = s.bygd.indexOf("Heile Hå") >= 0 || s.bygd.some(function (x) { return state.bygd.indexOf(x) >= 0; });
+    if (!b) return false;
+    if (s.h === "straks" || !s.tema) return true;
+    return state.tema.indexOf(s.tema) >= 0;
+  }
+  function visEkte() {
+    var ek = document.getElementById("aar-ekte");
+    if (!ek) return;
+    ek.textContent = "";
+    var mine = berreMine && valgjort();
+    EKTE.filter(function (s) { return !mine || ekteOk(s); })
+      .sort(function (a, b) { return (a.m || 13) - (b.m || 13); })
+      .forEach(function (s) {
+        var it = el("div", { "class": "item" });
+        var tags = el("div", { "class": "tags" });
+        tags.appendChild(badge(s.h));
+        tags.appendChild(el("span", { "class": "badge b-plain" }, T(s.dato)));
+        s.bygd.forEach(function (b) { tags.appendChild(el("span", { "class": "badge b-plain" }, T(b))); });
+        it.appendChild(tags);
+        it.appendChild(el("b", null, T(s.t)));
+        if (s.x) it.appendChild(el("span", null, T(s.x)));
+        var meta = el("small", { "class": "hint" });
+        meta.appendChild(document.createTextNode(T("Frå") + ": " + T(s.fra) + " · " + T("Kjelde") + ": "));
+        meta.appendChild(el("a", { href: s.u, target: "_blank", rel: "noopener" }, s.k));
+        it.appendChild(meta);
+        ek.appendChild(it);
+      });
+    if (!ek.childNodes.length) ek.appendChild(el("p", { "class": "hint" }, T("Ingen døme passar vala dine.")));
+  }
+  var lastSvar = null;
+  function reserveTekst(s) {
+    function v(x) { return x ? T(x) : "–"; }
+    return T("Opnar ikkje skjemaet? Vis denne skjermen til Oleiv.") + " " +
+      T("Bygder") + ": " + liste(s.bygd) + ". " + T("Tema:") + " " + liste(s.tema) + ". " +
+      T("Straks") + ": " + v(s.kStraks) + ". " + T("Snart") + ": " + v(s.kSnart) + ". " + T("Godt å vite") + ": " + v(s.kGodt) + ". " +
+      T("Ville du meldt deg på") + ": " + v(s.q1) + ". " + T("Var skiljet lett å skjøna") + ": " + v(s.q4) + ". " +
+      T("Kvar burde du sett det") + ": " + (s.q2.length ? liste(s.q2) : "–") +
+      (s.sekund != null ? ". " + T("Tid") + ": " + s.sekund + " " + T("sekund") : "") + ".";
+  }
+
+  function freshState() {
+    return { bygd: [], tema: [], kStraks: [K_STRAKS[0]], kSnart: [K_SNART[0]], kGodt: [K_GODT[0]], q1: [], q4: [], q2: [] };
+  }
+
+  function el(tag, attrs, text) {
+    var e = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) { e.setAttribute(k, attrs[k]); });
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  var chipBoxes = [];
+  function makeChips(containerId, options, key, single) {
+    var box = document.getElementById(containerId);
+    chipBoxes.push({ box: box, key: key, options: options });
+    options.forEach(function (o, i) {
+      var b = el("button", { type: "button", "class": "chip", "aria-pressed": "false", id: containerId + "-" + i }, o);
+      b.addEventListener("click", function () {
+        var list = state[key];
+        var on = list.indexOf(o) >= 0;
+        if (single) {
+          if (on) return; // ein må alltid vera vald
+          state[key] = [o];
+        } else {
+          if (on) list.splice(list.indexOf(o), 1); else list.push(o);
+        }
+        syncChips();
+        updateButtons();
+      });
+      box.appendChild(b);
+    });
+  }
+  function makeChipsOptional(containerId, options, key) {
+    var box = document.getElementById(containerId);
+    chipBoxes.push({ box: box, key: key, options: options });
+    options.forEach(function (o, i) {
+      var b = el("button", { type: "button", "class": "chip", "aria-pressed": "false", id: containerId + "-" + i }, o);
+      b.addEventListener("click", function () {
+        state[key] = state[key].indexOf(o) >= 0 ? [] : [o];
+        syncChips(); updateButtons();
+      });
+      box.appendChild(b);
+    });
+  }
+  function syncChips() {
+    chipBoxes.forEach(function (c) {
+      c.box.querySelectorAll(".chip").forEach(function (b, i) {
+        b.setAttribute("aria-pressed", state[c.key].indexOf(c.options[i]) >= 0 ? "true" : "false");
+      });
+    });
+  }
+
+  function reset() {
+    state = freshState();
+    pameldtSek = null;
+    var t = document.getElementById("q3"); if (t) t.value = "";
+    var a = document.getElementById("b-skjema"); if (a) { a.hidden = true; a.removeAttribute("href"); }
+    var r = document.getElementById("t-reserve"); if (r) { r.hidden = true; r.textContent = ""; }
+    var ht = document.getElementById("h-takk"); if (ht) ht.textContent = "Takk!";
+    syncChips();
+    updateButtons();
+  }
+
+  function updateButtons() {
+    document.getElementById("n-bygd").disabled = state.bygd.length === 0;
+    document.getElementById("n-tema").disabled = state.tema.length === 0;
+    document.getElementById("n-svar").disabled = state.q1.length === 0;
+    // Hintet held plassen sin, så knappane ikkje hoppar når det forsvinn.
+    document.getElementById("m-bygd").style.visibility = state.bygd.length > 0 ? "hidden" : "visible";
+    document.getElementById("m-tema").style.visibility = state.tema.length > 0 ? "hidden" : "visible";
+    document.getElementById("m-svar").style.visibility = state.q1.length > 0 ? "hidden" : "visible";
+  }
+
+  var VIEWS = ["start", "bygd", "tema", "kanal", "ferdig", "svar", "takk", "aaret", "lapp"];
+  function show(name) {
+    document.body.classList.toggle("compact", name !== "start" && name !== "aaret");
+    VIEWS.forEach(function (v) { document.getElementById("v-" + v).hidden = (v !== name); });
+    var h = document.querySelector("#v-" + name + " h1, #v-" + name + " h2");
+    if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
+    window.scrollTo(0, 0);
+  }
+  // Kvart steg har eigen #adresse, så tilbakeknappen på telefonen går eitt steg tilbake.
+  function go(name) {
+    var want = name === "start" ? "" : "#" + name;
+    var have = location.hash === "#" ? "" : location.hash;
+    if (have === want) route(); else location.hash = want;
+  }
+
+  function bygdOk(s) { return s.bygd === "Heile Hå" || state.bygd.indexOf(s.bygd) >= 0; }
+  function passar(s) {
+    if (!bygdOk(s)) return false;
+    if (s.h === "straks") return true; // straks gjeld alltid for bygda
+    if (s.h === "godt" && state.kGodt[0] === "Nei takk") return false;
+    return state.tema.indexOf(s.tema) >= 0;
+  }
+  function valgjort() { return state && state.bygd.length > 0 && state.tema.length > 0; }
+
+  function liste(a) { a = a.map(T); if (a.length < 2) return a.join(""); return a.slice(0, -1).join(", ") + " " + T("og") + " " + a[a.length - 1]; }
+
+  function badge(h) { return el("span", { "class": "badge b-" + h }, HAST[h]); }
+
+  function itemEl(s, withMonth) {
+    var it = el("div", { "class": "item" });
+    var tags = el("div", { "class": "tags" });
+    tags.appendChild(badge(s.h));
+    tags.appendChild(el("span", { "class": "badge b-demo" }, "DØME"));
+    tags.appendChild(el("span", { "class": "badge b-plain" }, s.tema));
+    tags.appendChild(el("span", { "class": "badge b-plain" }, s.bygd));
+    if (withMonth && s.mnd) tags.appendChild(el("span", { "class": "badge b-plain" }, MND[s.mnd]));
+    it.appendChild(tags);
+    it.appendChild(el("b", null, s.t));
+    it.appendChild(el("span", null, s.x));
+    return it;
+  }
+
+  function notifEl(s, soon, kanal) {
+    var n = el("div", { "class": "notif" + (soon ? " soon" : ""), "aria-label": T("Døme på") + " " + lc(T(kanal)) });
+    n.appendChild(el("small", null, T("DØME") + " · " + T(kanal) + " · " + T(HAST[s.h]) + " · " + T(s.tema) + " · " + T(s.bygd)));
+    n.appendChild(el("b", null, s.t));
+    n.appendChild(el("span", { "class": "hint" }, s.x));
+    return n;
+  }
+
+  function laneHead(h, text) {
+    var d = el("div", { "class": "lane-h" });
+    d.appendChild(badge(h));
+    d.appendChild(el("b", null, text));
+    return d;
+  }
+
+  function renderFerdig() {
+    var mine = SAKER.filter(passar);
+    var straks = mine.filter(function (s) { return s.h === "straks"; }).sort(function (a, b) { return (a.bygd === "Heile Hå") - (b.bygd === "Heile Hå"); });
+    var snart = mine.filter(function (s) { return s.h === "snart"; });
+    var godt = mine.filter(function (s) { return s.h === "godt"; });
+
+    document.getElementById("t-val").textContent =
+      T("Du valde") + " " + liste(state.bygd) + ". " + T("Tema:") + " " + liste(state.tema) + ".";
+
+    var ps = document.getElementById("p-straks"); ps.textContent = "";
+    ps.appendChild(laneHead("straks", T("Med ein gong, som") + " " + lc(T(state.kStraks[0]))));
+    if (straks.length) ps.appendChild(notifEl(straks[0], false, state.kStraks[0]));
+    else ps.appendChild(el("p", { "class": "hint" }, "Ingen straksdøme for bygda di. I verkelegheita kjem dei sjeldan."));
+
+    var pn = document.getElementById("p-snart"); pn.textContent = "";
+    var mail = document.getElementById("p-mail"); mail.textContent = "";
+    var snartIMail = state.kSnart[0] === "I e-posten kvar veke";
+    if (!snartIMail) {
+      pn.appendChild(laneHead("snart", T("Dagen før, som") + " " + (state.kSnart[0].indexOf("SMS") === 0 ? "SMS" : lc(T("Varsel i app")))));
+      if (snart.length) pn.appendChild(notifEl(snart[0], true, state.kSnart[0].indexOf("SMS") === 0 ? "SMS" : "Varsel i app"));
+      else pn.appendChild(el("p", { "class": "hint" }, "Ingen planlagde saker for vala dine denne veka."));
+    }
+
+    var mailSnart = snartIMail ? snart.slice(0, 3) : [];
+    var mailGodt = state.kGodt[0] === "Nei takk" ? [] : godt.slice(0, 3);
+    if (mailSnart.length || mailGodt.length) {
+      mail.appendChild(el("b", null, "I e-posten onsdag kveld"));
+      var m = el("div", { "class": "mail" });
+      var hd = el("header");
+      var ant = mailSnart.length + mailGodt.length;
+      hd.appendChild(el("span", null, "DØME · Til: deg · onsdag kl. 18"));
+      hd.appendChild(el("b", null, T("Nytt der du bur denne veka") + " (" + ant + " " + (ant === 1 ? T("sak") : (document.documentElement.lang === "uk" && ant >= 2 && ant <= 4 ? "новини" : T("saker"))) + ")"));
+      m.appendChild(hd);
+      var body = el("div", { "class": "body" });
+      [["snart", "Snart", mailSnart], ["godt", "Godt å vite", mailGodt]].forEach(function (g) {
+        if (!g[2].length) return;
+        var sec = el("div", { "class": "sec" });
+        sec.appendChild(el("h3", null, g[1]));
+        g[2].forEach(function (s) { sec.appendChild(itemEl(s, false)); });
+        body.appendChild(sec);
+      });
+      m.appendChild(body);
+      mail.appendChild(m);
+    } else {
+      var ingenEpost = state.kGodt[0] === "Nei takk" && !snartIMail;
+      mail.appendChild(el("p", { "class": "hint" }, ingenEpost ? "Du får ingen e-post med desse vala." : "Ingen saker i e-posten denne veka for vala dine."));
+    }
+  }
+
+  var berreMine = false;
+  function visAaret() {
+    show("aaret");
+    var box = document.getElementById("t-mine-box");
+    box.hidden = !valgjort();
+    document.getElementById("b-aar-tilbake").hidden = !valgjort();
+    var tb = document.getElementById("t-mine");
+    tb.setAttribute("aria-pressed", berreMine && valgjort() ? "true" : "false");
+    var body = document.getElementById("aar-body");
+    body.textContent = "";
+    var liste = SAKER.filter(function (s) { return !(berreMine && valgjort()) || passar(s); });
+    var order = [1,2,3,4,5,6,7,8,9,10,11,12,0];
+    order.forEach(function (m) {
+      var saker = liste.filter(function (s) { return s.mnd === m; });
+      if (!saker.length) return;
+      var sec = el("div", { "class": "month" });
+      sec.appendChild(el("h3", null, MND[m]));
+      saker.forEach(function (s) {
+        var line = el("div", { "class": "mline" });
+        var b = el("span"); b.appendChild(badge(s.h));
+        line.appendChild(b);
+        line.appendChild(el("span", null, T(s.t) + " (" + T(s.bygd) + ")"));
+        sec.appendChild(line);
+      });
+      body.appendChild(sec);
+    });
+    if (!body.childNodes.length) body.appendChild(el("p", { "class": "hint" }, "Ingen døme passar vala dine."));
+    visEkte();
+  }
+
+  async function sende() {
+    var sek = pameldtSek;
+    var svar = {
+      bygd: state.bygd.slice(), tema: state.tema.slice(),
+      kStraks: state.kStraks[0], kSnart: state.kSnart[0], kGodt: state.kGodt[0],
+      q1: state.q1[0] || "", q4: state.q4[0] || "", q2: state.q2.slice(),
+      q3: (document.getElementById("q3").value || "").slice(0, 500),
+      sekund: sek, dato: new Date().toISOString().slice(0, 10), versjon: 5
+    };
+    var t = document.getElementById("t-takk");
+    // Nullstill reserven frå eit tidlegare forsøk som feila.
+    document.getElementById("h-takk").textContent = "Takk!";
+    var gl = document.getElementById("b-skjema"); gl.hidden = true; gl.removeAttribute("href");
+    var gr = document.getElementById("t-reserve"); gr.hidden = true; gr.textContent = "";
+    // Sender rett til Google-skjemaet. no-cors gir eit svar vi ikkje kan lesa, så berre nettverksfeil eller tidsgrense blir rekna som feil.
+    try {
+      var body = new URLSearchParams();
+      skjemaPar(svar).forEach(function (kv) { body.append(kv[0], kv[1]); });
+      await Promise.race([
+        fetch(SKJEMA_POST, { method: "POST", mode: "no-cors", body: body }),
+        new Promise(function (_, rej) { setTimeout(function () { rej(new Error("tidsgrense")); }, 8000); })
+      ]);
+      t.textContent = "Svara er sende. Gi telefonen vidare, eller trykk under for å starta på nytt.";
+      return;
+    } catch (e) { /* reserve under */ }
+    // Reserve: lenkje til det ferdig utfylte skjemaet. Opnar berre når naboen trykkjer.
+    document.getElementById("h-takk").textContent = "Siste steg: send skjemaet";
+    var lenkje = document.getElementById("b-skjema");
+    lenkje.href = skjemaUrl(svar);
+    lenkje.hidden = false;
+    t.textContent = "Eitt steg att: opne skjemaet, sjå over svara og trykk «Send» nedst. Skjemaet er Oleiv sitt i Google Skjema, ikkje kommunen sitt.";
+    var res = document.getElementById("t-reserve");
+    res.hidden = false;
+    lastSvar = svar;
+    res.textContent = reserveTekst(svar);
+  }
+
+  function visLapp() {
+    show("lapp");
+    var inp = document.getElementById("lapp-url");
+    function draw() {
+      var box = document.getElementById("qr");
+      box.textContent = "";
+      var url = (inp.value || "").trim();
+      if (!/^https:\/\//.test(url)) { box.appendChild(el("p", { "class": "small" }, "Lim inn lenka over, så kjem QR-koden her.")); return; }
+      if (typeof QRCode === "undefined") { box.appendChild(el("p", { "class": "small" }, "QR-koden kunne ikkje lagast. Prøv å lasta sida på nytt.")); return; }
+      new QRCode(box, { text: url, width: 180, height: 180, colorDark: "#1f2421", colorLight: "#ffffff" });
+      setTimeout(function () { box.querySelectorAll("img").forEach(function (i) { i.alt = "QR-kode til skissa"; }); box.setAttribute("title", "QR-kode til skissa"); }, 50);
+    }
+    if (!inp.dataset.bound) { inp.addEventListener("input", draw); inp.dataset.bound = "1"; }
+    draw();
+  }
+
+  function route() {
+    var h = (location.hash || "").replace("#", "");
+    if (h === "lapp") return visLapp();
+    if (h === "aaret") return visAaret();
+    if (h === "bygd") return show("bygd");
+    if (h === "tema") return state.bygd.length ? show("tema") : show("bygd");
+    if (h === "kanal") return valgjort() ? show("kanal") : show("bygd");
+    if (h === "ferdig") { if (!valgjort()) return show("bygd"); renderFerdig(); return show("ferdig"); }
+    if (h === "svar") return valgjort() ? show("svar") : show("start");
+    if (h === "takk") {
+      var rr = document.getElementById("t-reserve");
+      if (lastSvar && rr && !rr.hidden) rr.textContent = reserveTekst(lastSvar);
+      return show("takk");
+    }
+    show("start");
+  }
+
+  // Oppsett
+  makeChips("c-bygd", BYGDER, "bygd", false);
+  makeChips("c-tema", TEMA, "tema", false);
+  makeChips("c-k-straks", K_STRAKS, "kStraks", true);
+  makeChips("c-k-snart", K_SNART, "kSnart", true);
+  makeChips("c-k-godt", K_GODT, "kGodt", true);
+  makeChipsOptional("c-q1", Q1, "q1");
+  makeChipsOptional("c-q4", Q4, "q4");
+  makeChips("c-q2", Q2, "q2", false);
+  reset();
+
+  document.getElementById("b-start").addEventListener("click", function () { go("bygd"); });
+  document.getElementById("n-bygd").addEventListener("click", function () { go("tema"); });
+  document.getElementById("n-tema").addEventListener("click", function () { go("kanal"); });
+  document.getElementById("n-kanal").addEventListener("click", function () {
+    pameldtSek = Math.round((Date.now() - startTime) / 1000);
+    go("ferdig");
+  });
+  document.getElementById("n-ferdig").addEventListener("click", function () { go("svar"); });
+  document.getElementById("b-aar-tilbake").addEventListener("click", function () { go("ferdig"); });
+  document.getElementById("t-mine").addEventListener("click", function () { berreMine = !berreMine; visAaret(); });
+  document.getElementById("f-svar").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    var b = document.getElementById("n-svar"); b.disabled = true;
+    await sende();
+    updateButtons();
+    go("takk");
+  });
+  document.getElementById("b-igjen").addEventListener("click", function () { if (window.__resetLang) window.__resetLang(); lastSvar = null; reset(); startTime = Date.now(); go("start"); });
+  document.querySelectorAll("[data-back]").forEach(function (b) {
+    b.addEventListener("click", function () { go(b.getAttribute("data-back")); });
+  });
+  // Visning: lys/mørk og større tekst. Huskast på telefonen til «Start på nytt».
+  var docEl = document.documentElement, visTema = null, visStor = false;
+  function erMork() {
+    if (visTema) return visTema === "dark";
+    return !!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  }
+  function brukVis(lagre) {
+    if (visTema) docEl.setAttribute("data-theme", visTema); else docEl.removeAttribute("data-theme");
+    docEl.style.fontSize = visStor ? "125%" : "";
+    var bl = document.getElementById("b-lys"), lab = erMork() ? "Lys bakgrunn" : "Mørk bakgrunn";
+    bl.textContent = erMork() ? "☀" : "☾";
+    bl.setAttribute("aria-label", lab); bl.setAttribute("title", lab);
+    document.getElementById("b-stor").setAttribute("aria-pressed", visStor ? "true" : "false");
+    if (lagre) { try { localStorage.setItem("ndb-vis", JSON.stringify({ t: visTema, s: visStor })); } catch (e) {} }
+  }
+  try { var lv = JSON.parse(localStorage.getItem("ndb-vis") || "null"); if (lv) { visTema = lv.t || null; visStor = !!lv.s; } } catch (e) {}
+  brukVis(false);
+  document.getElementById("b-lys").addEventListener("click", function () { visTema = erMork() ? "light" : "dark"; brukVis(true); });
+  document.getElementById("b-stor").addEventListener("click", function () { visStor = !visStor; brukVis(true); });
+  if (window.matchMedia) { try { window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () { if (!visTema) brukVis(false); }); } catch (e) {} }
+  document.getElementById("b-igjen").addEventListener("click", function () { visTema = null; visStor = false; try { localStorage.removeItem("ndb-vis"); } catch (e) {} brukVis(false); });
+
+  window.addEventListener("hashchange", route);
+  window.__rerender = route;
+  route();
+})();
+</script>
+</body>
+</html>
