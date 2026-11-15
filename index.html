@@ -328,7 +328,7 @@ textarea { min-height: 6rem; }
     <div class="stack">
       <h2 id="h-lapp">QR-lapp til testen</h2>
       <label for="lapp-url">Lim inn lenka til skissa</label>
-      <input type="url" id="lapp-url" placeholder="https://claude.ai/…" autocomplete="off">
+      <input type="url" id="lapp-url" placeholder="https://kvesstdesign.github.io/nytt-der-du-bur/" autocomplete="off">
       <div class="lapp" aria-live="polite">
         <h2>Få med deg det som skjer der du bur</h2>
         <div id="qr" aria-label="QR-kode"></div>
@@ -1020,6 +1020,10 @@ textarea { min-height: 6rem; }
       sekund: sek, dato: new Date().toISOString().slice(0, 10), versjon: 5
     };
     var t = document.getElementById("t-takk");
+    // Nullstill reserven frå eit tidlegare forsøk som feila.
+    document.getElementById("h-takk").textContent = "Takk!";
+    var gl = document.getElementById("b-skjema"); gl.hidden = true; gl.removeAttribute("href");
+    var gr = document.getElementById("t-reserve"); gr.hidden = true; gr.textContent = "";
     // Sender rett til Google-skjemaet. no-cors gir eit svar vi ikkje kan lesa, så berre nettverksfeil eller tidsgrense blir rekna som feil.
     try {
       var body = new URLSearchParams();
@@ -1101,6 +1105,7 @@ textarea { min-height: 6rem; }
     e.preventDefault();
     var b = document.getElementById("n-svar"); b.disabled = true;
     await sende();
+    updateButtons();
     go("takk");
   });
   document.getElementById("b-igjen").addEventListener("click", function () { if (window.__resetLang) window.__resetLang(); lastSvar = null; reset(); startTime = Date.now(); go("start"); });
