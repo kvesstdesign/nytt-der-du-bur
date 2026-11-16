@@ -31,29 +31,20 @@
   --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
   color-scheme: light;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #171a18; --surface: #212623; --ink: #ecefe9; --muted: #b3bab4; --line: #3a413c; --edge: #7f8781;
-    --accent: #8fc7a5; --accent-ink: #10231a; --accent-soft: #24352b; --flag: #ffd58a; --flag-bg: #3a2d12;
-    --straks: #ffb3a8; --straks-bg: #3d1a16; --snart: #ffd58a; --snart-bg: #3a2d12; --godt: #a9d9bb; --godt-bg: #24352b;
-    color-scheme: dark;
-  }
-}
 :root[data-theme="dark"] {
   --bg: #171a18; --surface: #212623; --ink: #ecefe9; --muted: #b3bab4; --line: #3a413c; --edge: #7f8781;
   --accent: #8fc7a5; --accent-ink: #10231a; --accent-soft: #24352b; --flag: #ffd58a; --flag-bg: #3a2d12;
   --straks: #ffb3a8; --straks-bg: #3d1a16; --snart: #ffd58a; --snart-bg: #3a2d12; --godt: #a9d9bb; --godt-bg: #24352b;
   color-scheme: dark;
 }
-/* Lys variant med sterkare kontrast (for dei som ser dårlegare). Gjeld berre lyst tema; mørkt tema er uendra.
+/* Lys variant med sterkare kontrast (for dei som ser dårlegare). Mørk variant berre når ein vel ☾.
    Kontrast mot bakgrunn: tekst ca. 16:1, grå tekst ca. 8:1, kantar ca. 5,5:1, kvit tekst på merkelappar 7–9:1. */
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) {
-    --bg: #eceae4; --surface: #ffffff; --ink: #141816; --muted: #3f4541; --line: #857f73; --edge: #5f5a52;
-    --accent: #24503a; --accent-ink: #ffffff; --accent-soft: #dfe9e2; --flag: #5c3700; --flag-bg: #ffe9b0;
-    --b-straks-bg: #9b1c12; --b-straks-fg: #ffffff; --b-snart-bg: #7a4a00; --b-snart-fg: #ffffff; --b-godt-bg: #24503a; --b-godt-fg: #ffffff;
-    --card-shadow: 0 1px 2px rgba(0,0,0,.10), 0 3px 10px rgba(0,0,0,.07);
-  }
+/* Hvit som standard (oppdrag 03): gjeld når data-theme ikkje er sett, uansett innstillinga på telefonen. */
+:root:not([data-theme="dark"]) {
+  --bg: #eceae4; --surface: #ffffff; --ink: #141816; --muted: #3f4541; --line: #857f73; --edge: #5f5a52;
+  --accent: #24503a; --accent-ink: #ffffff; --accent-soft: #dfe9e2; --flag: #5c3700; --flag-bg: #ffe9b0;
+  --b-straks-bg: #9b1c12; --b-straks-fg: #ffffff; --b-snart-bg: #7a4a00; --b-snart-fg: #ffffff; --b-godt-bg: #24503a; --b-godt-fg: #ffffff;
+  --card-shadow: 0 1px 2px rgba(0,0,0,.10), 0 3px 10px rgba(0,0,0,.07);
 }
 :root[data-theme="light"] {
   --bg: #eceae4; --surface: #ffffff; --ink: #141816; --muted: #3f4541; --line: #857f73; --edge: #5f5a52;
@@ -148,7 +139,19 @@ textarea, input[type="url"] { font: inherit; width: 100%; border: 1.5px solid va
 textarea { min-height: 6rem; }
 .month { display: grid; gap: 6px; padding: 12px 0; border-top: 1px solid var(--line); }
 .month:first-child { border-top: none; }
-.mline { display: grid; grid-template-columns: 6.5rem 1fr; gap: 8px; align-items: baseline; }
+/* Årsoversikta (oppdrag 03): merkelappen står over teksten, så teksten får heile breidda på mobil. */
+.mline { display: grid; gap: 2px; justify-items: start; padding: 4px 0; }
+.month > h3 { font-size: 1.15rem; }
+.month .item { border-top: none; padding: 6px 0; }
+.sum-h { font-weight: 600; }
+.sumrows { display: grid; gap: 8px; }
+.sumrow { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; } /* bryt heller enn å bli breiare enn skjermen (kontroll 03a) */
+.sumrow .tal { min-width: 2.4rem; font-family: var(--font-display); font-size: 1.7rem; font-weight: 700; line-height: 1; text-align: right; font-variant-numeric: tabular-nums; }
+.sumrow .kan { color: var(--muted); font-size: .95rem; min-width: 0; overflow-wrap: anywhere; }
+details.card { display: block; }
+details.card > summary { cursor: pointer; font-weight: 600; min-height: 44px; display: flex; align-items: center; color: var(--accent); }
+details.card[open] > summary { margin-bottom: 8px; }
+details.card > .hint { margin-bottom: 4px; }
 .stat { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; font-variant-numeric: tabular-nums; }
 .bar { height: 8px; border-radius: 4px; background: var(--accent); }
 .lapp { background: #fff; color: #1f2421; border: 2px dashed #8a8a8a; border-radius: 10px; padding: 18px; display: grid; gap: 10px; justify-items: center; text-align: center; max-width: 105mm; margin: 0 auto; }
@@ -308,15 +311,20 @@ textarea { min-height: 6rem; }
   <!-- ÅRET -->
   <section class="view" id="v-aaret" hidden aria-labelledby="h-aaret">
     <div class="stack">
-      <h2 id="h-aaret">Eit år med døme</h2>
-      <p class="lead">Øvst er oppdikta døme som viser kva som kunne kome, og kor fort. Nedst er ekte saker frå 2026.</p>
+      <h2 id="h-aaret">Eit år i Hå</h2>
+      <p class="lead">Dette skjedde i Hå i 2026. Slik ville det kome til deg.</p>
+      <div class="card" id="aar-sum" aria-live="polite"></div>
       <div class="toggle" id="t-mine-box" hidden>
-        <button type="button" class="chip" id="t-mine" aria-pressed="false">Berre det som passar vala mine</button>
+        <button type="button" class="chip" id="t-mine" aria-pressed="true">Berre det som passar vala mine</button>
       </div>
-      <div class="card" id="aar-body"></div>
       <h3>Skjedde i 2026</h3>
       <p class="hint">Ekte saker frå Hå i år, skrivne om med eigne ord. Kjelda står under kvar sak.</p>
       <div class="card" id="aar-ekte"></div>
+      <details class="card demo" id="aar-demo">
+        <summary>Vis oppdikta døme: kva som kunne kome elles i året</summary>
+        <p class="hint">Desse er oppdikta. Dei viser kva slags saker som kunne kome, og kor fort.</p>
+        <div id="aar-body"></div>
+      </details>
       <button class="btn ghost" id="b-aar-tilbake" hidden>Tilbake til veka di</button>
       <a href="#" class="hint">Til starten</a>
     </div>
@@ -465,6 +473,16 @@ textarea { min-height: 6rem; }
     ["Eitt steg att: opne skjemaet, sjå over svara og trykk «Send» nedst. Skjemaet er Oleiv sitt i Google Skjema, ikkje kommunen sitt.", "Ett steg igjen: åpne skjemaet, se over svarene og send det nederst. Skjemaet er Oleivs eget i Google Skjemaer, ikke kommunens.", "One more step: open the form, check your answers and send it at the bottom. The form is Oleiv's own in Google Forms, not the municipality's.", "Ще один крок: відкрийте форму, перевірте відповіді й надішліть її внизу. Форма належить Олейву в Google Forms, а не комуні.", "Jeszcze jeden krok: otwórz formularz, sprawdź odpowiedzi i wyślij go na dole. Formularz należy do Oleiva w Google Forms, nie do gminy."],
     ["Opnar ikkje skjemaet? Vis denne skjermen til Oleiv.", "Åpner ikke skjemaet? Vis denne skjermen til Oleiv.", "Form won't open? Show this screen to Oleiv.", "Форма не відкривається? Покажіть цей екран Олейву.", "Formularz się nie otwiera? Pokaż ten ekran Oleivowi."],
     ["Eit år med døme", "Et år med eksempler", "A year of examples", "Рік прикладів", "Rok przykładów"],
+    ["Eit år i Hå", "Et år i Hå", "A year in Hå", "Рік у Hå", "Rok w Hå"],
+    ["Dette skjedde i Hå i 2026. Slik ville det kome til deg.", "Dette skjedde i Hå i 2026. Slik ville det kommet til deg.", "This happened in Hå in 2026. This is how it would have reached you.", "Ось що сталося в Hå у 2026 році. Так це дійшло б до вас.", "To wydarzyło się w Hå w 2026 roku. Tak by to do Ciebie dotarło."],
+    ["Med vala dine i 2026", "Med valgene dine i 2026", "With your choices in 2026", "З вашим вибором у 2026 році", "Z Twoimi wyborami w 2026 roku"],
+    ["I heile Hå i 2026", "I hele Hå i 2026", "All of Hå in 2026", "Уся комуна Hå у 2026 році", "Cała gmina Hå w 2026 roku"],
+    ["Vel bygd og tema i starten for å sjå kva du ville fått.", "Velg bygd og tema i starten for å se hva du ville fått.", "Choose your village and topics at the start to see what you would have got.", "Оберіть село й теми на початку, щоб побачити, що ви отримали б.", "Wybierz miejscowość i tematy na początku, aby zobaczyć, co by do Ciebie trafiło."],
+    ["Talet gjeld berre dei ekte sakene som er med her. Kommunen ville truleg sendt fleire.", "Tallet gjelder bare de ekte sakene som er med her. Kommunen ville trolig sendt flere.", "The count only covers the real items shown here. The municipality would probably send more.", "Кількість стосується лише справжніх новин, наведених тут. Комуна, ймовірно, надіслала б більше.", "Liczba obejmuje tylko prawdziwe wiadomości pokazane tutaj. Gmina zapewne wysłałaby ich więcej."],
+    ["Heile året", "Hele året", "All year", "Увесь рік", "Cały rok"],
+    ["Vis oppdikta døme: kva som kunne kome elles i året", "Vis oppdiktede eksempler: hva som kunne kommet ellers i året", "Show made-up examples: what else could arrive during the year", "Показати вигадані приклади: що ще могло б надходити протягом року", "Pokaż zmyślone przykłady: co jeszcze mogłoby przyjść w ciągu roku"],
+    ["Desse er oppdikta. Dei viser kva slags saker som kunne kome, og kor fort.", "Disse er oppdiktet. De viser hva slags saker som kunne kommet, og hvor raskt.", "These are made up. They show what kind of items could arrive, and how quickly.", "Це вигадані приклади. Вони показують, які новини могли б надходити і як швидко.", "To zmyślone przykłady. Pokazują, jakie wiadomości mogłyby przychodzić i jak szybko."],
+    ["ikkje sendt", "ikke sendt", "not sent", "не надсилається", "nie wysyłane"],
     ["Alt er oppdikta. Det viser kva slags saker som kunne kome, og kor fort. (gamal)", "Alt er oppdiktet. Det viser hva slags saker som kunne kommet, og hvor raskt.", "Everything is made up. It shows what kind of news could arrive, and how quickly.", "Усе вигадано. Це показує, які новини могли б надходити і як швидко.", "Wszystko jest zmyślone. Pokazuje, jakie wiadomości mogłyby przychodzić i jak szybko."],
     ["Berre det som passar vala mine", "Bare det som passer valgene mine", "Only what fits my choices", "Лише те, що відповідає моєму вибору", "Tylko to, co pasuje do moich wyborów"],
     ["Tilbake til veka di", "Tilbake til uka di", "Back to your week", "Назад до вашого тижня", "Wróć do swojego tygodnia"],
@@ -763,6 +781,7 @@ textarea { min-height: 6rem; }
   function ekteOk(s) {
     var b = s.bygd.indexOf("Heile Hå") >= 0 || s.bygd.some(function (x) { return state.bygd.indexOf(x) >= 0; });
     if (!b) return false;
+    if (s.h === "godt" && state.kGodt[0] === "Nei takk") return false;
     if (s.h === "straks" || !s.tema) return true;
     return state.tema.indexOf(s.tema) >= 0;
   }
@@ -771,9 +790,16 @@ textarea { min-height: 6rem; }
     if (!ek) return;
     ek.textContent = "";
     var mine = berreMine && valgjort();
+    var sist = null, sec = null;
     EKTE.filter(function (s) { return !mine || ekteOk(s); })
       .sort(function (a, b) { return (a.m || 13) - (b.m || 13); })
       .forEach(function (s) {
+        if (s.m !== sist || !sec) {
+          sist = s.m;
+          sec = el("div", { "class": "month" });
+          sec.appendChild(el("h3", null, T(s.m ? MND[s.m] : "Heile året")));
+          ek.appendChild(sec);
+        }
         var it = el("div", { "class": "item" });
         var tags = el("div", { "class": "tags" });
         tags.appendChild(badge(s.h));
@@ -786,7 +812,7 @@ textarea { min-height: 6rem; }
         meta.appendChild(document.createTextNode(T("Frå") + ": " + T(s.fra) + " · " + T("Kjelde") + ": "));
         meta.appendChild(el("a", { href: s.u, target: "_blank", rel: "noopener" }, s.k));
         it.appendChild(meta);
-        ek.appendChild(it);
+        sec.appendChild(it);
       });
     if (!ek.childNodes.length) ek.appendChild(el("p", { "class": "hint" }, T("Ingen døme passar vala dine.")));
   }
@@ -980,7 +1006,30 @@ textarea { min-height: 6rem; }
     }
   }
 
-  var berreMine = false;
+  var berreMine = true; // oppdrag 03: vis det som passar vala, når vala er gjorde
+  // Oppsummering øvst i årsoversikta (oppdrag 03): tal frå dei ekte sakene i 2026.
+  function visSum() {
+    var box = document.getElementById("aar-sum");
+    if (!box) return;
+    box.textContent = "";
+    var harVal = valgjort();
+    var saker = harVal ? EKTE.filter(ekteOk) : EKTE;
+    box.appendChild(el("p", { "class": "sum-h" }, T(harVal ? "Med vala dine i 2026" : "I heile Hå i 2026")));
+    var rows = el("div", { "class": "sumrows" });
+    var kan = harVal ? { straks: state.kStraks[0], snart: state.kSnart[0], godt: state.kGodt[0] } : {};
+    ["straks", "snart", "godt"].forEach(function (h) {
+      var n = saker.filter(function (s) { return s.h === h; }).length;
+      var r = el("div", { "class": "sumrow" });
+      r.appendChild(el("span", { "class": "tal" }, String(n)));
+      var b = el("span"); b.appendChild(badge(h)); r.appendChild(b);
+      var k = kan[h];
+      r.appendChild(el("span", { "class": "kan" }, k ? (k === "Nei takk" ? T("ikkje sendt") : T(k)) : ""));
+      rows.appendChild(r);
+    });
+    box.appendChild(rows);
+    box.appendChild(el("p", { "class": "hint" }, T(harVal ? "Talet gjeld berre dei ekte sakene som er med her. Kommunen ville truleg sendt fleire." : "Vel bygd og tema i starten for å sjå kva du ville fått.")));
+  }
+
   function visAaret() {
     show("aaret");
     var box = document.getElementById("t-mine-box");
@@ -1007,6 +1056,7 @@ textarea { min-height: 6rem; }
       body.appendChild(sec);
     });
     if (!body.childNodes.length) body.appendChild(el("p", { "class": "hint" }, "Ingen døme passar vala dine."));
+    visSum();
     visEkte();
   }
 
@@ -1108,15 +1158,14 @@ textarea { min-height: 6rem; }
     updateButtons();
     go("takk");
   });
-  document.getElementById("b-igjen").addEventListener("click", function () { if (window.__resetLang) window.__resetLang(); lastSvar = null; reset(); startTime = Date.now(); go("start"); });
+  document.getElementById("b-igjen").addEventListener("click", function () { if (window.__resetLang) window.__resetLang(); lastSvar = null; berreMine = true; reset(); startTime = Date.now(); go("start"); });
   document.querySelectorAll("[data-back]").forEach(function (b) {
     b.addEventListener("click", function () { go(b.getAttribute("data-back")); });
   });
   // Visning: lys/mørk og større tekst. Huskast på telefonen til «Start på nytt».
   var docEl = document.documentElement, visTema = null, visStor = false;
   function erMork() {
-    if (visTema) return visTema === "dark";
-    return !!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    return visTema === "dark"; // hvit som standard
   }
   function brukVis(lagre) {
     if (visTema) docEl.setAttribute("data-theme", visTema); else docEl.removeAttribute("data-theme");
@@ -1131,7 +1180,6 @@ textarea { min-height: 6rem; }
   brukVis(false);
   document.getElementById("b-lys").addEventListener("click", function () { visTema = erMork() ? "light" : "dark"; brukVis(true); });
   document.getElementById("b-stor").addEventListener("click", function () { visStor = !visStor; brukVis(true); });
-  if (window.matchMedia) { try { window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () { if (!visTema) brukVis(false); }); } catch (e) {} }
   document.getElementById("b-igjen").addEventListener("click", function () { visTema = null; visStor = false; try { localStorage.removeItem("ndb-vis"); } catch (e) {} brukVis(false); });
 
   window.addEventListener("hashchange", route);
