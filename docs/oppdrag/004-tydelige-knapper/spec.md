@@ -1,6 +1,6 @@
 # APP-HAA oppdrag 04: tydelige knapper til og fra årsoversikten
 
-Skrevet 2026-11-16 09:25 av APP · APP-HAA 01 (skyøkta i containeren). Bestilt av Oleiv 16.11 kl. 09:18.
+Skrevet 2026-11-16 09:19 av APP · APP-HAA 01 (skyøkta i containeren). Bestilt av Oleiv 16.11 kl. 09:18.
 
 ## Hvorfor
 
