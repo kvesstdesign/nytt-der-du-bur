@@ -924,9 +924,10 @@ details.card > .hint { margin-bottom: 4px; }
     function v(x) { return x ? T(x) : "–"; }
     return T("Opnar ikkje skjemaet? Vis denne skjermen til Oleiv.") + " " +
       T("Bygder") + ": " + liste(s.bygd) + ". " + T("Tema:") + " " + liste(s.tema) + ". " +
-      T("Straks") + ": " + liste(s.kStraks) + ". " + T("Snart") + ": " + liste(s.kSnart) + ". " + T("Godt å vite") + ": " + v(s.kGodt) + ". " +
+      T("Straks") + ": " + kanalListe(s.kStraks) + ". " + T("Snart") + ": " + kanalListe(s.kSnart) + ". " + T("Godt å vite") + ": " + v(s.kGodt) + ". " +
       T("Ville du meldt deg på") + ": " + v(s.q1) + ". " + T("Var skiljet lett å skjøna") + ": " + v(s.q4) + ". " +
-      T("Kvar burde du sett det") + ": " + (s.q2.length ? liste(s.q2) : "–") +
+      T("Korleis får du med deg nytt i dag") + ": " + (s.q5.length ? liste(s.q5) : "–") + ". " +
+      T("Kvar burde du sett det") + ": " + (s.q2.length ? liste(s.q2) : "–") + ". " + T("Alder") + ": " + v(s.q6) +
       (s.sekund != null ? ". " + T("Tid") + ": " + s.sekund + " " + T("sekund") : "") + ".";
   }
 
