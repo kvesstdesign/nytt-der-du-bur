@@ -1121,11 +1121,12 @@ details.card > .hint { margin-bottom: 4px; }
   }
 
   // Oppdrag 04: hugs kvar ein kom frå, så «Tilbake» i årsoversikta går dit.
-  var sisteVisning = "start", aarFra = "start";
+  var sisteVisning = "start", aarFra = "start", harRutet = false, aarHarForrige = false;
   function route() {
     var h = (location.hash || "").replace("#", "");
-    if (h === "aaret" && sisteVisning !== "aaret") aarFra = sisteVisning;
+    if (h === "aaret" && sisteVisning !== "aaret") { aarFra = sisteVisning; aarHarForrige = harRutet; }
     sisteVisning = h || "start";
+    harRutet = true;
     if (h === "lapp") return visLapp();
     if (h === "aaret") return visAaret();
     if (h === "bygd") return show("bygd");
@@ -1160,7 +1161,11 @@ details.card > .hint { margin-bottom: 4px; }
     go("ferdig");
   });
   document.getElementById("n-ferdig").addEventListener("click", function () { go("svar"); });
-  document.querySelectorAll(".aar-tilbake").forEach(function (b) { b.addEventListener("click", function () { go(b.getAttribute("data-fra") || "start"); }); });
+  document.querySelectorAll(".aar-tilbake").forEach(function (b) { b.addEventListener("click", function () {
+    var fra = b.getAttribute("data-fra") || "start";
+    // Gå tilbake i historikken når forrige side er den same, så telefonens tilbakeknapp ikkje pendlar (kontroll 04a).
+    if (aarHarForrige && fra === aarFra) history.back(); else go(fra);
+  }); });
   document.getElementById("t-mine").addEventListener("click", function () { berreMine = !berreMine; visAaret(); });
   document.getElementById("f-svar").addEventListener("submit", async function (e) {
     e.preventDefault();
