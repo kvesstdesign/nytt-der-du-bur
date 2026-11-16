@@ -227,7 +227,7 @@ details.card > .hint { margin-bottom: 4px; }
   </div>
   <div class="tp-grp" role="group" aria-labelledby="tp-h-luft">
     <p class="tp-h" id="tp-h-luft">Luftig tekst</p>
-    <p class="tp-hint">Meir luft mellom bokstavar, ord og linjer. Kan gjera det lettare å lesa, til dømes ved dysleksi.</p>
+    <p class="tp-hint">Meir luft mellom bokstavar, ord og linjer. Fint om teksten kjennest tett eller tung å lesa.</p>
     <div class="tp-val">
       <button type="button" data-luft="0" aria-pressed="true">Av</button>
       <button type="button" data-luft="1" aria-pressed="false">På</button>
@@ -302,11 +302,13 @@ details.card > .hint { margin-bottom: 4px; }
       <p class="hint">Skissa har valt noko på førehand. Du kan endra det.</p>
       <div class="kanalgruppe">
         <div class="lane-h"><span class="badge b-straks">Straks</span><b>Når noko hastar</b></div>
+        <p class="hint">Vel så mange du vil.</p>
         <div class="chips" id="c-k-straks" role="group" aria-label="Kanal for Straks"></div>
-        <p class="hint"><b>SMS</b> kjem på alle telefonar, også gamle, utan at du gjer noko meir. Det ville kosta kommunen litt per melding. <b>Varsel i app</b> krev at du har ein app frå kommunen på telefonen.</p>
+        <p class="hint"><b>SMS</b> kjem på alle telefonar, også gamle, utan at du gjer noko meir. Det ville kosta kommunen litt per melding. <b>Varsel i app</b> krev at du har ein app frå kommunen på telefonen. <b>E-post</b> kan koma seinare fram, så ta gjerne med SMS eller app òg.</p>
       </div>
       <div class="kanalgruppe">
         <div class="lane-h"><span class="badge b-snart">Snart</span><b>Når noko er planlagt</b></div>
+        <p class="hint">Vel så mange du vil.</p>
         <div class="chips" id="c-k-snart" role="group" aria-label="Kanal for Snart"></div>
       </div>
       <div class="kanalgruppe">
@@ -327,14 +329,14 @@ details.card > .hint { margin-bottom: 4px; }
       <div class="lane" id="p-snart"></div>
       <div class="lane" id="p-mail"></div>
       <a class="btn ghost" href="#aaret">Sjå kva du ville fått gjennom eit heilt år</a>
-      <button class="btn" id="n-ferdig">Fire korte spørsmål</button>
+      <button class="btn" id="n-ferdig">Seks korte spørsmål</button>
     </div>
   </section>
 
   <!-- SPØRSMÅL -->
   <section class="view" id="v-svar" hidden aria-labelledby="h-svar">
     <form id="f-svar" class="stack" style="gap:20px">
-      <h2 id="h-svar">Fire korte spørsmål</h2>
+      <h2 id="h-svar">Seks korte spørsmål</h2>
       <fieldset>
         <legend>1. Ville du meldt deg på noko slikt?</legend>
         <div class="chips" id="c-q1" role="group" aria-label="Ville du meldt deg på"></div>
@@ -344,12 +346,22 @@ details.card > .hint { margin-bottom: 4px; }
         <div class="chips" id="c-q4" role="group" aria-label="Var skiljet lett å skjøna"></div>
       </fieldset>
       <fieldset>
-        <legend>3. Kvar ville du helst fått vita at dette finst?</legend>
+        <legend>3. Korleis får du med deg nytt frå kommunen i dag?</legend>
+        <p class="hint">Vel så mange du vil.</p>
+        <div class="chips" id="c-q5" role="group" aria-label="Korleis får du med deg nytt i dag"></div>
+      </fieldset>
+      <fieldset>
+        <legend>4. Kvar ville du helst fått vita at dette finst?</legend>
         <p class="hint">Vel så mange du vil.</p>
         <div class="chips" id="c-q2" role="group" aria-label="Kvar burde du sett det"></div>
       </fieldset>
       <fieldset>
-        <legend><label for="q3">4. Kva saknar du?</label></legend>
+        <legend>5. Kor gamal er du?</legend>
+        <p class="hint">Valfritt. Brukt berre til å sjå om tenesta passar for alle aldrar.</p>
+        <div class="chips" id="c-q6" role="group" aria-label="Alder"></div>
+      </fieldset>
+      <fieldset>
+        <legend><label for="q3">6. Kva saknar du?</label></legend>
         <p class="hint" id="q3-hint">Ikkje skriv namn, telefonnummer eller adresse.</p>
         <textarea id="q3" maxlength="500" aria-describedby="q3-hint"></textarea>
       </fieldset>
@@ -431,7 +443,7 @@ details.card > .hint { margin-bottom: 4px; }
     ["Større", "Større", "Larger", "Більший", "Większy"],
     ["Størst", "Størst", "Largest", "Найбільший", "Największy"],
     ["Luftig tekst", "Luftig tekst", "Spacious text", "Просторий текст", "Tekst z odstępami"],
-    ["Meir luft mellom bokstavar, ord og linjer. Kan gjera det lettare å lesa, til dømes ved dysleksi.", "Mer luft mellom bokstaver, ord og linjer. Kan gjøre det lettere å lese, for eksempel ved dysleksi.", "More space between letters, words and lines. Can make reading easier, for example with dyslexia.", "Більше простору між літерами, словами й рядками. Може полегшити читання, наприклад при дислексії.", "Więcej miejsca między literami, słowami i wierszami. Może ułatwić czytanie, na przykład przy dysleksji."],
+    ["Meir luft mellom bokstavar, ord og linjer. Fint om teksten kjennest tett eller tung å lesa.", "Mer luft mellom bokstaver, ord og linjer. Fint hvis teksten føles tett eller tung å lese.", "More space between letters, words and lines. Handy if the text feels dense or tiring to read.", "Більше простору між літерами, словами й рядками. Зручно, якщо текст здається щільним або важким для читання.", "Więcej miejsca między literami, słowami i wierszami. Przydatne, gdy tekst wydaje się zbity lub męczący."],
     ["Av", "Av", "Off", "Вимк.", "Wył."],
     ["På", "På", "On", "Увімк.", "Wł."],
     ["Bakgrunn", "Bakgrunn", "Background", "Фон", "Tło"],
@@ -611,6 +623,20 @@ details.card > .hint { margin-bottom: 4px; }
     ["Du valde", "Du valgte", "You chose", "Ви вибрали", "Wybrano"],
     ["Tema:", "Tema:", "Topics:", "Теми:", "Tematy:"],
     ["og", "og", "and", "і", "i"],
+    ["E-post", "E-post", "Email", "Електронна пошта", "E-mail"],
+    ["kan koma seinare fram, så ta gjerne med SMS eller app òg.", "kan komme senere fram, så ta gjerne med SMS eller app også.", "may arrive later, so consider adding SMS or the app too.", "може надійти пізніше, тож краще додайте ще SMS або застосунок.", "może dotrzeć później, więc warto dodać też SMS lub aplikację."],
+    ["Seks korte spørsmål", "Seks korte spørsmål", "Six short questions", "Шість коротких запитань", "Sześć krótkich pytań"],
+    ["3. Korleis får du med deg nytt frå kommunen i dag?", "3. Hvordan får du med deg nytt fra kommunen i dag?", "3. How do you keep up with news from the municipality today?", "3. Як ви сьогодні дізнаєтеся новини від комуни?", "3. Skąd dziś dowiadujesz się o sprawach gminy?"],
+    ["Korleis får du med deg nytt i dag", "Hvordan får du med deg nytt i dag", "How you keep up today", "Як ви дізнаєтеся новини сьогодні", "Skąd dziś się dowiadujesz"],
+    ["4. Kvar ville du helst fått vita at dette finst?", "4. Hvor ville du helst fått vite at dette finnes?", "4. Where would you most like to find out that this exists?", "4. Де б ви хотіли дізнатися, що це існує?", "4. Gdzie najchętniej dowiedział(a)byś się, że to istnieje?"],
+    ["5. Kor gamal er du?", "5. Hvor gammel er du?", "5. How old are you?", "5. Скільки вам років?", "5. Ile masz lat?"],
+    ["Valfritt. Brukt berre til å sjå om tenesta passar for alle aldrar.", "Valgfritt. Brukes bare til å se om tjenesten passer for alle aldre.", "Optional. Only used to see whether the service suits all ages.", "Необов'язково. Лише щоб побачити, чи підходить сервіс для всіх вікових груп.", "Opcjonalnie. Tylko po to, by sprawdzić, czy usługa pasuje do każdego wieku."],
+    ["Alder", "Alder", "Age", "Вік", "Wiek"],
+    ["6. Kva saknar du?", "6. Hva savner du?", "6. What is missing?", "6. Чого вам бракує?", "6. Czego Ci brakuje?"],
+    ["Folk eg kjenner", "Folk jeg kjenner", "People I know", "Знайомі", "Znajomi"],
+    ["Får det ofte ikkje med meg", "Får det ofte ikke med meg", "I often miss it", "Часто пропускаю", "Często mi to umyka"],
+    ["Under 30", "Under 30", "Under 30", "До 30", "Poniżej 30"],
+    ["67 eller eldre", "67 eller eldre", "67 or older", "67 і старше", "67 lub więcej"],
     ["Med ein gong, som", "Med en gang, som", "At once, as", "Одразу, як", "Od razu, jako"],
     ["Dagen før, som", "Dagen før, som", "The day before, as", "Напередодні, як", "Dzień wcześniej, jako"],
     ["Ingen straksdøme for bygda di. I verkelegheita kjem dei sjeldan.", "Ingen hasteeksempler for bygda di. I virkeligheten kommer de sjelden.", "No urgent examples for your village. In reality they are rare.", "Для вашого селища немає термінових прикладів. Насправді вони трапляються рідко.", "Brak pilnych przykładów dla Twojej miejscowości. W rzeczywistości zdarzają się rzadko."],
@@ -772,11 +798,13 @@ details.card > .hint { margin-bottom: 4px; }
 
   var BYGDER = ["Nærbø", "Varhaug", "Vigrestad", "Ogna", "Brusand", "Hæen", "Sirevåg", "Nærland"];
   var TEMA = ["Vatn og avløp", "Veg og trafikk", "Miljø og avfall", "Skule og barnehage", "Helse", "Kultur og fritid", "Politikk og høyring"];
-  var K_STRAKS = ["SMS", "Varsel i app"];
+  var K_STRAKS = ["SMS", "Varsel i app", "E-post"];
   var K_SNART = ["SMS dagen før", "Varsel i app dagen før", "I e-posten kvar veke"];
   var K_GODT = ["I e-posten kvar veke", "Nei takk"];
   var Q1 = ["Ja", "Kanskje", "Nei"];
   var Q4 = ["Ja", "Litt", "Nei"];
+  var Q5 = ["Facebook", "Kommunen si nettside", "Lokalavisa", "Folk eg kjenner", "Får det ofte ikkje med meg"];
+  var Q6 = ["Under 30", "30–49", "50–66", "67 eller eldre"];
   var Q2 = ["Butikken", "Lokalavisa", "Postkassa", "Skule eller barnehage", "Kommunen si nettside", "Facebook", "Anna"];
   var HAST = { straks: "Straks", snart: "Snart", godt: "Godt å vite" };
   var MND = ["Når som helst", "Januar", "Februar", "Mars", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Desember"];
@@ -818,7 +846,8 @@ details.card > .hint { margin-bottom: 4px; }
   // ?test=1 sender til ein lokal adresse i staden, så testar ikkje lagar svar i skjemaet.
   var TEST = /(?:^|[?&])test=1(?:&|$)/.test(location.search || "");
   var SKJEMA_POST = TEST ? "test-formResponse" : SKJEMA.replace(/\/viewform$/, "/formResponse");
-  var FELT = { bygd: "144338228", tema: "1494700229", kStraks: "535172419", kSnart: "1629005840", kGodt: "1065507517", q1: "1532557234", q4: "588487473", q2: "1723581213", q3: "129376377", sekund: "1021682156" };
+  // Oppdrag 06: Straks og Snart går til nye spørsmål med avkryssing (fleire val). Dei gamle enkeltvalsspørsmåla (535172419, 1629005840) står att i skjemaet med svara frå før.
+  var FELT = { bygd: "144338228", tema: "1494700229", kStraks: "1231167071", kSnart: "58709819", kGodt: "1065507517", q1: "1532557234", q4: "588487473", q5: "1553620", q2: "1723581213", q6: "519260362", q3: "129376377", sekund: "1021682156" };
   // Same felt for sending og reservelenkje, så dei aldri sprikar.
   function skjemaPar(s) {
     var p = [];
@@ -895,14 +924,14 @@ details.card > .hint { margin-bottom: 4px; }
     function v(x) { return x ? T(x) : "–"; }
     return T("Opnar ikkje skjemaet? Vis denne skjermen til Oleiv.") + " " +
       T("Bygder") + ": " + liste(s.bygd) + ". " + T("Tema:") + " " + liste(s.tema) + ". " +
-      T("Straks") + ": " + v(s.kStraks) + ". " + T("Snart") + ": " + v(s.kSnart) + ". " + T("Godt å vite") + ": " + v(s.kGodt) + ". " +
+      T("Straks") + ": " + liste(s.kStraks) + ". " + T("Snart") + ": " + liste(s.kSnart) + ". " + T("Godt å vite") + ": " + v(s.kGodt) + ". " +
       T("Ville du meldt deg på") + ": " + v(s.q1) + ". " + T("Var skiljet lett å skjøna") + ": " + v(s.q4) + ". " +
       T("Kvar burde du sett det") + ": " + (s.q2.length ? liste(s.q2) : "–") +
       (s.sekund != null ? ". " + T("Tid") + ": " + s.sekund + " " + T("sekund") : "") + ".";
   }
 
   function freshState() {
-    return { bygd: [], tema: [], kStraks: [K_STRAKS[0]], kSnart: [K_SNART[0]], kGodt: [K_GODT[0]], q1: [], q4: [], q2: [] };
+    return { bygd: [], tema: [], kStraks: [K_STRAKS[0]], kSnart: [K_SNART[0]], kGodt: [K_GODT[0]], q1: [], q4: [], q2: [], q5: [], q6: [] };
   }
 
   function el(tag, attrs, text) {
@@ -921,9 +950,13 @@ details.card > .hint { margin-bottom: 4px; }
       b.addEventListener("click", function () {
         var list = state[key];
         var on = list.indexOf(o) >= 0;
-        if (single) {
+        if (single === true) {
           if (on) return; // ein må alltid vera vald
           state[key] = [o];
+        } else if (single === "min1") {
+          if (on && list.length === 1) return; // minst éin kanal
+          if (on) list.splice(list.indexOf(o), 1); else list.push(o);
+          state[key] = options.filter(function (x) { return list.indexOf(x) >= 0; }); // fast rekkjefølgje
         } else {
           if (on) list.splice(list.indexOf(o), 1); else list.push(o);
         }
@@ -1002,6 +1035,7 @@ details.card > .hint { margin-bottom: 4px; }
 
   function liste(a) { a = a.map(T); if (a.length < 2) return a.join(""); return a.slice(0, -1).join(", ") + " " + T("og") + " " + a[a.length - 1]; }
 
+  function kanalListe(a) { a = a.map(function (k) { var s = T(k); return /^\p{Lu}{2}/u.test(s) ? s : lc(s); }); /* «SMS dagen før» held fram med store bokstavar */ if (a.length < 2) return a.join(""); return a.slice(0, -1).join(", ") + " " + T("og") + " " + a[a.length - 1]; }
   function badge(h) { return el("span", { "class": "badge b-" + h }, HAST[h]); }
 
   function itemEl(s, withMonth) {
@@ -1043,16 +1077,17 @@ details.card > .hint { margin-bottom: 4px; }
       T("Du valde") + " " + liste(state.bygd) + ". " + T("Tema:") + " " + liste(state.tema) + ".";
 
     var ps = document.getElementById("p-straks"); ps.textContent = "";
-    ps.appendChild(laneHead("straks", T("Med ein gong, som") + " " + lc(T(state.kStraks[0]))));
+    ps.appendChild(laneHead("straks", T("Med ein gong, som") + " " + kanalListe(state.kStraks)));
     if (straks.length) ps.appendChild(notifEl(straks[0], false, state.kStraks[0]));
     else ps.appendChild(el("p", { "class": "hint" }, "Ingen straksdøme for bygda di. I verkelegheita kjem dei sjeldan."));
 
     var pn = document.getElementById("p-snart"); pn.textContent = "";
     var mail = document.getElementById("p-mail"); mail.textContent = "";
-    var snartIMail = state.kSnart[0] === "I e-posten kvar veke";
-    if (!snartIMail) {
-      pn.appendChild(laneHead("snart", T("Dagen før, som") + " " + (state.kSnart[0].indexOf("SMS") === 0 ? "SMS" : lc(T("Varsel i app")))));
-      if (snart.length) pn.appendChild(notifEl(snart[0], true, state.kSnart[0].indexOf("SMS") === 0 ? "SMS" : "Varsel i app"));
+    var snartIMail = state.kSnart.indexOf("I e-posten kvar veke") >= 0;
+    var snartTlf = state.kSnart.filter(function (k) { return k !== "I e-posten kvar veke"; }).map(function (k) { return k.indexOf("SMS") === 0 ? "SMS" : "Varsel i app"; });
+    if (snartTlf.length) {
+      pn.appendChild(laneHead("snart", T("Dagen før, som") + " " + kanalListe(snartTlf)));
+      if (snart.length) pn.appendChild(notifEl(snart[0], true, snartTlf[0]));
       else pn.appendChild(el("p", { "class": "hint" }, "Ingen planlagde saker for vala dine denne veka."));
     }
 
@@ -1092,14 +1127,14 @@ details.card > .hint { margin-bottom: 4px; }
     var saker = harVal ? EKTE.filter(ekteOk) : EKTE;
     box.appendChild(el("p", { "class": "sum-h" }, T(harVal ? "Med vala dine i 2026" : "I heile Hå i 2026")));
     var rows = el("div", { "class": "sumrows" });
-    var kan = harVal ? { straks: state.kStraks[0], snart: state.kSnart[0], godt: state.kGodt[0] } : {};
+    var kan = harVal ? { straks: state.kStraks, snart: state.kSnart, godt: state.kGodt } : {};
     ["straks", "snart", "godt"].forEach(function (h) {
       var n = saker.filter(function (s) { return s.h === h; }).length;
       var r = el("div", { "class": "sumrow" });
       r.appendChild(el("span", { "class": "tal" }, String(n)));
       var b = el("span"); b.appendChild(badge(h)); r.appendChild(b);
       var k = kan[h];
-      r.appendChild(el("span", { "class": "kan" }, k ? (k === "Nei takk" ? T("ikkje sendt") : T(k)) : ""));
+      r.appendChild(el("span", { "class": "kan" }, k ? (k[0] === "Nei takk" ? T("ikkje sendt") : kanalListe(k)) : ""));
       rows.appendChild(r);
     });
     box.appendChild(rows);
@@ -1143,8 +1178,8 @@ details.card > .hint { margin-bottom: 4px; }
     var sek = pameldtSek;
     var svar = {
       bygd: state.bygd.slice(), tema: state.tema.slice(),
-      kStraks: state.kStraks[0], kSnart: state.kSnart[0], kGodt: state.kGodt[0],
-      q1: state.q1[0] || "", q4: state.q4[0] || "", q2: state.q2.slice(),
+      kStraks: state.kStraks.slice(), kSnart: state.kSnart.slice(), kGodt: state.kGodt[0],
+      q1: state.q1[0] || "", q4: state.q4[0] || "", q5: state.q5.slice(), q2: state.q2.slice(), q6: state.q6[0] || "",
       q3: (document.getElementById("q3").value || "").slice(0, 500),
       sekund: sek, dato: new Date().toISOString().slice(0, 10), versjon: 5
     };
@@ -1217,12 +1252,14 @@ details.card > .hint { margin-bottom: 4px; }
   // Oppsett
   makeChips("c-bygd", BYGDER, "bygd", false);
   makeChips("c-tema", TEMA, "tema", false);
-  makeChips("c-k-straks", K_STRAKS, "kStraks", true);
-  makeChips("c-k-snart", K_SNART, "kSnart", true);
+  makeChips("c-k-straks", K_STRAKS, "kStraks", "min1");
+  makeChips("c-k-snart", K_SNART, "kSnart", "min1");
   makeChips("c-k-godt", K_GODT, "kGodt", true);
   makeChipsOptional("c-q1", Q1, "q1");
   makeChipsOptional("c-q4", Q4, "q4");
+  makeChips("c-q5", Q5, "q5", false);
   makeChips("c-q2", Q2, "q2", false);
+  makeChipsOptional("c-q6", Q6, "q6");
   reset();
 
   document.getElementById("b-start").addEventListener("click", function () { go("bygd"); });
