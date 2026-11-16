@@ -71,13 +71,14 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-body); 
 .wrap > *, .stack > *, .card > *, .month > *, .item, .item > * { min-width: 0; }
 .tags { flex-wrap: wrap; }
 .tags > * { max-width: 100%; }
-body { overflow-wrap: break-word; }
+body { overflow-wrap: break-word; hyphens: auto; -webkit-hyphens: auto; } /* orddeling med bindestrek i staden for brot midt i ordet */
 html.luft .badge, html.stor2 .badge { white-space: normal; }
 .topbar .vis button { font: inherit; font-size: 1rem; font-weight: 600; line-height: 1; min-width: 44px; min-height: 44px; padding: 0 10px; border: 1.5px solid var(--edge); border-radius: 10px; background: var(--surface); color: var(--ink); cursor: pointer; }
 .topbar .vis button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 .topbar select:focus-visible, .topbar button:focus-visible { outline: 3px solid var(--flag); outline-offset: 2px; }
 .topbar .vis button[aria-expanded="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-/* Tilpass-panelet (oppdrag 05) */
+/* Tilpass-panelet (oppdrag 05). [hidden] må vinna over display:grid (kontroll 05b). */
+.tilpass[hidden] { display: none; }
 .tilpass { max-width: 34rem; margin: 0 auto 8px; padding: 14px 16px 16px; display: grid; gap: 14px; background: var(--surface); border: 1.5px solid var(--edge); border-radius: 12px; box-shadow: var(--card-shadow, none); }
 @media (max-width: 34rem) { .tilpass { margin-inline: 8px; } }
 .tp-h { margin: 0 0 6px; font-weight: 600; }
@@ -106,8 +107,8 @@ p { margin: 0; }
 /* Hastegradane: merkelappane i eiga kolonne, så overskriftene startar på same linje same kor brei lappen er (gjeld alle språk). */
 .levels { display: grid; grid-template-columns: minmax(0, max-content) minmax(0, 1fr); gap: 4px 12px; align-items: baseline; }
 /* Stor eller luftig tekst: merkelappen over teksten, så raden ikkje blir breiare enn skjermen (kontroll 05a). */
-html.stor2 .levels, html.luft .levels { grid-template-columns: minmax(0, 1fr); }
-html.stor2 .level .badge, html.luft .level .badge, html.stor2 .level b, html.luft .level b, html.stor2 .level p, html.luft .level p { grid-column: 1; justify-self: start; }
+html.stor .levels, html.luft .levels { grid-template-columns: minmax(0, 1fr); }
+html.stor .level .badge, html.luft .level .badge, html.stor .level b, html.luft .level b, html.stor .level p, html.luft .level p { grid-column: 1; justify-self: start; }
 .level { display: contents; }
 .level .badge { grid-column: 1; justify-self: stretch; text-align: center; }
 .level b { grid-column: 2; }
@@ -435,7 +436,6 @@ details.card > .hint { margin-bottom: 4px; }
     ["Lys", "Lys", "Light", "Світлий", "Jasne"],
     ["Mørk", "Mørk", "Dark", "Темний", "Ciemne"],
     ["Ferdig", "Ferdig", "Done", "Готово", "Gotowe"],
-    ["Visning", "Visning", "Display", "Вигляд", "Wygląd"],
     ["Siste steg: send skjemaet", "Siste steg: send skjemaet", "Last step: send the form", "Останній крок: надішліть форму", "Ostatni krok: wyślij formularz"],
     ["Skjedde i 2026", "Skjedde i 2026", "Happened in 2026", "Сталося у 2026 році", "Wydarzyło się w 2026"],
     ["Ekte saker frå Hå i år, skrivne om med eigne ord. Kjelda står under kvar sak.", "Ekte saker fra Hå i år, skrevet om med egne ord. Kilden står under hver sak.", "Real items from Hå this year, rewritten in our own words. The source is under each item.", "Справжні новини з Hå цього року, переказані своїми словами. Джерело вказано під кожною новиною.", "Prawdziwe wiadomości z Hå z tego roku, opisane własnymi słowami. Źródło jest pod każdą wiadomością."],
@@ -1257,6 +1257,7 @@ details.card > .hint { margin-bottom: 4px; }
     if (visTema) docEl.setAttribute("data-theme", visTema); else docEl.removeAttribute("data-theme");
     docEl.style.fontSize = ["", "125%", "150%"][visStor] || "";
     docEl.classList.toggle("luft", visLuft);
+    docEl.classList.toggle("stor", visStor >= 1);
     docEl.classList.toggle("stor2", visStor === 2);
     var mork = erMork();
     document.querySelectorAll("[data-str]").forEach(function (b) { b.setAttribute("aria-pressed", String(+b.getAttribute("data-str") === visStor)); });
