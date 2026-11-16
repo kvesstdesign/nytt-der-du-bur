@@ -72,7 +72,7 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-body); 
 .tags { flex-wrap: wrap; }
 .tags > * { max-width: 100%; }
 body { overflow-wrap: break-word; }
-html.luft .badge, html[style*="150%"] .badge { white-space: normal; }
+html.luft .badge, html.stor2 .badge { white-space: normal; }
 .topbar .vis button { font: inherit; font-size: 1rem; font-weight: 600; line-height: 1; min-width: 44px; min-height: 44px; padding: 0 10px; border: 1.5px solid var(--edge); border-radius: 10px; background: var(--surface); color: var(--ink); cursor: pointer; }
 .topbar .vis button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 .topbar select:focus-visible, .topbar button:focus-visible { outline: 3px solid var(--flag); outline-offset: 2px; }
@@ -92,6 +92,7 @@ html.luft body { letter-spacing: .12em; word-spacing: .16em; line-height: 1.8; }
 html.luft p, html.luft li { margin-bottom: 1em; }
 html.luft h1, html.luft h2, html.luft h3, html.luft h4 { letter-spacing: .06em; line-height: 1.35; }
 html.luft .badge { letter-spacing: .06em; }
+html.luft button, html.luft select, html.luft textarea, html.luft input { letter-spacing: .12em; word-spacing: .16em; }
 .flag strong { font-weight: 600; }
 h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; text-wrap: balance; margin: 0; }
 h1 { font-size: 2rem; margin-top: 8px; }
@@ -103,7 +104,10 @@ p { margin: 0; }
 .hint { color: var(--muted); font-size: .9rem; }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 12px; }
 /* Hastegradane: merkelappane i eiga kolonne, så overskriftene startar på same linje same kor brei lappen er (gjeld alle språk). */
-.levels { display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; align-items: baseline; }
+.levels { display: grid; grid-template-columns: minmax(0, max-content) minmax(0, 1fr); gap: 4px 12px; align-items: baseline; }
+/* Stor eller luftig tekst: merkelappen over teksten, så raden ikkje blir breiare enn skjermen (kontroll 05a). */
+html.stor2 .levels, html.luft .levels { grid-template-columns: minmax(0, 1fr); }
+html.stor2 .level .badge, html.luft .level .badge, html.stor2 .level b, html.luft .level b, html.stor2 .level p, html.luft .level p { grid-column: 1; justify-self: start; }
 .level { display: contents; }
 .level .badge { grid-column: 1; justify-self: stretch; text-align: center; }
 .level b { grid-column: 2; }
@@ -143,7 +147,7 @@ body.compact .flag-full, body:not(.compact) .flag-short, body.compact .langbar, 
 .row > .btn.ghost { flex: 0 0 auto; width: auto; padding-inline: 20px; }
 #b-aar-topp { width: auto; justify-self: start; padding-inline: 20px; } /* oppdrag 04 */
 .mt { background: var(--flag-bg); color: var(--flag); padding: 8px max(16px, calc((100% - 34rem) / 2 + 16px)); font-size: .9rem; margin: 0; }
-.row { display: flex; gap: 10px; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; }
 .row > * { flex: 1; }
 button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visible { outline: 3px solid var(--flag); outline-offset: 2px; }
 a { color: var(--accent); }
@@ -418,9 +422,6 @@ details.card > .hint { margin-bottom: 4px; }
     ["Øvst er oppdikta døme som viser kva som kunne kome, og kor fort. Nedst er ekte saker frå 2026.", "Øverst er oppdiktede eksempler som viser hva som kunne kommet, og hvor raskt. Nederst er ekte saker fra 2026.", "At the top are made-up examples showing what could arrive, and how quickly. Below are real items from 2026.", "Угорі вигадані приклади, які показують, що могло б надходити і як швидко. Нижче справжні новини 2026 року.", "U góry są zmyślone przykłady pokazujące, co mogłoby przychodzić i jak szybko. Poniżej prawdziwe wiadomości z 2026 roku."],
     ["Forslag frå Oleiv Høyland, innbyggjar på Nærbø · ikkje ei teneste frå Hå kommune", "Forslag fra Oleiv Høyland, innbygger på Nærbø · ikke en tjeneste fra Hå kommune", "A proposal from Oleiv Høyland, a Nærbø resident · not a Hå municipality service", "Пропозиція від Oleiv Høyland, мешканця Nærbø · не сервіс комуни Hå", "Propozycja od Oleiva Høylanda, mieszkańca Nærbø · to nie usługa gminy Hå"],
     ["Ingen saker i e-posten denne veka for vala dine.", "Ingen saker i e-posten denne uka for valgene dine.", "No items in this week's email for your choices.", "Цього тижня у листі немає новин для вашого вибору.", "W tym tygodniu w e-mailu nie ma wiadomości dla Twoich wyborów."],
-    ["Lys bakgrunn", "Lys bakgrunn", "Light background", "Світлий фон", "Jasne tło"],
-    ["Mørk bakgrunn", "Mørk bakgrunn", "Dark background", "Темний фон", "Ciemne tło"],
-    ["Større tekst", "Større tekst", "Larger text", "Більший текст", "Większy tekst"],
     ["Tilpass", "Tilpass", "Adjust", "Налаштувати", "Dostosuj"],
     ["Tekststorleik", "Tekststørrelse", "Text size", "Розмір тексту", "Rozmiar tekstu"],
     ["Normal", "Normal", "Normal", "Звичайний", "Normalny"],
@@ -1256,6 +1257,7 @@ details.card > .hint { margin-bottom: 4px; }
     if (visTema) docEl.setAttribute("data-theme", visTema); else docEl.removeAttribute("data-theme");
     docEl.style.fontSize = ["", "125%", "150%"][visStor] || "";
     docEl.classList.toggle("luft", visLuft);
+    docEl.classList.toggle("stor2", visStor === 2);
     var mork = erMork();
     document.querySelectorAll("[data-str]").forEach(function (b) { b.setAttribute("aria-pressed", String(+b.getAttribute("data-str") === visStor)); });
     document.querySelectorAll("[data-luft]").forEach(function (b) { b.setAttribute("aria-pressed", String((b.getAttribute("data-luft") === "1") === visLuft)); });
@@ -1277,6 +1279,7 @@ details.card > .hint { margin-bottom: 4px; }
   tpBtn.addEventListener("click", function () { visTilpass(tpPanel.hidden); });
   document.getElementById("b-tp-lukk").addEventListener("click", function () { visTilpass(false); });
   tpPanel.addEventListener("keydown", function (e) { if (e.key === "Escape") visTilpass(false); });
+  tpBtn.addEventListener("keydown", function (e) { if (e.key === "Escape" && !tpPanel.hidden) visTilpass(false); });
   document.querySelectorAll("[data-str]").forEach(function (b) { b.addEventListener("click", function () { visStor = +b.getAttribute("data-str"); brukVis(true); }); });
   document.querySelectorAll("[data-luft]").forEach(function (b) { b.addEventListener("click", function () { visLuft = b.getAttribute("data-luft") === "1"; brukVis(true); }); });
   document.querySelectorAll("[data-tema]").forEach(function (b) { b.addEventListener("click", function () { visTema = b.getAttribute("data-tema"); brukVis(true); }); });
