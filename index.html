@@ -71,7 +71,9 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-body); 
 .wrap > *, .stack > *, .card > *, .month > *, .item, .item > * { min-width: 0; }
 .tags { flex-wrap: wrap; }
 .tags > * { max-width: 100%; }
-body { overflow-wrap: break-word; hyphens: auto; -webkit-hyphens: auto; } /* orddeling med bindestrek i staden for brot midt i ordet */
+body { overflow-wrap: break-word; }
+/* Orddeling berre ved stor eller luftig tekst, og ikkje i overskrifter, merkelappar og knappar (kontroll 05c, F1). */
+html.stor p, html.luft p, html.stor li, html.luft li, html.stor .lead, html.luft .lead { hyphens: auto; -webkit-hyphens: auto; }
 html.luft .badge, html.stor2 .badge { white-space: normal; }
 .topbar .vis button { font: inherit; font-size: 1rem; font-weight: 600; line-height: 1; min-width: 44px; min-height: 44px; padding: 0 10px; border: 1.5px solid var(--edge); border-radius: 10px; background: var(--surface); color: var(--ink); cursor: pointer; }
 .topbar .vis button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }

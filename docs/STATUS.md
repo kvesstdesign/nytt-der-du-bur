@@ -11,3 +11,4 @@
 
 ## Samtaler
 - 2026-11-16: oppdrag 04 (tydelige knapper til og fra årsoversikten). Kontroll 04a godkjent med ett lavt funn innenfor oppdraget, rettet (history.back). Avsenderen er endret til «Oleiv Høyland» etter Oleivs valg 10:00.
+- 2026-11-16: oppdrag 05 (Tilpass-panel: tekststørrelse, luftig tekst, bakgrunn; symbol på merkelappene; UU-retting) etter Oleivs bestilling 10:07 og uavhengig UU-gjennomgang. Kontroll 05a og 05b fant feil (overflyt, panel alltid synlig), rettet. 05c godkjent. Orddeling begrenset til stor/luftig tekst etter F1. Venter på Oleivs ja til merge.
