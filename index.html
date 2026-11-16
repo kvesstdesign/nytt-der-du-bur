@@ -112,6 +112,7 @@ body.compact .flag-full, body:not(.compact) .flag-short, body.compact .langbar, 
 .flag-short { font-weight: 600; }
 [tabindex="-1"]:focus { outline: none; }
 .row > .btn.ghost { flex: 0 0 auto; width: auto; padding-inline: 20px; }
+#b-aar-topp { width: auto; justify-self: start; padding-inline: 20px; } /* oppdrag 04 */
 .mt { background: var(--flag-bg); color: var(--flag); padding: 8px max(16px, calc((100% - 34rem) / 2 + 16px)); font-size: .9rem; margin: 0; }
 .row { display: flex; gap: 10px; }
 .row > * { flex: 1; }
@@ -182,8 +183,8 @@ details.card > .hint { margin-bottom: 4px; }
 </div>
 <p class="mt" id="mt-note" role="note" hidden data-noi18n></p>
 <div class="flag" role="note">
-  <p class="flag-short">Forslag frå Oleiv, innbyggjar på Nærbø · ikkje ei teneste frå Hå kommune</p>
-  <p class="flag-full"><strong>Forslag frå Oleiv, innbyggjar på Nærbø.</strong> Dette er ikkje ei teneste frå Hå kommune. Døma er oppdikta, bortsett frå dei ekte sakene frå 2026 i årsoversikta. Ingen varsel blir sende.</p>
+  <p class="flag-short">Forslag frå Oleiv Høyland, innbyggjar på Nærbø · ikkje ei teneste frå Hå kommune</p>
+  <p class="flag-full"><strong>Forslag frå Oleiv Høyland, innbyggjar på Nærbø.</strong> Dette er ikkje ei teneste frå Hå kommune. Døma er oppdikta, bortsett frå dei ekte sakene frå 2026 i årsoversikta. Ingen varsel blir sende.</p>
 </div>
 
 <main class="wrap">
@@ -204,7 +205,7 @@ details.card > .hint { margin-bottom: 4px; }
         <b>Vatnet er stengt i Dømegata no</b>
         <span class="hint">Brot på leidning. Vatnet er truleg tilbake om lag kl. 15.</span>
       </div>
-      <p class="hint"><a href="#aaret">Sjå eit heilt år med døme</a></p>
+      <a class="btn ghost" href="#aaret">Sjå eit heilt år med døme</a>
     </div>
   </section>
 
@@ -264,7 +265,7 @@ details.card > .hint { margin-bottom: 4px; }
       <div class="lane" id="p-straks"></div>
       <div class="lane" id="p-snart"></div>
       <div class="lane" id="p-mail"></div>
-      <p class="hint"><a href="#aaret">Sjå kva du ville fått gjennom eit heilt år</a></p>
+      <a class="btn ghost" href="#aaret">Sjå kva du ville fått gjennom eit heilt år</a>
       <button class="btn" id="n-ferdig">Fire korte spørsmål</button>
     </div>
   </section>
@@ -311,6 +312,7 @@ details.card > .hint { margin-bottom: 4px; }
   <!-- ÅRET -->
   <section class="view" id="v-aaret" hidden aria-labelledby="h-aaret">
     <div class="stack">
+      <button type="button" class="btn ghost aar-tilbake" id="b-aar-topp">Tilbake</button>
       <h2 id="h-aaret">Eit år i Hå</h2>
       <p class="lead">Dette skjedde i Hå i 2026. Slik ville det kome til deg.</p>
       <div class="card" id="aar-sum" aria-live="polite"></div>
@@ -325,8 +327,8 @@ details.card > .hint { margin-bottom: 4px; }
         <p class="hint">Desse er oppdikta. Dei viser kva slags saker som kunne kome, og kor fort.</p>
         <div id="aar-body"></div>
       </details>
-      <button class="btn ghost" id="b-aar-tilbake" hidden>Tilbake til veka di</button>
-      <a href="#" class="hint">Til starten</a>
+      <button type="button" class="btn ghost aar-tilbake" id="b-aar-tilbake">Tilbake</button>
+      <a href="#" class="hint" id="a-aar-start">Til starten</a>
     </div>
   </section>
 
@@ -341,7 +343,7 @@ details.card > .hint { margin-bottom: 4px; }
         <h2>Få med deg det som skjer der du bur</h2>
         <div id="qr" aria-label="QR-kode"></div>
         <p>Skann og prøv på eitt minutt.</p>
-        <p class="small">Forslag frå Oleiv, innbyggjar på Nærbø. Ikkje ei teneste frå Hå kommune. Du treng ikkje oppgje namn, e-post eller telefonnummer.</p>
+        <p class="small">Forslag frå Oleiv Høyland, innbyggjar på Nærbø. Ikkje ei teneste frå Hå kommune. Du treng ikkje oppgje namn, e-post eller telefonnummer.</p>
       </div>
       <p class="hint">Ta eit skjermbilete av lappen og skriv det ut i A6.</p>
       <a href="#" class="hint">Til starten</a>
@@ -357,10 +359,10 @@ details.card > .hint { margin-bottom: 4px; }
   var LANGS = ["nn", "nb", "en", "uk", "pl"];
   var R = [
     ["Nytt der du bur", "Nytt der du bor", "News where you live", "Новини там, де ви живете", "Wiadomości z Twojej okolicy"],
-    ["Forslag frå Oleiv, innbyggjar på Nærbø.", "Forslag fra Oleiv, innbygger på Nærbø.", "A proposal from Oleiv, a resident of Nærbø.", "Пропозиція від Олейва, мешканця Nærbø.", "Propozycja od Oleiva, mieszkańca Nærbø."],
+    ["Forslag frå Oleiv Høyland, innbyggjar på Nærbø.", "Forslag fra Oleiv Høyland, innbygger på Nærbø.", "A proposal from Oleiv Høyland, a resident of Nærbø.", "Пропозиція від Oleiv Høyland, мешканця Nærbø.", "Propozycja od Oleiva Høylanda, mieszkańca Nærbø."],
     ["Dette er ikkje ei teneste frå Hå kommune. Døma er oppdikta, bortsett frå dei ekte sakene frå 2026 i årsoversikta. Ingen varsel blir sende.", "Dette er ikke en tjeneste fra Hå kommune. Eksemplene er oppdiktet, bortsett fra de ekte sakene fra 2026 i årsoversikten. Ingen varsler blir sendt.", "This is not a service from Hå municipality. The examples are made up, except the real 2026 items in the year overview. No alerts are sent.", "Це не сервіс комуни Hå. Приклади вигадані, крім справжніх новин 2026 року в річному огляді. Жодні сповіщення не надсилаються.", "To nie jest usługa gminy Hå. Przykłady są zmyślone, z wyjątkiem prawdziwych wiadomości z 2026 roku w przeglądzie rocznym. Żadne powiadomienia nie są wysyłane."],
     ["Øvst er oppdikta døme som viser kva som kunne kome, og kor fort. Nedst er ekte saker frå 2026.", "Øverst er oppdiktede eksempler som viser hva som kunne kommet, og hvor raskt. Nederst er ekte saker fra 2026.", "At the top are made-up examples showing what could arrive, and how quickly. Below are real items from 2026.", "Угорі вигадані приклади, які показують, що могло б надходити і як швидко. Нижче справжні новини 2026 року.", "U góry są zmyślone przykłady pokazujące, co mogłoby przychodzić i jak szybko. Poniżej prawdziwe wiadomości z 2026 roku."],
-    ["Forslag frå Oleiv, innbyggjar på Nærbø · ikkje ei teneste frå Hå kommune", "Forslag fra Oleiv, innbygger på Nærbø · ikke en tjeneste fra Hå kommune", "A proposal from Oleiv, a Nærbø resident · not a Hå municipality service", "Пропозиція від Олейва, мешканця Nærbø · не сервіс комуни Hå", "Propozycja od Oleiva, mieszkańca Nærbø · to nie usługa gminy Hå"],
+    ["Forslag frå Oleiv Høyland, innbyggjar på Nærbø · ikkje ei teneste frå Hå kommune", "Forslag fra Oleiv Høyland, innbygger på Nærbø · ikke en tjeneste fra Hå kommune", "A proposal from Oleiv Høyland, a Nærbø resident · not a Hå municipality service", "Пропозиція від Oleiv Høyland, мешканця Nærbø · не сервіс комуни Hå", "Propozycja od Oleiva Høylanda, mieszkańca Nærbø · to nie usługa gminy Hå"],
     ["Ingen saker i e-posten denne veka for vala dine.", "Ingen saker i e-posten denne uka for valgene dine.", "No items in this week's email for your choices.", "Цього тижня у листі немає новин для вашого вибору.", "W tym tygodniu w e-mailu nie ma wiadomości dla Twoich wyborów."],
     ["Lys bakgrunn", "Lys bakgrunn", "Light background", "Світлий фон", "Jasne tło"],
     ["Mørk bakgrunn", "Mørk bakgrunn", "Dark background", "Темний фон", "Ciemne tło"],
@@ -487,10 +489,12 @@ details.card > .hint { margin-bottom: 4px; }
     ["Berre det som passar vala mine", "Bare det som passer valgene mine", "Only what fits my choices", "Лише те, що відповідає моєму вибору", "Tylko to, co pasuje do moich wyborów"],
     ["Tilbake til veka di", "Tilbake til uka di", "Back to your week", "Назад до вашого тижня", "Wróć do swojego tygodnia"],
     ["Til starten", "Til starten", "To the start", "На початок", "Na początek"],
+    ["Tilbake til starten", "Tilbake til starten", "Back to the start", "Назад на початок", "Wróć na początek"],
+    ["Tilbake til spørsmåla", "Tilbake til spørsmålene", "Back to the questions", "Назад до запитань", "Wróć do pytań"],
     ["QR-lapp til testen", "QR-lapp til testen", "QR note for the test", "QR-листівка для тесту", "Karteczka z kodem QR do testu"],
     ["Lim inn lenka til skissa", "Lim inn lenken til skissen", "Paste the link to the sketch", "Вставте посилання на ескіз", "Wklej link do szkicu"],
     ["Skann og prøv på eitt minutt.", "Skann og prøv på ett minutt.", "Scan and try it in one minute.", "Скануйте й спробуйте за одну хвилину.", "Zeskanuj i wypróbuj w minutę."],
-    ["Forslag frå Oleiv, innbyggjar på Nærbø. Ikkje ei teneste frå Hå kommune. Du treng ikkje oppgje namn, e-post eller telefonnummer.", "Forslag fra Oleiv, innbygger på Nærbø. Ikke en tjeneste fra Hå kommune. Du trenger ikke oppgi navn, e-post eller telefonnummer.", "A proposal from Oleiv, a resident of Nærbø. Not a service from Hå municipality. You don't need to give your name, email or phone number.", "Пропозиція від Олейва, мешканця Nærbø. Не сервіс комуни Hå. Не потрібно вказувати ім'я, електронну пошту чи номер телефону.", "Propozycja od Oleiva, mieszkańca Nærbø. To nie usługa gminy Hå. Nie musisz podawać imienia, e-maila ani numeru telefonu."],
+    ["Forslag frå Oleiv Høyland, innbyggjar på Nærbø. Ikkje ei teneste frå Hå kommune. Du treng ikkje oppgje namn, e-post eller telefonnummer.", "Forslag fra Oleiv Høyland, innbygger på Nærbø. Ikke en tjeneste fra Hå kommune. Du trenger ikke oppgi navn, e-post eller telefonnummer.", "A proposal from Oleiv Høyland, a resident of Nærbø. Not a service from Hå municipality. You don't need to give your name, email or phone number.", "Пропозиція від Oleiv Høyland, мешканця Nærbø. Не сервіс комуни Hå. Не потрібно вказувати ім'я, електронну пошту чи номер телефону.", "Propozycja od Oleiva Høylanda, mieszkańca Nærbø. To nie usługa gminy Hå. Nie musisz podawać imienia, e-maila ani numeru telefonu."],
     ["Ta eit skjermbilete av lappen og skriv det ut i A6.", "Ta et skjermbilde av lappen og skriv det ut i A6.", "Take a screenshot of the note and print it in A6.", "Зробіть знімок екрана листівки й надрукуйте у форматі A6.", "Zrób zrzut ekranu karteczki i wydrukuj w formacie A6."],
     ["Lim inn lenka over, så kjem QR-koden her.", "Lim inn lenken over, så kommer QR-koden her.", "Paste the link above and the QR code appears here.", "Вставте посилання вище, і тут з'явиться QR-код.", "Wklej link powyżej, a kod QR pojawi się tutaj."],
     ["QR-koden kunne ikkje lagast. Prøv å lasta sida på nytt.", "QR-koden kunne ikke lages. Prøv å laste siden på nytt.", "The QR code could not be made. Try reloading the page.", "Не вдалося створити QR-код. Спробуйте перезавантажити сторінку.", "Nie udało się utworzyć kodu QR. Spróbuj odświeżyć stronę."],
@@ -1034,7 +1038,10 @@ details.card > .hint { margin-bottom: 4px; }
     show("aaret");
     var box = document.getElementById("t-mine-box");
     box.hidden = !valgjort();
-    document.getElementById("b-aar-tilbake").hidden = !valgjort();
+    var fra = (aarFra === "ferdig" && !valgjort()) ? "start" : aarFra;
+    var tekst = fra === "ferdig" ? "Tilbake til veka di" : fra === "start" ? "Tilbake til starten" : fra === "takk" ? "Tilbake" : fra === "svar" ? "Tilbake til spørsmåla" : "Tilbake";
+    document.querySelectorAll(".aar-tilbake").forEach(function (b) { b.textContent = T(tekst); b.setAttribute("data-fra", fra); });
+    document.getElementById("a-aar-start").hidden = (fra === "start");
     var tb = document.getElementById("t-mine");
     tb.setAttribute("aria-pressed", berreMine && valgjort() ? "true" : "false");
     var body = document.getElementById("aar-body");
@@ -1113,8 +1120,13 @@ details.card > .hint { margin-bottom: 4px; }
     draw();
   }
 
+  // Oppdrag 04: hugs kvar ein kom frå, så «Tilbake» i årsoversikta går dit.
+  var sisteVisning = "start", aarFra = "start", harRutet = false, aarHarForrige = false;
   function route() {
     var h = (location.hash || "").replace("#", "");
+    if (h === "aaret" && sisteVisning !== "aaret") { aarFra = sisteVisning; aarHarForrige = harRutet; }
+    sisteVisning = h || "start";
+    harRutet = true;
     if (h === "lapp") return visLapp();
     if (h === "aaret") return visAaret();
     if (h === "bygd") return show("bygd");
@@ -1149,7 +1161,11 @@ details.card > .hint { margin-bottom: 4px; }
     go("ferdig");
   });
   document.getElementById("n-ferdig").addEventListener("click", function () { go("svar"); });
-  document.getElementById("b-aar-tilbake").addEventListener("click", function () { go("ferdig"); });
+  document.querySelectorAll(".aar-tilbake").forEach(function (b) { b.addEventListener("click", function () {
+    var fra = b.getAttribute("data-fra") || "start";
+    // Gå tilbake i historikken når forrige side er den same, så telefonens tilbakeknapp ikkje pendlar (kontroll 04a).
+    if (aarHarForrige && fra === aarFra) history.back(); else go(fra);
+  }); });
   document.getElementById("t-mine").addEventListener("click", function () { berreMine = !berreMine; visAaret(); });
   document.getElementById("f-svar").addEventListener("submit", async function (e) {
     e.preventDefault();

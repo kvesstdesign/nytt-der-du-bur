@@ -10,3 +10,4 @@
 ## Delprosjekter
 
 ## Samtaler
+- 2026-11-16: oppdrag 04 (tydelige knapper til og fra årsoversikten). Kontroll 04a godkjent med ett lavt funn innenfor oppdraget, rettet (history.back). Avsenderen er endret til «Oleiv Høyland» etter Oleivs valg 10:00.
