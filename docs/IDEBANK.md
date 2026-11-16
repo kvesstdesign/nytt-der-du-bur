@@ -8,3 +8,6 @@ Ideer og funn utenfor oppdragene. Én linje per idé, med dato og kilde.
 - 2026-11-16 · oppdrag 02: resultatvisningen (#resultat) er fjernet. Svarene leses nå i Google Skjemaer › Svar. En egen resultatside kan bygges senere.
 - 2026-11-16 · kontroll 03b (lav, fantes før oppdrag 03): forsida (#start) blir litt breiare enn skjermen på 320 px med A+ på ukrainsk (335 px) og polsk (321 px).
 - 2026-11-16 · kontroll 03b (lav, kosmetisk): når ei rad i oppsummeringa i årsoversikta bryt, legg kanalteksten seg heilt til venstre under talet i staden for under merkelappen.
+- 2026-11-16 · UU-gjennomgang (middels, utsatt): enkeltval (kanal) som radiogruppe med piltastar i staden for av/på-knappar.
+- 2026-11-16 · UU-gjennomgang: tilgjengelegheitserklæring på uustatus.no når/om dette blir ei ekte kommunal teneste.
+- 2026-11-16 · kontroll 05c (lav): enkelte lange ord blir framleis brotne midt i ordet på 320 px (t.d. «przeciwpowodziowe» på polsk, der Chrome manglar orddeling, og «попередження» på ukrainsk). #lapp på ukrainsk er 3 px for brei med Størst+luftig på 320 px.

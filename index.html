@@ -64,9 +64,38 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-body); 
 .topbar .lang svg { flex: none; }
 .topbar select { font: inherit; font-size: .95rem; color: var(--ink); background: var(--surface); border: 1.5px solid var(--edge); border-radius: 10px; padding: 8px 10px; min-height: 44px; cursor: pointer; }
 .topbar .vis { display: flex; gap: 8px; }
+/* Stor tekst og luftig tekst skal aldri gjera sida breiare enn skjermen (oppdrag 05). */
+.topbar { flex-wrap: wrap; }
+.topbar .lang { min-width: 0; }
+.topbar select { max-width: 100%; }
+.wrap > *, .stack > *, .card > *, .month > *, .item, .item > * { min-width: 0; }
+.tags { flex-wrap: wrap; }
+.tags > * { max-width: 100%; }
+body { overflow-wrap: break-word; }
+/* Orddeling berre ved stor eller luftig tekst, og ikkje i overskrifter, merkelappar og knappar (kontroll 05c, F1). */
+html.stor p, html.luft p, html.stor li, html.luft li, html.stor .lead, html.luft .lead { hyphens: auto; -webkit-hyphens: auto; }
+html.luft .badge, html.stor2 .badge { white-space: normal; }
 .topbar .vis button { font: inherit; font-size: 1rem; font-weight: 600; line-height: 1; min-width: 44px; min-height: 44px; padding: 0 10px; border: 1.5px solid var(--edge); border-radius: 10px; background: var(--surface); color: var(--ink); cursor: pointer; }
 .topbar .vis button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 .topbar select:focus-visible, .topbar button:focus-visible { outline: 3px solid var(--flag); outline-offset: 2px; }
+.topbar .vis button[aria-expanded="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+/* Tilpass-panelet (oppdrag 05). [hidden] må vinna over display:grid (kontroll 05b). */
+.tilpass[hidden] { display: none; }
+.tilpass { max-width: 34rem; margin: 0 auto 8px; padding: 14px 16px 16px; display: grid; gap: 14px; background: var(--surface); border: 1.5px solid var(--edge); border-radius: 12px; box-shadow: var(--card-shadow, none); }
+@media (max-width: 34rem) { .tilpass { margin-inline: 8px; } }
+.tp-h { margin: 0 0 6px; font-weight: 600; }
+.tp-hint { margin: -2px 0 8px; color: var(--muted); font-size: .95rem; }
+.tp-val { display: flex; flex-wrap: wrap; gap: 8px; }
+.tp-val button { font: inherit; font-weight: 600; min-height: 44px; min-width: 44px; padding: 8px 14px; border: 1.5px solid var(--edge); border-radius: 10px; background: var(--surface); color: var(--ink); cursor: pointer; }
+.tp-val button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.tp-val button[aria-pressed="true"]::before { content: "✓ "; }
+.tp-val button:focus-visible, #b-tp-lukk:focus-visible { outline: 3px solid var(--flag); outline-offset: 2px; }
+/* Luftig tekst: verdiane frå WCAG 1.4.12 (tekstavstand), litt rundare linjeavstand. */
+html.luft body { letter-spacing: .12em; word-spacing: .16em; line-height: 1.8; }
+html.luft p, html.luft li { margin-bottom: 1em; }
+html.luft h1, html.luft h2, html.luft h3, html.luft h4 { letter-spacing: .06em; line-height: 1.35; }
+html.luft .badge { letter-spacing: .06em; }
+html.luft button, html.luft select, html.luft textarea, html.luft input { letter-spacing: .12em; word-spacing: .16em; }
 .flag strong { font-weight: 600; }
 h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; text-wrap: balance; margin: 0; }
 h1 { font-size: 2rem; margin-top: 8px; }
@@ -78,13 +107,20 @@ p { margin: 0; }
 .hint { color: var(--muted); font-size: .9rem; }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 12px; }
 /* Hastegradane: merkelappane i eiga kolonne, så overskriftene startar på same linje same kor brei lappen er (gjeld alle språk). */
-.levels { display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; align-items: baseline; }
+.levels { display: grid; grid-template-columns: minmax(0, max-content) minmax(0, 1fr); gap: 4px 12px; align-items: baseline; }
+/* Stor eller luftig tekst: merkelappen over teksten, så raden ikkje blir breiare enn skjermen (kontroll 05a). */
+html.stor .levels, html.luft .levels { grid-template-columns: minmax(0, 1fr); }
+html.stor .level .badge, html.luft .level .badge, html.stor .level b, html.luft .level b, html.stor .level p, html.luft .level p { grid-column: 1; justify-self: start; }
 .level { display: contents; }
 .level .badge { grid-column: 1; justify-self: stretch; text-align: center; }
 .level b { grid-column: 2; }
 .level p { grid-column: 2; color: var(--muted); font-size: .95rem; margin-bottom: 10px; }
 .level:last-child p { margin-bottom: 0; }
-.badge { display: inline-block; border-radius: 6px; padding: 1px 8px; font-size: .8rem; font-weight: 600; white-space: nowrap; }
+.badge { display: inline-block; border-radius: 6px; padding: 2px 8px; font-size: .9rem; font-weight: 600; white-space: nowrap; }
+/* Symbol i tillegg til farge, så hastegradene kan skiljast ved fargeblindheit og i gråtonar (oppdrag 05). */
+.badge.b-straks::before { content: "▲\00a0"; content: "▲\00a0" / ""; }
+.badge.b-snart::before { content: "●\00a0"; content: "●\00a0" / ""; }
+.badge.b-godt::before { content: "■\00a0"; content: "■\00a0" / ""; }
 .b-straks { background: var(--b-straks-bg, var(--straks-bg)); color: var(--b-straks-fg, var(--straks)); }
 .b-snart { background: var(--b-snart-bg, var(--snart-bg)); color: var(--b-snart-fg, var(--snart)); }
 .b-godt { background: var(--b-godt-bg, var(--godt-bg)); color: var(--b-godt-fg, var(--godt)); }
@@ -114,7 +150,7 @@ body.compact .flag-full, body:not(.compact) .flag-short, body.compact .langbar, 
 .row > .btn.ghost { flex: 0 0 auto; width: auto; padding-inline: 20px; }
 #b-aar-topp { width: auto; justify-self: start; padding-inline: 20px; } /* oppdrag 04 */
 .mt { background: var(--flag-bg); color: var(--flag); padding: 8px max(16px, calc((100% - 34rem) / 2 + 16px)); font-size: .9rem; margin: 0; }
-.row { display: flex; gap: 10px; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; }
 .row > * { flex: 1; }
 button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visible { outline: 3px solid var(--flag); outline-offset: 2px; }
 a { color: var(--accent); }
@@ -142,7 +178,7 @@ textarea { min-height: 6rem; }
 .month:first-child { border-top: none; }
 /* Årsoversikta (oppdrag 03): merkelappen står over teksten, så teksten får heile breidda på mobil. */
 .mline { display: grid; gap: 2px; justify-items: start; padding: 4px 0; }
-.month > h3 { font-size: 1.15rem; }
+.month > h4 { font-size: 1.15rem; font-family: var(--font-display); line-height: 1.15; margin: 0; }
 .month .item { border-top: none; padding: 6px 0; }
 .sum-h { font-weight: 600; }
 .sumrows { display: grid; gap: 8px; }
@@ -176,10 +212,35 @@ details.card > .hint { margin-bottom: 4px; }
       <option value="pl" lang="pl">Polski</option>
     </select>
   </label>
-  <div class="vis" role="group" aria-label="Visning">
-    <button type="button" id="b-lys" aria-label="Lys bakgrunn" title="Lys bakgrunn">☀</button>
-    <button type="button" id="b-stor" aria-pressed="false" aria-label="Større tekst" title="Større tekst">A+</button>
+  <div class="vis">
+    <button type="button" id="b-tilpass" aria-expanded="false" aria-controls="tilpass"><span aria-hidden="true">Aa</span> Tilpass</button>
   </div>
+</div>
+<div class="tilpass" id="tilpass" hidden>
+  <div class="tp-grp" role="group" aria-labelledby="tp-h-str">
+    <p class="tp-h" id="tp-h-str">Tekststorleik</p>
+    <div class="tp-val">
+      <button type="button" data-str="0" aria-pressed="true">Normal</button>
+      <button type="button" data-str="1" aria-pressed="false">Større</button>
+      <button type="button" data-str="2" aria-pressed="false">Størst</button>
+    </div>
+  </div>
+  <div class="tp-grp" role="group" aria-labelledby="tp-h-luft">
+    <p class="tp-h" id="tp-h-luft">Luftig tekst</p>
+    <p class="tp-hint">Meir luft mellom bokstavar, ord og linjer. Kan gjera det lettare å lesa, til dømes ved dysleksi.</p>
+    <div class="tp-val">
+      <button type="button" data-luft="0" aria-pressed="true">Av</button>
+      <button type="button" data-luft="1" aria-pressed="false">På</button>
+    </div>
+  </div>
+  <div class="tp-grp" role="group" aria-labelledby="tp-h-bg">
+    <p class="tp-h" id="tp-h-bg">Bakgrunn</p>
+    <div class="tp-val">
+      <button type="button" data-tema="light" aria-pressed="true">Lys</button>
+      <button type="button" data-tema="dark" aria-pressed="false">Mørk</button>
+    </div>
+  </div>
+  <button type="button" class="btn ghost" id="b-tp-lukk">Ferdig</button>
 </div>
 <p class="mt" id="mt-note" role="note" hidden data-noi18n></p>
 <div class="flag" role="note">
@@ -201,7 +262,7 @@ details.card > .hint { margin-bottom: 4px; }
         <div class="level"><span class="badge b-godt">Godt å vite</span><b>Kjem samla kvar veke</b><p>Fristar, arrangement, høyringar og tips gjennom året.</p></div>
       </div>
       <div class="notif" aria-label="Døme på straksvarsel">
-        <small>DØME · Straks · Vatn og avløp · Vigrestad</small>
+        <small>Døme · Straks · Vatn og avløp · Vigrestad</small>
         <b>Vatnet er stengt i Dømegata no</b>
         <span class="hint">Brot på leidning. Vatnet er truleg tilbake om lag kl. 15.</span>
       </div>
@@ -364,10 +425,19 @@ details.card > .hint { margin-bottom: 4px; }
     ["Øvst er oppdikta døme som viser kva som kunne kome, og kor fort. Nedst er ekte saker frå 2026.", "Øverst er oppdiktede eksempler som viser hva som kunne kommet, og hvor raskt. Nederst er ekte saker fra 2026.", "At the top are made-up examples showing what could arrive, and how quickly. Below are real items from 2026.", "Угорі вигадані приклади, які показують, що могло б надходити і як швидко. Нижче справжні новини 2026 року.", "U góry są zmyślone przykłady pokazujące, co mogłoby przychodzić i jak szybko. Poniżej prawdziwe wiadomości z 2026 roku."],
     ["Forslag frå Oleiv Høyland, innbyggjar på Nærbø · ikkje ei teneste frå Hå kommune", "Forslag fra Oleiv Høyland, innbygger på Nærbø · ikke en tjeneste fra Hå kommune", "A proposal from Oleiv Høyland, a Nærbø resident · not a Hå municipality service", "Пропозиція від Oleiv Høyland, мешканця Nærbø · не сервіс комуни Hå", "Propozycja od Oleiva Høylanda, mieszkańca Nærbø · to nie usługa gminy Hå"],
     ["Ingen saker i e-posten denne veka for vala dine.", "Ingen saker i e-posten denne uka for valgene dine.", "No items in this week's email for your choices.", "Цього тижня у листі немає новин для вашого вибору.", "W tym tygodniu w e-mailu nie ma wiadomości dla Twoich wyborów."],
-    ["Lys bakgrunn", "Lys bakgrunn", "Light background", "Світлий фон", "Jasne tło"],
-    ["Mørk bakgrunn", "Mørk bakgrunn", "Dark background", "Темний фон", "Ciemne tło"],
-    ["Større tekst", "Større tekst", "Larger text", "Більший текст", "Większy tekst"],
-    ["Visning", "Visning", "Display", "Вигляд", "Wygląd"],
+    ["Tilpass", "Tilpass", "Adjust", "Налаштувати", "Dostosuj"],
+    ["Tekststorleik", "Tekststørrelse", "Text size", "Розмір тексту", "Rozmiar tekstu"],
+    ["Normal", "Normal", "Normal", "Звичайний", "Normalny"],
+    ["Større", "Større", "Larger", "Більший", "Większy"],
+    ["Størst", "Størst", "Largest", "Найбільший", "Największy"],
+    ["Luftig tekst", "Luftig tekst", "Spacious text", "Просторий текст", "Tekst z odstępami"],
+    ["Meir luft mellom bokstavar, ord og linjer. Kan gjera det lettare å lesa, til dømes ved dysleksi.", "Mer luft mellom bokstaver, ord og linjer. Kan gjøre det lettere å lese, for eksempel ved dysleksi.", "More space between letters, words and lines. Can make reading easier, for example with dyslexia.", "Більше простору між літерами, словами й рядками. Може полегшити читання, наприклад при дислексії.", "Więcej miejsca między literami, słowami i wierszami. Może ułatwić czytanie, na przykład przy dysleksji."],
+    ["Av", "Av", "Off", "Вимк.", "Wył."],
+    ["På", "På", "On", "Увімк.", "Wł."],
+    ["Bakgrunn", "Bakgrunn", "Background", "Фон", "Tło"],
+    ["Lys", "Lys", "Light", "Світлий", "Jasne"],
+    ["Mørk", "Mørk", "Dark", "Темний", "Ciemne"],
+    ["Ferdig", "Ferdig", "Done", "Готово", "Gotowe"],
     ["Siste steg: send skjemaet", "Siste steg: send skjemaet", "Last step: send the form", "Останній крок: надішліть форму", "Ostatni krok: wyślij formularz"],
     ["Skjedde i 2026", "Skjedde i 2026", "Happened in 2026", "Сталося у 2026 році", "Wydarzyło się w 2026"],
     ["Ekte saker frå Hå i år, skrivne om med eigne ord. Kjelda står under kvar sak.", "Ekte saker fra Hå i år, skrevet om med egne ord. Kilden står under hver sak.", "Real items from Hå this year, rewritten in our own words. The source is under each item.", "Справжні новини з Hå цього року, переказані своїми словами. Джерело вказано під кожною новиною.", "Prawdziwe wiadomości z Hå z tego roku, opisane własnymi słowami. Źródło jest pod każdą wiadomością."],
@@ -421,7 +491,7 @@ details.card > .hint { margin-bottom: 4px; }
     ["Kjem samla kvar veke", "Kommer samlet hver uke", "Comes bundled every week", "Приходить разом щотижня", "Przychodzi zbiorczo co tydzień"],
     ["Fristar, arrangement, høyringar og tips gjennom året.", "Frister, arrangementer, høringer og tips gjennom året.", "Deadlines, events, public consultations and tips through the year.", "Терміни, заходи, громадські обговорення та поради протягом року.", "Terminy, wydarzenia, konsultacje społeczne i porady przez cały rok."],
     ["Tre hastegradar", "Tre hastegrader", "Three levels of urgency", "Три рівні терміновості", "Trzy poziomy pilności"],
-    ["DØME · Straks · Vatn og avløp · Vigrestad", "EKSEMPEL · Straks · Vann og avløp · Vigrestad", "EXAMPLE · Urgent · Water and sewage · Vigrestad", "ПРИКЛАД · Терміново · Вода і каналізація · Vigrestad", "PRZYKŁAD · Pilne · Woda i kanalizacja · Vigrestad"],
+    ["Døme · Straks · Vatn og avløp · Vigrestad", "Eksempel · Straks · Vann og avløp · Vigrestad", "Example · Urgent · Water and sewage · Vigrestad", "Приклад · Терміново · Вода і каналізація · Vigrestad", "Przykład · Pilne · Woda i kanalizacja · Vigrestad"],
     ["Vatnet er stengt i Dømegata no", "Vannet er stengt i Eksempelgata nå", "Water is shut off in Example Street now", "Зараз відключено воду на вулиці Прикладна", "Woda jest teraz zakręcona na ulicy Przykładowej"],
     ["Brot på leidning. Vatnet er truleg tilbake om lag kl. 15.", "Brudd på ledning. Vannet er trolig tilbake rundt kl. 15.", "A burst pipe. Water should be back around 3 pm.", "Пошкодження труби. Воду, ймовірно, дадуть близько 15:00.", "Awaria rury. Woda wróci prawdopodobnie około 15:00."],
     ["Døme på straksvarsel", "Eksempel på hastevarsel", "Example of an urgent alert", "Приклад термінового сповіщення", "Przykład pilnego powiadomienia"],
@@ -546,12 +616,12 @@ details.card > .hint { margin-bottom: 4px; }
     ["Ingen straksdøme for bygda di. I verkelegheita kjem dei sjeldan.", "Ingen hasteeksempler for bygda di. I virkeligheten kommer de sjelden.", "No urgent examples for your village. In reality they are rare.", "Для вашого селища немає термінових прикладів. Насправді вони трапляються рідко.", "Brak pilnych przykładów dla Twojej miejscowości. W rzeczywistości zdarzają się rzadko."],
     ["Ingen planlagde saker for vala dine denne veka.", "Ingen planlagte saker for valgene dine denne uka.", "No planned items for your choices this week.", "Цього тижня немає запланованих новин для вашого вибору.", "W tym tygodniu brak zaplanowanych wiadomości dla Twoich wyborów."],
     ["I e-posten onsdag kveld", "I e-posten onsdag kveld", "In the email on Wednesday evening", "У листі в середу ввечері", "W e-mailu w środę wieczorem"],
-    ["DØME · Til: deg · onsdag kl. 18", "EKSEMPEL · Til: deg · onsdag kl. 18", "EXAMPLE · To: you · Wednesday 6 pm", "ПРИКЛАД · Кому: вам · середа, 18:00", "PRZYKŁAD · Do: Ciebie · środa, 18:00"],
+    ["Døme · Til: deg · onsdag kl. 18", "Eksempel · Til: deg · onsdag kl. 18", "Example · To: you · Wednesday 6 pm", "Приклад · Кому: вам · середа, 18:00", "Przykład · Do: Ciebie · środa, 18:00"],
     ["Nytt der du bur denne veka", "Nytt der du bor denne uka", "News where you live this week", "Новини там, де ви живете, цього тижня", "Wiadomości z Twojej okolicy w tym tygodniu"],
     ["sak", "sak", "item", "новина", "wiadomość"],
     ["saker", "saker", "items", "новин", "wiadomości"],
     ["Du får ingen e-post med desse vala.", "Du får ingen e-post med disse valgene.", "You get no email with these choices.", "З таким вибором ви не отримуватимете листів.", "Przy tych wyborach nie dostaniesz e-maili."],
-    ["DØME", "EKSEMPEL", "EXAMPLE", "ПРИКЛАД", "PRZYKŁAD"],
+    ["Døme", "Eksempel", "Example", "Приклад", "Przykład"],
     ["Ingen døme passar vala dine.", "Ingen eksempler passer valgene dine.", "No examples fit your choices.", "Жоден приклад не відповідає вашому вибору.", "Żaden przykład nie pasuje do Twoich wyborów."],
     ["Døme på", "Eksempel på", "Example of", "Приклад:", "Przykład:"],
     ["Brot på leidning. Vatnet er truleg tilbake om lag kl. 15. Vatn kan hentast ved Dømeskulen.", "Brudd på ledning. Vannet er trolig tilbake rundt kl. 15. Vann kan hentes ved Eksempelskolen.", "A burst pipe. Water should be back around 3 pm. Water can be collected at Example School.", "Пошкодження труби. Воду, ймовірно, дадуть близько 15:00. Воду можна набрати біля школи Прикладна.", "Awaria rury. Woda wróci prawdopodobnie około 15:00. Wodę można pobrać przy Szkole Przykładowej."],
@@ -801,7 +871,7 @@ details.card > .hint { margin-bottom: 4px; }
         if (s.m !== sist || !sec) {
           sist = s.m;
           sec = el("div", { "class": "month" });
-          sec.appendChild(el("h3", null, T(s.m ? MND[s.m] : "Heile året")));
+          sec.appendChild(el("h4", null, T(s.m ? MND[s.m] : "Heile året")));
           ek.appendChild(sec);
         }
         var it = el("div", { "class": "item" });
@@ -904,11 +974,13 @@ details.card > .hint { margin-bottom: 4px; }
     document.getElementById("m-svar").style.visibility = state.q1.length > 0 ? "hidden" : "visible";
   }
 
+  var stilleRender = false;
   var VIEWS = ["start", "bygd", "tema", "kanal", "ferdig", "svar", "takk", "aaret", "lapp"];
   function show(name) {
     document.body.classList.toggle("compact", name !== "start" && name !== "aaret");
     VIEWS.forEach(function (v) { document.getElementById("v-" + v).hidden = (v !== name); });
     var h = document.querySelector("#v-" + name + " h1, #v-" + name + " h2");
+    if (stilleRender) return; // språkbyte: ikkje flytt fokus eller rull (kontroll UU, 3.2.2)
     if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
     window.scrollTo(0, 0);
   }
@@ -936,7 +1008,7 @@ details.card > .hint { margin-bottom: 4px; }
     var it = el("div", { "class": "item" });
     var tags = el("div", { "class": "tags" });
     tags.appendChild(badge(s.h));
-    tags.appendChild(el("span", { "class": "badge b-demo" }, "DØME"));
+    tags.appendChild(el("span", { "class": "badge b-demo" }, "Døme"));
     tags.appendChild(el("span", { "class": "badge b-plain" }, s.tema));
     tags.appendChild(el("span", { "class": "badge b-plain" }, s.bygd));
     if (withMonth && s.mnd) tags.appendChild(el("span", { "class": "badge b-plain" }, MND[s.mnd]));
@@ -948,7 +1020,7 @@ details.card > .hint { margin-bottom: 4px; }
 
   function notifEl(s, soon, kanal) {
     var n = el("div", { "class": "notif" + (soon ? " soon" : ""), "aria-label": T("Døme på") + " " + lc(T(kanal)) });
-    n.appendChild(el("small", null, T("DØME") + " · " + T(kanal) + " · " + T(HAST[s.h]) + " · " + T(s.tema) + " · " + T(s.bygd)));
+    n.appendChild(el("small", null, T("Døme") + " · " + T(kanal) + " · " + T(HAST[s.h]) + " · " + T(s.tema) + " · " + T(s.bygd)));
     n.appendChild(el("b", null, s.t));
     n.appendChild(el("span", { "class": "hint" }, s.x));
     return n;
@@ -991,7 +1063,7 @@ details.card > .hint { margin-bottom: 4px; }
       var m = el("div", { "class": "mail" });
       var hd = el("header");
       var ant = mailSnart.length + mailGodt.length;
-      hd.appendChild(el("span", null, "DØME · Til: deg · onsdag kl. 18"));
+      hd.appendChild(el("span", null, "Døme · Til: deg · onsdag kl. 18"));
       hd.appendChild(el("b", null, T("Nytt der du bur denne veka") + " (" + ant + " " + (ant === 1 ? T("sak") : (document.documentElement.lang === "uk" && ant >= 2 && ant <= 4 ? "новини" : T("saker"))) + ")"));
       m.appendChild(hd);
       var body = el("div", { "class": "body" });
@@ -1052,7 +1124,7 @@ details.card > .hint { margin-bottom: 4px; }
       var saker = liste.filter(function (s) { return s.mnd === m; });
       if (!saker.length) return;
       var sec = el("div", { "class": "month" });
-      sec.appendChild(el("h3", null, MND[m]));
+      sec.appendChild(el("h4", null, MND[m]));
       saker.forEach(function (s) {
         var line = el("div", { "class": "mline" });
         var b = el("span"); b.appendChild(badge(s.h));
@@ -1179,27 +1251,45 @@ details.card > .hint { margin-bottom: 4px; }
     b.addEventListener("click", function () { go(b.getAttribute("data-back")); });
   });
   // Visning: lys/mørk og større tekst. Huskast på telefonen til «Start på nytt».
-  var docEl = document.documentElement, visTema = null, visStor = false;
+  var docEl = document.documentElement, visTema = null, visStor = 0, visLuft = false;
   function erMork() {
     return visTema === "dark"; // hvit som standard
   }
   function brukVis(lagre) {
     if (visTema) docEl.setAttribute("data-theme", visTema); else docEl.removeAttribute("data-theme");
-    docEl.style.fontSize = visStor ? "125%" : "";
-    var bl = document.getElementById("b-lys"), lab = erMork() ? "Lys bakgrunn" : "Mørk bakgrunn";
-    bl.textContent = erMork() ? "☀" : "☾";
-    bl.setAttribute("aria-label", lab); bl.setAttribute("title", lab);
-    document.getElementById("b-stor").setAttribute("aria-pressed", visStor ? "true" : "false");
-    if (lagre) { try { localStorage.setItem("ndb-vis", JSON.stringify({ t: visTema, s: visStor })); } catch (e) {} }
+    docEl.style.fontSize = ["", "125%", "150%"][visStor] || "";
+    docEl.classList.toggle("luft", visLuft);
+    docEl.classList.toggle("stor", visStor >= 1);
+    docEl.classList.toggle("stor2", visStor === 2);
+    var mork = erMork();
+    document.querySelectorAll("[data-str]").forEach(function (b) { b.setAttribute("aria-pressed", String(+b.getAttribute("data-str") === visStor)); });
+    document.querySelectorAll("[data-luft]").forEach(function (b) { b.setAttribute("aria-pressed", String((b.getAttribute("data-luft") === "1") === visLuft)); });
+    document.querySelectorAll("[data-tema]").forEach(function (b) { b.setAttribute("aria-pressed", String((b.getAttribute("data-tema") === "dark") === mork)); });
+    if (lagre) { try { localStorage.setItem("ndb-vis", JSON.stringify({ t: visTema, s: visStor, l: visLuft })); } catch (e) {} }
   }
-  try { var lv = JSON.parse(localStorage.getItem("ndb-vis") || "null"); if (lv) { visTema = lv.t || null; visStor = !!lv.s; } } catch (e) {}
+  try {
+    var lv = JSON.parse(localStorage.getItem("ndb-vis") || "null");
+    if (lv) { visTema = lv.t || null; visStor = lv.s === true ? 1 : (+lv.s || 0); if (visStor < 0 || visStor > 2) visStor = 0; visLuft = !!lv.l; }
+  } catch (e) {}
   brukVis(false);
-  document.getElementById("b-lys").addEventListener("click", function () { visTema = erMork() ? "light" : "dark"; brukVis(true); });
-  document.getElementById("b-stor").addEventListener("click", function () { visStor = !visStor; brukVis(true); });
-  document.getElementById("b-igjen").addEventListener("click", function () { visTema = null; visStor = false; try { localStorage.removeItem("ndb-vis"); } catch (e) {} brukVis(false); });
+  var tpBtn = document.getElementById("b-tilpass"), tpPanel = document.getElementById("tilpass");
+  function visTilpass(open) {
+    var inni = tpPanel.contains(document.activeElement);
+    tpPanel.hidden = !open;
+    tpBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    if (open) { var f = tpPanel.querySelector("button[aria-pressed=\"true\"]"); if (f) f.focus(); } else if (inni) tpBtn.focus();
+  }
+  tpBtn.addEventListener("click", function () { visTilpass(tpPanel.hidden); });
+  document.getElementById("b-tp-lukk").addEventListener("click", function () { visTilpass(false); });
+  tpPanel.addEventListener("keydown", function (e) { if (e.key === "Escape") visTilpass(false); });
+  tpBtn.addEventListener("keydown", function (e) { if (e.key === "Escape" && !tpPanel.hidden) visTilpass(false); });
+  document.querySelectorAll("[data-str]").forEach(function (b) { b.addEventListener("click", function () { visStor = +b.getAttribute("data-str"); brukVis(true); }); });
+  document.querySelectorAll("[data-luft]").forEach(function (b) { b.addEventListener("click", function () { visLuft = b.getAttribute("data-luft") === "1"; brukVis(true); }); });
+  document.querySelectorAll("[data-tema]").forEach(function (b) { b.addEventListener("click", function () { visTema = b.getAttribute("data-tema"); brukVis(true); }); });
+  document.getElementById("b-igjen").addEventListener("click", function () { visTema = null; visStor = 0; visLuft = false; try { localStorage.removeItem("ndb-vis"); } catch (e) {} brukVis(false); visTilpass(false); });
 
   window.addEventListener("hashchange", route);
-  window.__rerender = route;
+  window.__rerender = function () { stilleRender = true; try { route(); } finally { stilleRender = false; } };
   route();
 })();
 </script>
