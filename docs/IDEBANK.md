@@ -11,9 +11,7 @@ Ideer og funn utenfor oppdragene. Én linje per idé, med dato og kilde.
 - 2026-11-16 · UU-gjennomgang (middels, utsatt): enkeltval (kanal) som radiogruppe med piltastar i staden for av/på-knappar.
 - 2026-11-16 · UU-gjennomgang: tilgjengelegheitserklæring på uustatus.no når/om dette blir ei ekte kommunal teneste.
 - 2026-11-16 · kontroll 05c (lav): enkelte lange ord blir framleis brotne midt i ordet på 320 px (t.d. «przeciwpowodziowe» på polsk, der Chrome manglar orddeling, og «попередження» på ukrainsk). #lapp på ukrainsk er 3 px for brei med Størst+luftig på 320 px.
-
-### Fra kontroll 06a (lave funn, utenfor oppdrag 06)
-- «Gjødselspredning:» stikker ut av boksen i demodelen (nb, 320 px, Størst og luftig). Fantes allerede før oppdrag 06.
-- `.notif` har aria-label, men ingen rolle.
-- Engelsk sier «SMS» under Straks og «text the day before» under Snart. Bør bli likt.
-- Forklar kort at den siste kanalen ikke kan velges bort, for eksempel «Minst éin må vera vald».
+- 2026-11-16 · kontroll 06a (lav, fanst før 06): «Gjødselspredning:» stikk ut av boksen i dømedelen (nb, 320 px, Størst+luftig).
+- 2026-11-16 · kontroll 06a (lav): `.notif` har aria-label utan rolle.
+- 2026-11-16 · kontroll 06a (lav): engelsk seier «SMS» under Straks men «text the day before» under Snart. Bør vera likt.
+- 2026-11-16 · kontroll 06a (lav): ingen forklaring på at den siste kanalen ikkje kan veljast bort (t.d. «Minst éin må vera vald»).
