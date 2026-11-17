@@ -105,6 +105,7 @@ p { margin: 0; }
 .stack { display: grid; gap: 16px; }
 .lead { color: var(--muted); }
 .hint { color: var(--muted); font-size: .9rem; }
+.merk { display: grid; gap: 8px; justify-items: start; }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 12px; }
 /* Hastegradane: merkelappane i eiga kolonne, så overskriftene startar på same linje same kor brei lappen er (gjeld alle språk). */
 .levels { display: grid; grid-template-columns: minmax(0, max-content) minmax(0, 1fr); gap: 4px 12px; align-items: baseline; }
@@ -287,7 +288,7 @@ details.card > .hint { margin-bottom: 4px; }
     <div class="stack">
       <p class="progress">Steg 2 av 3</p>
       <h2 id="h-tema">Kva vil du høyra om?</h2>
-      <p class="hint"><span class="badge b-straks">Straks</span> får du alltid for bygda di, same kva du vel her. Tema gjeld det som kan venta.</p>
+      <div class="merk"><span class="badge b-straks">Straks</span><p class="hint">Hastemeldingar får du alltid for bygda di, same kva du vel her. Tema gjeld det som kan venta.</p></div>
       <div class="chips" id="c-tema" role="group" aria-label="Tema"></div>
       <p class="hint" id="m-tema">Vel minst eitt tema for å gå vidare.</p>
       <div class="row"><button class="btn ghost" data-back="bygd">Tilbake</button><button class="btn" id="n-tema" disabled>Vidare</button></div>
@@ -520,7 +521,7 @@ details.card > .hint { margin-bottom: 4px; }
     ["Tilbake", "Tilbake", "Back", "Назад", "Wstecz"],
     ["Vidare", "Videre", "Next", "Далі", "Dalej"],
     ["Kva vil du høyra om?", "Hva vil du høre om?", "What do you want to hear about?", "Про що ви хочете дізнаватися?", "O czym chcesz słyszeć?"],
-    ["får du alltid for bygda di, same kva du vel her. Tema gjeld det som kan venta.", "får du alltid for bygda di, uansett hva du velger her. Tema gjelder det som kan vente.", "alerts always come for your village, whatever you choose here. Topics apply to what can wait.", "— ці сповіщення ви отримуєте завжди для свого селища, незалежно від вибору тут. Теми стосуються того, що може зачекати.", "otrzymujesz zawsze dla swojej miejscowości, niezależnie od wyboru tutaj. Tematy dotyczą spraw, które mogą poczekać."],
+    ["Hastemeldingar får du alltid for bygda di, same kva du vel her. Tema gjeld det som kan venta.", "Hastemeldinger får du alltid for bygda di, uansett hva du velger her. Tema gjelder det som kan vente.", "Urgent alerts always come for your village, whatever you choose here. Topics apply to what can wait.", "Термінові сповіщення ви отримуєте завжди для свого селища, незалежно від вибору тут. Теми стосуються того, що може зачекати.", "Pilne komunikaty otrzymujesz zawsze dla swojej miejscowości, niezależnie od wyboru tutaj. Tematy dotyczą spraw, które mogą poczekać."],
     ["Tema", "Tema", "Topics", "Теми", "Tematy"],
     ["Vel minst eitt tema for å gå vidare.", "Velg minst ett tema for å gå videre.", "Choose at least one topic to continue.", "Виберіть щонайменше одну тему, щоб продовжити.", "Wybierz co najmniej jeden temat, aby przejść dalej."],
     ["Korleis vil du få det?", "Hvordan vil du få det?", "How do you want to receive it?", "Як ви хочете це отримувати?", "Jak chcesz to otrzymywać?"],
