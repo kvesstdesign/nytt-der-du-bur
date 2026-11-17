@@ -325,10 +325,11 @@ details.card > .hint { margin-bottom: 4px; }
     <div class="stack">
       <h2 id="h-ferdig">Slik kunne det sett ut for deg</h2>
       <p class="lead" id="t-val"></p>
+      <button class="btn" id="n-ferdig-topp">Seks korte spørsmål</button>
+      <a class="btn ghost" href="#aaret">Sjå kva du ville fått gjennom eit heilt år</a>
       <div class="lane" id="p-straks"></div>
       <div class="lane" id="p-snart"></div>
       <div class="lane" id="p-mail"></div>
-      <a class="btn ghost" href="#aaret">Sjå kva du ville fått gjennom eit heilt år</a>
       <button class="btn" id="n-ferdig">Seks korte spørsmål</button>
     </div>
   </section>
@@ -1271,6 +1272,7 @@ details.card > .hint { margin-bottom: 4px; }
     go("ferdig");
   });
   document.getElementById("n-ferdig").addEventListener("click", function () { go("svar"); });
+  document.getElementById("n-ferdig-topp").addEventListener("click", function () { go("svar"); });
   document.querySelectorAll(".aar-tilbake").forEach(function (b) { b.addEventListener("click", function () {
     var fra = b.getAttribute("data-fra") || "start";
     // Gå tilbake i historikken når forrige side er den same, så telefonens tilbakeknapp ikkje pendlar (kontroll 04a).
